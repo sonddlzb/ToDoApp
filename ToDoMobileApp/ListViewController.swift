@@ -1,0 +1,105 @@
+//
+//  MyDayViewController.swift
+//  ToDoMobileApp
+//
+//  Created by đào sơn on 08/04/2022.
+//
+
+import UIKit
+
+class ListViewController: UIViewController{
+
+    var listStore: ListStore!
+    var currentList: Int!
+    @IBOutlet weak var myDayTableView: UITableView!
+    @IBOutlet weak var addTaskTextField: UITextField!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.title = listStore.allList[currentList].name
+        addTaskTextField.delegate = self
+        myDayTableView.delegate = self
+        myDayTableView.dataSource = self
+        myDayTableView.register(UINib(nibName: "TaskTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "TaskTableViewCell")
+        // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func addNewTask(_ sender: Any) {
+        if let taskName = addTaskTextField.text, !taskName.isEmpty
+        {
+            myDayTableView.reloadData()
+            let newTask = Task(detail: taskName, taskType: .listed)
+            listStore.allList[currentList].addTask(task: newTask)
+            let index = listStore.allList[currentList].taskNotFinished.count - 1
+            let indexPath = IndexPath(row: index, section: 0)
+            myDayTableView.insertRows(at: [indexPath], with: .automatic)
+        }
+    }
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
+}
+extension ListViewController: UITableViewDelegate, UITableViewDataSource
+{
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0
+        {
+            return listStore.allList[currentList].taskNotFinished.count
+        }
+        else
+        {
+            return listStore.allList[currentList].taskFinished.count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = myDayTableView.dequeueReusableCell(withIdentifier: "TaskTableViewCell") as! TaskTableViewCell
+        //task not finished
+        cell.delegate = self
+        cell.initCellForListTableViewCell(list: listStore.allList[currentList], indexPath: indexPath)
+        return cell
+    }
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let number = listStore.allList[currentList].taskFinished.count
+        if(section == 1)
+        {
+            if(number == 0)
+            {
+                return ""
+            }
+            return "Đã hoàn thành \(listStore.allList[currentList].taskFinished.count)"
+        }
+        return ""
+    }
+}
+extension ListViewController: UITextFieldDelegate
+{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+}
+
+extension ListViewController: TaskTableViewCellDelegate
+{
+    func taskTableViewCell(_ cell: TaskTableViewCell, didTapFinishButtonAtTask task: Task, didTapFinishButtonToState state: Bool) {
+        print("update finished database of \(task.detail)!")
+        task.isFinished = state
+        myDayTableView.reloadSections([0,1], with: .automatic)
+    }
+    
+    func taskTableViewCell(_ cell: TaskTableViewCell, didTapInterestButtonAtTask task: Task, didTapInterestButtonToState state: Bool) {
+        print("update interested database of \(task.detail)!")
+        task.isInterested = state
+    }
+    
+}

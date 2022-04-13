@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ListViewController" customModule="ToDoMobileApp" customModuleProvider="target">
+            <connections>
+                <outlet property="addTaskTextField" destination="Oni-1p-5c3" id="gGp-5E-EVG"/>
+                <outlet property="myDayTableView" destination="OYH-4a-7cR" id="QFG-ON-EjR"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vIe-GR-QCM">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="M8b-Kh-yJr"/>
+                    </constraints>
+                    <items>
+                        <navigationItem id="sve-4M-rHg">
+                            <rightBarButtonItems>
+                                <barButtonItem image="icon-dot" id="upR-ma-2Is"/>
+                                <barButtonItem image="icon-4" id="iVZ-11-DTZ"/>
+                            </rightBarButtonItems>
+                        </navigationItem>
+                    </items>
+                </navigationBar>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="OYH-4a-7cR">
+                    <rect key="frame" x="0.0" y="50" width="414" height="762"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Oni-1p-5c3">
+                    <rect key="frame" x="40" y="812" width="374" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="7QB-Hq-03J"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="Tu0-aE-NM4">
+                    <rect key="frame" x="0.0" y="50" width="414" height="44"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Tu0-aE-NM4" id="QY8-JI-6Ey">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </tableViewCellContentView>
+                </tableViewCell>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6pU-e8-P1p">
+                    <rect key="frame" x="0.0" y="812" width="40" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="O2I-kU-0Q6"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" title="+"/>
+                    <connections>
+                        <action selector="addNewTask:" destination="-1" eventType="touchUpInside" id="6eH-op-lvg"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="vIe-GR-QCM" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="-44" id="EMp-ab-Nvc"/>
+                <constraint firstItem="vIe-GR-QCM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="LGM-XX-zXY"/>
+                <constraint firstItem="Oni-1p-5c3" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="LqL-va-4gt"/>
+                <constraint firstItem="Oni-1p-5c3" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Na9-mI-dxR"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="OYH-4a-7cR" secondAttribute="trailing" id="SHn-Oq-icQ"/>
+                <constraint firstItem="6pU-e8-P1p" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="W3T-Ds-MLb"/>
+                <constraint firstItem="OYH-4a-7cR" firstAttribute="top" secondItem="vIe-GR-QCM" secondAttribute="bottom" id="WKY-YB-Oul"/>
+                <constraint firstItem="6pU-e8-P1p" firstAttribute="top" secondItem="OYH-4a-7cR" secondAttribute="bottom" id="frK-hn-jUt"/>
+                <constraint firstItem="OYH-4a-7cR" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="g7S-j3-oT6"/>
+                <constraint firstItem="6pU-e8-P1p" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="l4h-sd-Sl8"/>
+                <constraint firstItem="Oni-1p-5c3" firstAttribute="top" secondItem="OYH-4a-7cR" secondAttribute="bottom" id="qP6-nE-sIN"/>
+                <constraint firstItem="vIe-GR-QCM" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="uTN-Vv-SdU"/>
+                <constraint firstItem="Oni-1p-5c3" firstAttribute="leading" secondItem="6pU-e8-P1p" secondAttribute="trailing" id="z6Y-Bj-zvR"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="-74"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="icon-4" width="24" height="24"/>
+        <image name="icon-dot" width="32" height="32"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
