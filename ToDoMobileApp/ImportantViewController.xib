@@ -42,9 +42,6 @@
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
-                    <connections>
-                        <action selector="addTaskTextField:" destination="-1" eventType="editingDidEnd" id="oPh-9h-Fql"/>
-                    </connections>
                 </textField>
                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="T9P-6d-Hne">
                     <rect key="frame" x="0.0" y="50" width="414" height="44"/>
@@ -61,6 +58,9 @@
                     </constraints>
                     <state key="normal" title="Button"/>
                     <buttonConfiguration key="configuration" style="plain" title="+"/>
+                    <connections>
+                        <action selector="addTask:" destination="-1" eventType="touchUpInside" id="iPO-ap-F3F"/>
+                    </connections>
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="Iya-XX-dT9"/>

@@ -36,15 +36,15 @@ class TaskTableViewCell: UITableViewCell {
         }
     }
     @IBAction func interestClick(_ sender: UIButton) {
-        if sender.imageView!.image!.description.contains("star1-icon")
+        if sender.imageView!.image!.description.contains("star.fill")
         {
-            sender.setImage(UIImage(named: "star2-icon"), for: .normal)
+            sender.setImage(UIImage(systemName: "star"), for: .normal)
             delegate?.taskTableViewCell(self, didTapInterestButtonAtTask: task, didTapInterestButtonToState: true)
         }
         else
         {
             
-            sender.setImage(UIImage(named: "star1-icon"), for: .normal)
+            sender.setImage(UIImage(systemName: "star.fill"), for: .normal)
             delegate?.taskTableViewCell(self, didTapInterestButtonAtTask: task, didTapInterestButtonToState: true)
         }
     }
@@ -65,11 +65,11 @@ class TaskTableViewCell: UITableViewCell {
             self.finishButton.imageView?.image = UIImage(named: "uncheck-icon")
             if(self.task.isInterested)
             {
-                self.interestButton.imageView?.image = UIImage(named: "star2-icon")
+                self.interestButton.imageView?.image = UIImage(systemName: "star.fill")
             }
             else
             {
-                self.interestButton.imageView?.image = UIImage(named: "star1-icon")
+                self.interestButton.imageView?.image = UIImage(systemName: "star")
             }
         }
         else
@@ -82,11 +82,11 @@ class TaskTableViewCell: UITableViewCell {
             self.finishButton.imageView?.image = UIImage(named: "check-icon")
             if(self.task.isInterested)
             {
-                self.interestButton.imageView?.image = UIImage(named: "star2-icon")
+                self.interestButton.imageView?.image = UIImage(systemName: "star.fill")
             }
             else
             {
-                self.interestButton.imageView?.image = UIImage(named: "star1-icon")
+                self.interestButton.imageView?.image = UIImage(systemName: "star")
             }
         }
     }
@@ -103,11 +103,11 @@ class TaskTableViewCell: UITableViewCell {
             self.finishButton.imageView?.image = UIImage(named: "uncheck-icon")
             if(self.task.isInterested)
             {
-                self.interestButton.imageView?.image = UIImage(named: "star2-icon")
+                self.interestButton.imageView?.image = UIImage(systemName: "star.fill")
             }
             else
             {
-                self.interestButton.imageView?.image = UIImage(named: "star1-icon")
+                self.interestButton.imageView?.image = UIImage(systemName: "star")
             }
         }
         else
@@ -120,11 +120,11 @@ class TaskTableViewCell: UITableViewCell {
             self.finishButton.imageView?.image = UIImage(named: "check-icon")
             if(self.task.isInterested)
             {
-                self.interestButton.imageView?.image = UIImage(named: "star2-icon")
+                self.interestButton.imageView?.image = UIImage(systemName: "star.fill")
             }
             else
             {
-                self.interestButton.imageView?.image = UIImage(named: "star1-icon")
+                self.interestButton.imageView?.image = UIImage(systemName: "star")
             }
         }
     }
@@ -136,7 +136,7 @@ class TaskTableViewCell: UITableViewCell {
         self.taskNameLabel.contentMode = .left
         self.task.isFinished = false
         self.finishButton.imageView?.image = UIImage(named: "uncheck-icon")
-        self.interestButton.imageView?.image = UIImage(named: "star2-icon")
+        self.interestButton.imageView?.image = UIImage(systemName: "star.fill")
     }
 }
 

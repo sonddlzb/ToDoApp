@@ -33,12 +33,7 @@ class TaskViewController: UIViewController {
             let indexPath = IndexPath(row: index, section: 0)
             taskTableView.insertRows(at: [indexPath], with: .automatic)
         }
-        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            self.view.endEditing(true)
-            return false
-        }
     }
-    
 
 
 }

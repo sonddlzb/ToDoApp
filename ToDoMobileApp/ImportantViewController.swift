@@ -53,6 +53,17 @@ class ImportantViewController: UIViewController {
     }
     */
 
+    @IBAction func addTask(_ sender: UIButton) {
+        if let taskName = addTaskTextField.text, !taskName.isEmpty
+        {
+            importantTableView.reloadData()
+            let newTask = Task(detail:taskName, taskType: .important)
+            taskStore.addTask(task: newTask)
+            let index = listOfImportantTask.count - 1
+            let indexPath = IndexPath(row: index, section: 0)
+            importantTableView.insertRows(at: [indexPath], with: .automatic)
+        }
+    }
 }
 
 extension ImportantViewController: UITableViewDelegate, UITableViewDataSource
@@ -67,6 +78,11 @@ extension ImportantViewController: UITableViewDelegate, UITableViewDataSource
         cell.initCellForImportantViewController(indexPath: indexPath, listOfImportantTask: listOfImportantTask)
         return cell
     }
-    
-    
+}
+extension ImportantViewController: UITextFieldDelegate
+{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
 }
