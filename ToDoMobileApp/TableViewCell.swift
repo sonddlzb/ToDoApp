@@ -9,6 +9,11 @@ import UIKit
 
 class TableViewCell: UITableViewCell {
     var taskStore: TaskStore!
+    var listStore: ListStore!
+    var listOfImportantTask: [Task]
+    {
+        return listStore.importantTaskListStore + taskStore.importantTaskTaskStore
+    }
     let buttonName: [String] = ["Ngày của tôi", "Quan trọng", "Đã lập kế hoạch", "Đã giao cho tôi", "Tác vụ"]
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet private weak var imageViewCell: UIImageView!
@@ -49,10 +54,9 @@ class TableViewCell: UITableViewCell {
         switch indexPath.row
         {
             case 0: number = taskStore.myDayTask.count
-            case 1: number = taskStore.importantTask.count
+            case 1: number = listOfImportantTask.count + listStore.numberOfImportantTaskInList()
             case 2: number = taskStore.planTask.count
-            case 4: number = taskStore.myDayTask.count + taskStore.importantTask.count
-                + taskStore.planTask.count + taskStore.normalTask.count
+        case 4: number = taskStore.taskNotFinished.count
             default: number = 0
         }
         if(number != 0)

@@ -43,33 +43,20 @@ class TaskStore
         var myDay: [Task] = []
         for value in allTask
         {
-            if value.taskType == .myDay
+            if value.taskType == .myDay && !value.isFinished
             {
                 myDay.append(value)
             }
         }
         return myDay
     }
-    
-    var importantTask: [Task]
-    {
-        var important: [Task] = []
-        for value in allTask
-        {
-            if value.taskType == .important
-            {
-                important.append(value)
-            }
-        }
-        return important
-    }
-    
+        
     var planTask: [Task]
     {
         var plan: [Task] = []
         for value in allTask
         {
-            if value.taskType == .planned
+            if value.taskType == .planned && !value.isFinished
             {
                 plan.append(value)
             }
@@ -82,12 +69,36 @@ class TaskStore
         var normal: [Task] = []
         for value in allTask
         {
-            if value.taskType == .normal
+            if value.taskType == .normal && !value.isFinished
             {
                 normal.append(value)
             }
         }
         return normal
+    }
+    var importantTaskTaskStore: [Task]
+    {
+        var res: [Task] = []
+        for task in allTask
+        {
+            if(task.taskType == .important && !task.isFinished)
+            {
+                res.append(task)
+            }
+            if(task.taskType == .myDay && task.isInterested && !task.isFinished)
+            {
+                res.append(task)
+            }
+            if(task.taskType == .planned && task.isInterested && !task.isFinished)
+            {
+                res.append(task)
+            }
+            if(task.taskType == .normal && task.isInterested && !task.isFinished)
+            {
+                res.append(task)
+            }
+        }
+        return res
     }
 }
 

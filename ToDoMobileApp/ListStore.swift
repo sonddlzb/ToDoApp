@@ -28,4 +28,34 @@ class ListStore
 //        }
 //        return nil
 //    }
+    func numberOfImportantTaskInList() -> Int
+    {
+        var count = 0
+        for list in allList
+        {
+            for task in list.listOfTask
+            {
+                if(task.isInterested && !task.isFinished)
+                {
+                    count += 1
+                }
+            }
+        }
+        return count
+    }
+    var importantTaskListStore: [Task]
+    {
+        var res = [Task]()
+        for list in allList
+        {
+            for task in list.listOfTask
+            {
+                if(task.isInterested && !task.isFinished)
+                {
+                    res.append(task)
+                }
+            }
+        }
+        return res
+    }
 }

@@ -8,41 +8,29 @@
 import UIKit
 
 class ImportantViewController: UIViewController {
+    
+    @IBOutlet weak private var addTaskTextField: UITextField!
+    
+    @IBOutlet weak private var importantTableView: UITableView!
     var listStore: ListStore!
     var taskStore: TaskStore!
-    var listOfImportantTask: [Task]
+    var importantTask: [Task]
     {
-        var res = [Task]()
-        for list in listStore.allList
-        {
-            for task in list.listOfTask
-            {
-                if(task.isInterested)
-                {
-                    res.append(task)
-                }
-            }
-        }
-        for task in taskStore.allTask
-        {
-            if(task.taskType == .important)
-            {
-                res.append(task)
-            }
-        }
+        let res = listStore.importantTaskListStore + taskStore.importantTaskTaskStore
         return res
     }
+    //combine important tasks in both listStore and taskStore
     override func viewDidLoad() {
         super.viewDidLoad()
         importantTableView.register(UINib(nibName: "TaskTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "TaskTableViewCell")
+        importantTableView.reloadData()
         importantTableView.delegate = self
         importantTableView.dataSource = self
+        
         // Do any additional setup after loading the view.
     }
 
-    @IBOutlet weak var addTaskTextField: UITextField!
-    
-    @IBOutlet weak var importantTableView: UITableView!
+
     /*
     // MARK: - Navigation
 
@@ -57,9 +45,10 @@ class ImportantViewController: UIViewController {
         if let taskName = addTaskTextField.text, !taskName.isEmpty
         {
             importantTableView.reloadData()
-            let newTask = Task(detail:taskName, taskType: .important)
+            let newTask = Task(detail:taskName, taskType: .important, timeCreate: Date())
             taskStore.addTask(task: newTask)
-            let index = listOfImportantTask.count - 1
+            let index = importantTask.count - 1
+            print(index)
             let indexPath = IndexPath(row: index, section: 0)
             importantTableView.insertRows(at: [indexPath], with: .automatic)
         }
@@ -69,20 +58,49 @@ class ImportantViewController: UIViewController {
 extension ImportantViewController: UITableViewDelegate, UITableViewDataSource
 {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.listOfImportantTask.count
+        return importantTask.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = importantTableView.dequeueReusableCell(withIdentifier: "TaskTableViewCell") as! TaskTableViewCell
         cell.taskStore = taskStore
-        cell.initCellForImportantViewController(indexPath: indexPath, listOfImportantTask: listOfImportantTask)
+        cell.initCellForImportantViewController(indexPath: indexPath, listOfImportantTask: importantTask)
+        cell.delegate = self
         return cell
     }
 }
+// MARK: - delegate from UITextField
+
 extension ImportantViewController: UITextFieldDelegate
 {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
+}
+
+// MARK: -
+
+extension ImportantViewController: TaskTableViewCellDelegate
+{
+    func taskTableViewCell(_ cell: TaskTableViewCell, didTapFinishButtonAtTask task: Task, didTapFinishButtonToState state: Bool) {
+        print("update finished database of \(task.detail)!")
+        task.isFinished = state
+        let indexPath = importantTableView.indexPath(for: cell)
+        importantTableView.deleteRows(at: [indexPath!], with: .automatic)
+    }
+    
+    func taskTableViewCell(_ cell: TaskTableViewCell, didTapInterestButtonAtTask task: Task, didTapInterestButtonToState state: Bool) {
+        print("update finished database of \(task.detail)!")
+        task.isInterested = state
+//        if(!state)
+//        {
+//            task.taskType = .normal
+//        }
+        let indexPath = importantTableView.indexPath(for: cell)
+        importantTableView.deleteRows(at: [indexPath!], with: .automatic)
+        //importantTableView.reloadData()
+    }
+    
+    
 }

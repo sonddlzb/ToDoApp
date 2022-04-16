@@ -10,8 +10,8 @@ import UIKit
 class TaskViewController: UIViewController {
         
     var taskStore: TaskStore!
-    @IBOutlet weak var taskTableView: UITableView!
-    @IBOutlet weak var addTaskTextField: UITextField!
+    @IBOutlet weak private var taskTableView: UITableView!
+    @IBOutlet weak private var addTaskTextField: UITextField!
     var listStore: ListStore!
     var currentList: Int!
     override func viewDidLoad() {
@@ -27,7 +27,7 @@ class TaskViewController: UIViewController {
         if let taskName = addTaskTextField.text, !taskName.isEmpty
         {
             taskTableView.reloadData()
-            let newTask = Task(detail:taskName, taskType: .normal)
+            let newTask = Task(detail:taskName, taskType: .normal, timeCreate: Date())
             taskStore.addTask(task: newTask)
             let index = taskStore.taskNotFinished.count - 1
             let indexPath = IndexPath(row: index, section: 0)
@@ -93,7 +93,11 @@ extension TaskViewController: TaskTableViewCellDelegate
     func taskTableViewCell(_ cell: TaskTableViewCell, didTapInterestButtonAtTask task: Task, didTapInterestButtonToState state: Bool) {
         print("update interested database of \(task.detail)!")
         task.isInterested = state
-        task.taskType = .important
+        if(!state)
+        {
+            task.taskType = .normal
+        }
+//        task.taskType = .important
     }
     
 }

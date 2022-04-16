@@ -8,13 +8,15 @@
 import UIKit
 import RealmSwift
 class ViewController: UIViewController {
+    
     var realm: [Realm] = []
-    var taskStore = TaskStore()
+    var taskStore: TaskStore!
     @IBOutlet weak var tableView: UITableView!
     var listStore: ListStore!
     @IBOutlet weak var addListButton: UIButton!
     @IBOutlet weak var createGroupButton: UIButton!
     @IBOutlet weak var addListTextField: UITextField!
+    
     override func viewDidLoad() {
         initGui()
         self.tableView.register(UINib(nibName: "TableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "TableViewCell")
@@ -72,6 +74,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell") as! TableViewCell
         cell.taskStore = taskStore
+        cell.listStore = listStore
         if(indexPath.section == 1)
         {
             cell.bindDataForSection1(list: listStore.allList[indexPath.row], indexPath: indexPath)
@@ -110,6 +113,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource
                     importantViewController.taskStore = taskStore
                     importantViewController.listStore = listStore
                     self.navigationController?.pushViewController(importantViewController, animated: true)
+                case 0:
+                    let myDayViewController = MyDayViewController()
+                    myDayViewController.taskStore = taskStore
+                    self.navigationController?.pushViewController(myDayViewController, animated: true)
+                case 2:
+                let plannedViewController = PlannedViewController()
+                plannedViewController.taskStore = taskStore
+                self.navigationController?.pushViewController(plannedViewController, animated: true)
                 default: print("Wrong index!")
                 
             }

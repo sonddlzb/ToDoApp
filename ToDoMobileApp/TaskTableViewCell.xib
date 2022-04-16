@@ -44,15 +44,25 @@
                             <action selector="interestClick:" destination="fgZ-1R-rRX" eventType="touchUpInside" id="mVc-pp-Vtw"/>
                         </connections>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CxV-Cm-vag">
+                        <rect key="frame" x="40" y="22" width="240" height="22"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="IOl-83-KKF" firstAttribute="leading" secondItem="CxV-Cm-vag" secondAttribute="trailing" id="1w5-l9-6Ja"/>
                     <constraint firstAttribute="trailing" secondItem="IOl-83-KKF" secondAttribute="trailing" id="2Ps-NN-EwS"/>
                     <constraint firstItem="a1f-KV-thj" firstAttribute="leading" secondItem="FMq-rD-47d" secondAttribute="trailing" id="796-7X-beo"/>
+                    <constraint firstAttribute="bottom" secondItem="CxV-Cm-vag" secondAttribute="bottom" id="7KT-gf-pOv"/>
                     <constraint firstItem="FMq-rD-47d" firstAttribute="top" secondItem="Bre-xf-Fdg" secondAttribute="top" id="ODV-TF-uQn"/>
                     <constraint firstItem="a1f-KV-thj" firstAttribute="top" secondItem="Bre-xf-Fdg" secondAttribute="top" id="Pl0-fG-2ke"/>
                     <constraint firstItem="IOl-83-KKF" firstAttribute="leading" secondItem="a1f-KV-thj" secondAttribute="trailing" id="ZnB-or-9Io"/>
+                    <constraint firstItem="CxV-Cm-vag" firstAttribute="top" secondItem="a1f-KV-thj" secondAttribute="bottom" id="eyl-Z0-haY"/>
                     <constraint firstItem="a1f-KV-thj" firstAttribute="height" secondItem="Bre-xf-Fdg" secondAttribute="height" multiplier="0.5" id="fJc-z5-RGS"/>
                     <constraint firstItem="IOl-83-KKF" firstAttribute="top" secondItem="Bre-xf-Fdg" secondAttribute="top" id="fnM-Ag-KIJ"/>
+                    <constraint firstItem="CxV-Cm-vag" firstAttribute="leading" secondItem="FMq-rD-47d" secondAttribute="trailing" id="llw-54-Gg9"/>
                     <constraint firstAttribute="bottom" secondItem="IOl-83-KKF" secondAttribute="bottom" id="mSY-zL-2sX"/>
                     <constraint firstItem="FMq-rD-47d" firstAttribute="leading" secondItem="Bre-xf-Fdg" secondAttribute="leading" id="qDP-CE-kQd"/>
                     <constraint firstAttribute="bottom" secondItem="FMq-rD-47d" secondAttribute="bottom" id="tOv-IU-ECE"/>
@@ -60,6 +70,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="7i8-mA-F9z"/>
             <connections>
+                <outlet property="detailLabel" destination="a1f-KV-thj" id="9hR-3N-PRJ"/>
                 <outlet property="finishButton" destination="FMq-rD-47d" id="MQ1-5u-HjO"/>
                 <outlet property="interestButton" destination="IOl-83-KKF" id="f1L-et-oNg"/>
                 <outlet property="taskNameLabel" destination="a1f-KV-thj" id="1mz-E3-KfS"/>

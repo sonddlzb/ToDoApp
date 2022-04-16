@@ -19,10 +19,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         guard let _ = (scene as? UIWindowScene) else { return }
         let listStore = ListStore()
+        let taskStore = TaskStore()
         //let viewController = window!.rootViewController as! ViewController
         let navController = window!.rootViewController as! UINavigationController
         let viewController = navController.topViewController as! ViewController
         viewController.listStore = listStore
+        viewController.taskStore = taskStore
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -11,8 +11,8 @@ class ListViewController: UIViewController{
 
     var listStore: ListStore!
     var currentList: Int!
-    @IBOutlet weak var myDayTableView: UITableView!
-    @IBOutlet weak var addTaskTextField: UITextField!
+    @IBOutlet weak private var myDayTableView: UITableView!
+    @IBOutlet weak private var addTaskTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = listStore.allList[currentList].name
@@ -27,7 +27,8 @@ class ListViewController: UIViewController{
         if let taskName = addTaskTextField.text, !taskName.isEmpty
         {
             myDayTableView.reloadData()
-            let newTask = Task(detail: taskName, taskType: .listed)
+            let newTask = Task(detail: taskName, taskType: .listed, timeCreate: Date())
+            newTask.listName = listStore.allList[currentList].name
             listStore.allList[currentList].addTask(task: newTask)
             let index = listStore.allList[currentList].taskNotFinished.count - 1
             let indexPath = IndexPath(row: index, section: 0)

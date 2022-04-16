@@ -35,6 +35,14 @@
 		C866BFD427FD985F0027EFF1 /* ToDoMobileAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C866BFD327FD985F0027EFF1 /* ToDoMobileAppTests.swift */; };
 		C866BFDE27FD985F0027EFF1 /* ToDoMobileAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C866BFDD27FD985F0027EFF1 /* ToDoMobileAppUITests.swift */; };
 		C866BFE027FD985F0027EFF1 /* ToDoMobileAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C866BFDF27FD985F0027EFF1 /* ToDoMobileAppUITestsLaunchTests.swift */; };
+		C8EFFB73280901AA001770AD /* MyDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EFFB71280901AA001770AD /* MyDayViewController.swift */; };
+		C8EFFB74280901AA001770AD /* MyDayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8EFFB72280901AA001770AD /* MyDayViewController.xib */; };
+		C8EFFB7728092D38001770AD /* PlannedFilterFloatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EFFB7528092D38001770AD /* PlannedFilterFloatViewController.swift */; };
+		C8EFFB7828092D38001770AD /* PlannedFilterFloatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8EFFB7628092D38001770AD /* PlannedFilterFloatViewController.xib */; };
+		C8EFFB7B28092E22001770AD /* PlannedFilterFloatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EFFB7928092E22001770AD /* PlannedFilterFloatTableViewCell.swift */; };
+		C8EFFB7C28092E22001770AD /* PlannedFilterFloatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8EFFB7A28092E22001770AD /* PlannedFilterFloatTableViewCell.xib */; };
+		C8EFFB7F280931AF001770AD /* PlannedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EFFB7D280931AF001770AD /* PlannedViewController.swift */; };
+		C8EFFB80280931AF001770AD /* PlannedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8EFFB7E280931AF001770AD /* PlannedViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +100,14 @@
 		C866BFD927FD985F0027EFF1 /* ToDoMobileAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoMobileAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C866BFDD27FD985F0027EFF1 /* ToDoMobileAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoMobileAppUITests.swift; sourceTree = "<group>"; };
 		C866BFDF27FD985F0027EFF1 /* ToDoMobileAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoMobileAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		C8EFFB71280901AA001770AD /* MyDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDayViewController.swift; sourceTree = "<group>"; };
+		C8EFFB72280901AA001770AD /* MyDayViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyDayViewController.xib; sourceTree = "<group>"; };
+		C8EFFB7528092D38001770AD /* PlannedFilterFloatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannedFilterFloatViewController.swift; sourceTree = "<group>"; };
+		C8EFFB7628092D38001770AD /* PlannedFilterFloatViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlannedFilterFloatViewController.xib; sourceTree = "<group>"; };
+		C8EFFB7928092E22001770AD /* PlannedFilterFloatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannedFilterFloatTableViewCell.swift; sourceTree = "<group>"; };
+		C8EFFB7A28092E22001770AD /* PlannedFilterFloatTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlannedFilterFloatTableViewCell.xib; sourceTree = "<group>"; };
+		C8EFFB7D280931AF001770AD /* PlannedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannedViewController.swift; sourceTree = "<group>"; };
+		C8EFFB7E280931AF001770AD /* PlannedViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlannedViewController.xib; sourceTree = "<group>"; };
 		F2EB5B22A606EA1ECD8BCDF4 /* Pods-ToDoMobileAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoMobileAppTests.debug.xcconfig"; path = "Target Support Files/Pods-ToDoMobileAppTests/Pods-ToDoMobileAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -171,6 +187,14 @@
 				C83A95DF2806AEC60044EA99 /* TaskDetailViewController.xib */,
 				C83A95E22806B98D0044EA99 /* ImportantViewController.swift */,
 				C83A95E32806B98D0044EA99 /* ImportantViewController.xib */,
+				C8EFFB71280901AA001770AD /* MyDayViewController.swift */,
+				C8EFFB72280901AA001770AD /* MyDayViewController.xib */,
+				C8EFFB7528092D38001770AD /* PlannedFilterFloatViewController.swift */,
+				C8EFFB7628092D38001770AD /* PlannedFilterFloatViewController.xib */,
+				C8EFFB7928092E22001770AD /* PlannedFilterFloatTableViewCell.swift */,
+				C8EFFB7A28092E22001770AD /* PlannedFilterFloatTableViewCell.xib */,
+				C8EFFB7D280931AF001770AD /* PlannedViewController.swift */,
+				C8EFFB7E280931AF001770AD /* PlannedViewController.xib */,
 			);
 			path = ToDoMobileApp;
 			sourceTree = "<group>";
@@ -324,11 +348,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8EFFB80280931AF001770AD /* PlannedViewController.xib in Resources */,
 				C806874327FFD7FC00491787 /* ListViewController.xib in Resources */,
 				C83A95DB28066BA20044EA99 /* TaskViewController.xib in Resources */,
+				C8EFFB7C28092E22001770AD /* PlannedFilterFloatTableViewCell.xib in Resources */,
 				C83A95E12806AEC70044EA99 /* TaskDetailViewController.xib in Resources */,
 				C866BFC927FD985F0027EFF1 /* LaunchScreen.storyboard in Resources */,
 				C806873F27FFC65200491787 /* TableViewCell.xib in Resources */,
+				C8EFFB7828092D38001770AD /* PlannedFilterFloatViewController.xib in Resources */,
+				C8EFFB74280901AA001770AD /* MyDayViewController.xib in Resources */,
 				C83A95CF2806686F0044EA99 /* TaskTableViewCell.xib in Resources */,
 				C866BFC627FD985F0027EFF1 /* Assets.xcassets in Resources */,
 				C83A95E52806B98D0044EA99 /* ImportantViewController.xib in Resources */,
@@ -460,10 +488,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8EFFB7728092D38001770AD /* PlannedFilterFloatViewController.swift in Sources */,
 				C806873927FFC1BC00491787 /* Task.swift in Sources */,
 				C866BFC127FD985E0027EFF1 /* ViewController.swift in Sources */,
 				C83A95DD280670CE0044EA99 /* TaskStore.swift in Sources */,
+				C8EFFB73280901AA001770AD /* MyDayViewController.swift in Sources */,
 				C83A95CE2806686F0044EA99 /* TaskTableViewCell.swift in Sources */,
+				C8EFFB7F280931AF001770AD /* PlannedViewController.swift in Sources */,
 				C866BFBD27FD985E0027EFF1 /* AppDelegate.swift in Sources */,
 				C806874527FFE9DA00491787 /* ListStore.swift in Sources */,
 				C83A95E42806B98D0044EA99 /* ImportantViewController.swift in Sources */,
@@ -472,6 +503,7 @@
 				C83A95E02806AEC60044EA99 /* TaskDetailViewController.swift in Sources */,
 				C806873B27FFC25B00491787 /* List.swift in Sources */,
 				C83A95DA28066BA20044EA99 /* TaskViewController.swift in Sources */,
+				C8EFFB7B28092E22001770AD /* PlannedFilterFloatTableViewCell.swift in Sources */,
 				C866BFBF27FD985E0027EFF1 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
