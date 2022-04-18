@@ -35,17 +35,10 @@ class ListViewController: UIViewController{
             myDayTableView.insertRows(at: [indexPath], with: .automatic)
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
+
+// MARK: - delegate from tableView
 extension ListViewController: UITableViewDelegate, UITableViewDataSource
 {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -82,6 +75,8 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource
         return ""
     }
 }
+
+// MARK: - delegate from text Field for returning
 extension ListViewController: UITextFieldDelegate
 {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -90,6 +85,7 @@ extension ListViewController: UITextFieldDelegate
     }
 }
 
+// MARK: - delegate from cell
 extension ListViewController: TaskTableViewCellDelegate
 {
     func taskTableViewCell(_ cell: TaskTableViewCell, didTapFinishButtonAtTask task: Task, didTapFinishButtonToState state: Bool) {

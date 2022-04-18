@@ -10,6 +10,8 @@ import UIKit
 class PlannedFilterFloatTableViewCell: UITableViewCell {
 
     let nameValue = ["All Planned", "Overdue", "Today", "Tomorrow", "This Week", "Later"]
+    let imageValue = ["calendar", "calendar.badge.exclamationmark","calendar.badge.plus", "calendar.badge.minus", "calendar.badge.clock","calendar.badge.clock.rtl"]
+    let deadlineValue = ["Today", "Tomorrow", "Next Week", "Pick a Date"]
     @IBOutlet private weak var imageIcon: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var timeLabel: UILabel!
@@ -24,9 +26,17 @@ class PlannedFilterFloatTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func initCell(indexPath: IndexPath)
+    func initCellForPlannedFilterTableView(indexPath: IndexPath)
     {
         nameLabel.text = nameValue[indexPath.row]
+        imageIcon.image = UIImage(systemName: imageValue[indexPath.row])
+        nameLabel.contentMode = .left
+    }
+    
+    func initCellForDeadlineTableView(indexPath: IndexPath)
+    {
+        nameLabel.text = deadlineValue[indexPath.row]
+        imageIcon.image = UIImage(systemName: imageValue[indexPath.row])
         nameLabel.contentMode = .left
     }
 }

@@ -11,6 +11,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlannedViewController" customModule="ToDoMobileApp" customModuleProvider="target">
             <connections>
                 <outlet property="addTaskTextField" destination="9tg-EV-tBo" id="8I0-Iv-mNz"/>
+                <outlet property="filterButton" destination="BVx-yq-s59" id="uk0-FF-hLw"/>
+                <outlet property="myDayButton" destination="GMq-Kv-0Kb" id="C9G-XX-YSS"/>
                 <outlet property="plannedTableView" destination="SSp-dB-dOG" id="kVW-Sd-cEA"/>
                 <outlet property="view" destination="O3C-ZV-l5S" id="AXL-JB-17A"/>
             </connections>
@@ -32,7 +34,7 @@
                     </items>
                 </navigationBar>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="SSp-dB-dOG">
-                    <rect key="frame" x="0.0" y="81" width="414" height="731"/>
+                    <rect key="frame" x="0.0" y="158" width="414" height="614"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9tg-EV-tBo">
@@ -49,54 +51,92 @@
                         <constraint firstAttribute="width" constant="40" id="uxo-xJ-ntd"/>
                     </constraints>
                     <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" title="+"/>
+                    <buttonConfiguration key="configuration" style="plain" title="+">
+                        <fontDescription key="titleFontDescription" type="boldSystem" pointSize="30"/>
+                    </buttonConfiguration>
                     <connections>
                         <action selector="addTask:" destination="-1" eventType="touchUpInside" id="BZg-fk-kUp"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BVx-yq-s59">
+                    <rect key="frame" x="0.0" y="100" width="414" height="38"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" title="Today">
+                        <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
+                    </buttonConfiguration>
+                    <connections>
+                        <action selector="addPresentView:" destination="-1" eventType="touchUpInside" id="zc9-NT-rhl"/>
+                    </connections>
+                </button>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="8XR-iz-5YE">
+                    <rect key="frame" x="0.0" y="772" width="414" height="40"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GMq-Kv-0Kb">
+                            <rect key="frame" x="0.0" y="0.0" width="138" height="40"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="homekit" catalog="system"/>
+                            <connections>
+                                <action selector="myDayDidTap:" destination="-1" eventType="touchUpInside" id="wgP-er-Omz"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LD1-pB-P3V">
+                            <rect key="frame" x="138" y="0.0" width="138" height="40"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="bell" catalog="system"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aZe-dV-nyM">
+                            <rect key="frame" x="276" y="0.0" width="138" height="40"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="calendar" catalog="system"/>
+                            <connections>
+                                <action selector="deadlineDidTap:" destination="-1" eventType="touchUpInside" id="ONb-bw-lij"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="gul-2g-24g"/>
+                    </constraints>
+                </stackView>
                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="WVY-KP-oNG">
-                    <rect key="frame" x="0.0" y="91" width="414" height="44"/>
+                    <rect key="frame" x="0.0" y="168" width="414" height="44"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WVY-KP-oNG" id="K0N-v3-Etz">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableViewCellContentView>
                 </tableViewCell>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Dm-n8-Mjs">
-                    <rect key="frame" x="0.0" y="50" width="67" height="31"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="67" id="0jQ-vv-ALg"/>
-                    </constraints>
-                    <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" title="Today"/>
-                    <connections>
-                        <action selector="addPresentView:" destination="-1" eventType="touchUpInside" id="ks3-6I-itD"/>
-                    </connections>
-                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="bhL-G2-v9e"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="9tg-EV-tBo" firstAttribute="trailing" secondItem="bhL-G2-v9e" secondAttribute="trailing" id="02C-YE-C6d"/>
+                <constraint firstItem="BVx-yq-s59" firstAttribute="leading" secondItem="bhL-G2-v9e" secondAttribute="leading" id="09P-cT-lZ8"/>
                 <constraint firstItem="9tg-EV-tBo" firstAttribute="leading" secondItem="AsN-Un-9Rc" secondAttribute="trailing" id="1Ev-kp-6C4"/>
-                <constraint firstItem="9tg-EV-tBo" firstAttribute="top" secondItem="SSp-dB-dOG" secondAttribute="bottom" id="4Fs-N0-zbR"/>
+                <constraint firstItem="8XR-iz-5YE" firstAttribute="trailing" secondItem="bhL-G2-v9e" secondAttribute="trailing" id="43N-9o-0K6"/>
                 <constraint firstItem="z2k-ac-eZp" firstAttribute="top" secondItem="bhL-G2-v9e" secondAttribute="top" constant="-44" id="5LB-av-boe"/>
                 <constraint firstItem="9tg-EV-tBo" firstAttribute="bottom" secondItem="bhL-G2-v9e" secondAttribute="bottom" id="7Yt-ys-I5r"/>
+                <constraint firstItem="SSp-dB-dOG" firstAttribute="top" secondItem="BVx-yq-s59" secondAttribute="bottom" constant="20" id="8Ia-zB-QAV"/>
                 <constraint firstItem="z2k-ac-eZp" firstAttribute="trailing" secondItem="bhL-G2-v9e" secondAttribute="trailing" id="BB0-Jg-knO"/>
-                <constraint firstItem="AsN-Un-9Rc" firstAttribute="top" secondItem="SSp-dB-dOG" secondAttribute="bottom" id="IAW-Ih-sqe"/>
-                <constraint firstItem="SSp-dB-dOG" firstAttribute="top" secondItem="6Dm-n8-Mjs" secondAttribute="bottom" id="LCh-Fx-d8w"/>
+                <constraint firstItem="AsN-Un-9Rc" firstAttribute="top" secondItem="8XR-iz-5YE" secondAttribute="bottom" id="IAW-Ih-sqe"/>
                 <constraint firstItem="AsN-Un-9Rc" firstAttribute="bottom" secondItem="bhL-G2-v9e" secondAttribute="bottom" id="P5H-Gi-Oyx"/>
                 <constraint firstItem="AsN-Un-9Rc" firstAttribute="leading" secondItem="bhL-G2-v9e" secondAttribute="leading" id="SVt-mt-UXp"/>
+                <constraint firstItem="9tg-EV-tBo" firstAttribute="top" secondItem="SSp-dB-dOG" secondAttribute="bottom" constant="40" id="WHB-tL-rUd"/>
                 <constraint firstItem="bhL-G2-v9e" firstAttribute="trailing" secondItem="SSp-dB-dOG" secondAttribute="trailing" id="WTk-xb-Ycs"/>
-                <constraint firstItem="6Dm-n8-Mjs" firstAttribute="leading" secondItem="bhL-G2-v9e" secondAttribute="leading" id="ZoM-dq-Drd"/>
+                <constraint firstItem="9tg-EV-tBo" firstAttribute="top" secondItem="SSp-dB-dOG" secondAttribute="bottom" constant="40" id="WUb-uO-biM"/>
                 <constraint firstItem="z2k-ac-eZp" firstAttribute="leading" secondItem="bhL-G2-v9e" secondAttribute="leading" id="b4w-Ph-Y5v"/>
+                <constraint firstItem="bhL-G2-v9e" firstAttribute="trailing" secondItem="BVx-yq-s59" secondAttribute="trailing" id="jFp-Cn-pbS"/>
                 <constraint firstItem="SSp-dB-dOG" firstAttribute="leading" secondItem="bhL-G2-v9e" secondAttribute="leading" id="l2W-ih-JSJ"/>
-                <constraint firstItem="6Dm-n8-Mjs" firstAttribute="top" secondItem="z2k-ac-eZp" secondAttribute="bottom" id="yWe-uo-br6"/>
+                <constraint firstItem="BVx-yq-s59" firstAttribute="top" secondItem="z2k-ac-eZp" secondAttribute="bottom" constant="50" id="lbd-jA-vWG"/>
+                <constraint firstItem="8XR-iz-5YE" firstAttribute="leading" secondItem="bhL-G2-v9e" secondAttribute="leading" id="uxz-xE-F9S"/>
+                <constraint firstItem="9tg-EV-tBo" firstAttribute="top" secondItem="8XR-iz-5YE" secondAttribute="bottom" id="zq2-dw-h9E"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="-74.330357142857139"/>
         </view>
     </objects>
     <resources>
+        <image name="bell" catalog="system" width="128" height="124"/>
+        <image name="calendar" catalog="system" width="128" height="106"/>
+        <image name="homekit" catalog="system" width="128" height="106"/>
         <image name="icon-dot" width="32" height="32"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

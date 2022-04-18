@@ -46,7 +46,7 @@
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CxV-Cm-vag">
                         <rect key="frame" x="40" y="22" width="240" height="22"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -73,6 +73,7 @@
                 <outlet property="detailLabel" destination="a1f-KV-thj" id="9hR-3N-PRJ"/>
                 <outlet property="finishButton" destination="FMq-rD-47d" id="MQ1-5u-HjO"/>
                 <outlet property="interestButton" destination="IOl-83-KKF" id="f1L-et-oNg"/>
+                <outlet property="moreInfoLabel" destination="CxV-Cm-vag" id="Hr7-Qd-6Zc"/>
                 <outlet property="taskNameLabel" destination="a1f-KV-thj" id="1mz-E3-KfS"/>
             </connections>
             <point key="canvasLocation" x="139" y="81"/>

@@ -121,6 +121,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource
                 let plannedViewController = PlannedViewController()
                 plannedViewController.taskStore = taskStore
                 self.navigationController?.pushViewController(plannedViewController, animated: true)
+                
+                case 3:
+                let assignToMeViewController = AssignToMeViewController()
+                self.navigationController?.pushViewController(assignToMeViewController, animated: true)
                 default: print("Wrong index!")
                 
             }
@@ -131,6 +135,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource
     
 }
 
+// MARK: - delegate from text field for returning
 extension ViewController: UITextFieldDelegate
 {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

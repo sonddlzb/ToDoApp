@@ -22,6 +22,10 @@ class MyDayViewController: UIViewController {
             {
                 res.append(value)
             }
+            if value.taskType == .planned && value.secondTaskType == .myDay && value.isFinished
+            {
+                res.append(value)
+            }
         }
         return res
     }
@@ -35,6 +39,10 @@ class MyDayViewController: UIViewController {
             {
                 res.append(value)
             }
+            if value.taskType == .planned && value.secondTaskType == .myDay && !value.isFinished
+            {
+                res.append(value)
+            }
         }
         return res
     }
@@ -42,7 +50,7 @@ class MyDayViewController: UIViewController {
     func initUI()
     {
         let date = Date()
-        dateLabel.text = date.dayofTheWeek + ", " + date.day + " " + date.month
+        dateLabel.text = date.dayofTheWeek + ", " + date.day + " " + date.monthString
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +59,7 @@ class MyDayViewController: UIViewController {
         myDayTableView.delegate = self
         myDayTableView.dataSource = self
         addTaskTextField.delegate = self
+        view.backgroundColor = UIColor.white
         // Do any additional setup after loading the view.
     }
 
@@ -66,44 +75,8 @@ class MyDayViewController: UIViewController {
         }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
-
-// MARK: - get day in week
-extension Date {
-
-     var dayofTheWeek: String {
-          let dayNumber = Calendar.current.component(.weekday, from: self)
-          // day number starts from 1 but array count from 0
-          return daysOfTheWeek[dayNumber - 1]
-     }
-    var day: String
-    {
-        let dayCount: Int = Calendar.current.component(.day, from: self)
-        return "\(dayCount)"
-    }
-    var month: String
-    {
-        let monthCount = Calendar.current.component(.weekday, from: self)
-        // day number starts from 1 but array count from 0
-        return monthsCount[monthCount - 1]
-    }
-     private var daysOfTheWeek: [String] {
-          return  ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-     }
-    private var monthsCount: [String] {
-         return  ["January", "February", "March", "April", "May", "July", "June", "August", "September", "October", "November", "December"]
-    }
-  }
 
 // MARK: - tableViewCell render
 

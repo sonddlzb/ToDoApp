@@ -14,19 +14,31 @@ class Task
     @objc dynamic var  isFinished: Bool = false
     @objc dynamic var  isInterested: Bool = false
     @objc dynamic var timeCreate: Date
+    @objc dynamic var timePlanned: Date
     init(detail: String, taskType: TaskType, timeCreate: Date)
     {
         self.detail = detail
         self.taskType = taskType
         self.timeCreate = timeCreate
+        self.timePlanned = timeCreate
     }
+    
+    init(detail: String, taskType: TaskType, timeCreate: Date, timePlanned: Date)
+    {
+        self.detail = detail
+        self.taskType = taskType
+        self.timeCreate = timeCreate
+        self.timePlanned = timeCreate
+    }
+    init(detail: String, taskType: TaskType, secondTaskType: TaskType, timeCreate: Date, timePlanned: Date)
+    {
+        self.detail = detail
+        self.taskType = taskType
+        self.timeCreate = timeCreate
+        self.timePlanned = timeCreate
+        self.secondTaskType = secondTaskType
+    }
+
     var taskType: TaskType
-}
-enum TaskType
-{
-    case myDay
-    case planned
-    case important
-    case normal
-    case listed
+    var secondTaskType: TaskType = .normal
 }

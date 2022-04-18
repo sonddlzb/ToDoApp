@@ -27,19 +27,9 @@ class ImportantViewController: UIViewController {
         importantTableView.delegate = self
         importantTableView.dataSource = self
         
-        // Do any additional setup after loading the view.
     }
 
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     @IBAction func addTask(_ sender: UIButton) {
         if let taskName = addTaskTextField.text, !taskName.isEmpty
@@ -79,7 +69,7 @@ extension ImportantViewController: UITextFieldDelegate
     }
 }
 
-// MARK: -
+// MARK: - delegate from cell
 
 extension ImportantViewController: TaskTableViewCellDelegate
 {
@@ -93,13 +83,8 @@ extension ImportantViewController: TaskTableViewCellDelegate
     func taskTableViewCell(_ cell: TaskTableViewCell, didTapInterestButtonAtTask task: Task, didTapInterestButtonToState state: Bool) {
         print("update finished database of \(task.detail)!")
         task.isInterested = state
-//        if(!state)
-//        {
-//            task.taskType = .normal
-//        }
         let indexPath = importantTableView.indexPath(for: cell)
         importantTableView.deleteRows(at: [indexPath!], with: .automatic)
-        //importantTableView.reloadData()
     }
     
     

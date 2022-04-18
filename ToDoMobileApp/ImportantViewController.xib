@@ -25,6 +25,9 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="8kw-kr-phm"/>
                     </constraints>
+                    <textAttributes key="titleTextAttributes">
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                    </textAttributes>
                     <items>
                         <navigationItem id="V84-m7-eWL">
                             <barButtonItem key="rightBarButtonItem" image="icon-dot" id="QGH-wM-YM6"/>

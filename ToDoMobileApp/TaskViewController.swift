@@ -37,6 +37,8 @@ class TaskViewController: UIViewController {
 
 
 }
+
+// MARK: - delegate from tableView
 extension TaskViewController: UITableViewDelegate, UITableViewDataSource
 {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -74,6 +76,8 @@ extension TaskViewController: UITableViewDelegate, UITableViewDataSource
     }
     
 }
+
+// MARK: - delegate from textField for returning
 extension TaskViewController: UITextFieldDelegate
 {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -82,6 +86,7 @@ extension TaskViewController: UITextFieldDelegate
     }
 }
 
+// MARK: - delegate from cell
 extension TaskViewController: TaskTableViewCellDelegate
 {
     func taskTableViewCell(_ cell: TaskTableViewCell, didTapFinishButtonAtTask task: Task,didTapFinishButtonToState state: Bool) {

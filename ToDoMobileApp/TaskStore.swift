@@ -47,6 +47,10 @@ class TaskStore
             {
                 myDay.append(value)
             }
+            if value.taskType == .planned && value.secondTaskType == .myDay && !value.isFinished
+            {
+                myDay.append(value)
+            }
         }
         return myDay
     }

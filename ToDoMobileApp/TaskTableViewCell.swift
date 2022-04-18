@@ -14,6 +14,7 @@ class TaskTableViewCell: UITableViewCell {
     @IBOutlet weak var interestButton: UIButton!
     @IBOutlet weak var taskNameLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
+    @IBOutlet weak var moreInfoLabel: UILabel!
     var taskStore: TaskStore!
     var task: Task!
     override func awakeFromNib() {
@@ -57,6 +58,8 @@ class TaskTableViewCell: UITableViewCell {
     //init the view of cell for TaskTableView
     func initCellForTaskTableView(indexPath: IndexPath)
     {
+        self.moreInfoLabel.text = "Tasks"
+        self.moreInfoLabel.contentMode = .left
         if indexPath.section == 0
         {
             self.task = taskStore.taskNotFinished[indexPath.row]
@@ -95,6 +98,8 @@ class TaskTableViewCell: UITableViewCell {
     //init the view of cell for ListTableView
     func initCellForListTableViewCell(list: List, indexPath: IndexPath)
     {
+        self.moreInfoLabel.text = "Tasks"
+        self.moreInfoLabel.contentMode = .left
         if indexPath.section == 0
         {
             self.task = list.taskNotFinished[indexPath.row]
@@ -133,6 +138,8 @@ class TaskTableViewCell: UITableViewCell {
     //init cell for importantViewController
     func initCellForImportantViewController(indexPath: IndexPath, listOfImportantTask: [Task])
     {
+        self.moreInfoLabel.text = "Tasks"
+        self.moreInfoLabel.contentMode = .left
         print(listOfImportantTask.count)
         self.task = listOfImportantTask[indexPath.row]
         if(task.taskType == .listed)
@@ -150,6 +157,8 @@ class TaskTableViewCell: UITableViewCell {
     //init cell for myDayViewController
     func initCellForMyDayViewController(indexPath: IndexPath)
     {
+        self.moreInfoLabel.text = "Tasks"
+        self.moreInfoLabel.contentMode = .left
         self.taskNameLabel.text = self.task.detail
         self.taskNameLabel.contentMode = .left
         if(task.isInterested)
@@ -176,6 +185,24 @@ class TaskTableViewCell: UITableViewCell {
     {
         self.taskNameLabel.text = task.detail
         self.taskNameLabel.contentMode = .left
+        self.task.isFinished = false
+        let interval = task.timePlanned - Date()
+        var deadline: String = " "
+        if(interval.day! == 0)
+        {
+            deadline += "Today"
+        }
+        else if(interval.day! == 1)
+        {
+            deadline += "Tomorrow"
+        }
+        else
+        {
+            deadline += "\(task.timePlanned.dayofTheWeek), \(task.timePlanned.day) \(task.timePlanned.monthString)"
+        }
+        self.moreInfoLabel.text = "Tasks" + deadline
+        self.moreInfoLabel.contentMode = .left
+        self.finishButton.imageView?.image = UIImage(systemName: "circle")
         if(task.isInterested)
         {
             self.interestButton.imageView?.image = UIImage(systemName: "star.fill")
@@ -188,11 +215,12 @@ class TaskTableViewCell: UITableViewCell {
 }
 
 
-
-
-
 protocol TaskTableViewCellDelegate
 {
     func taskTableViewCell(_ cell: TaskTableViewCell, didTapFinishButtonAtTask task: Task,didTapFinishButtonToState state: Bool)
     func taskTableViewCell(_ cell: TaskTableViewCell, didTapInterestButtonAtTask task: Task,didTapInterestButtonToState state: Bool)
 }
+
+
+
+
