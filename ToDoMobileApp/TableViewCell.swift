@@ -14,7 +14,7 @@ class TableViewCell: UITableViewCell {
     {
         return listStore.importantTaskListStore + taskStore.importantTaskTaskStore
     }
-    let buttonName: [String] = ["Ngày của tôi", "Quan trọng", "Đã lập kế hoạch", "Đã giao cho tôi", "Tác vụ"]
+    let buttonName: [String] = ["My Day", "Important", "Planned", "Assign To Me", "Task"]
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet private weak var imageViewCell: UIImageView!
     @IBOutlet private weak var countLabel: UILabel!

@@ -29,7 +29,7 @@
                         <color key="textColor" systemColor="systemGreenColor"/>
                     </textAttributes>
                     <items>
-                        <navigationItem title="Đã giao cho tôi" id="eKv-nE-fTb">
+                        <navigationItem title="Assign To Me" id="eKv-nE-fTb">
                             <barButtonItem key="rightBarButtonItem" title="Item" image="icon-dot" id="Yid-Ba-MWD"/>
                         </navigationItem>
                     </items>

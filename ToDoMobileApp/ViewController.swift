@@ -30,7 +30,7 @@ class ViewController: UIViewController {
     private func initGui()
     {
         addListButton.imageView?.image = UIImage(named: "add-icon")
-        addListTextField.placeholder = "Danh sách mới"
+        addListTextField.placeholder = "New list"
     }
 
     @IBAction func addNewList(_ sender: UIButton) {
