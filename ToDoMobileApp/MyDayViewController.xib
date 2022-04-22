@@ -75,6 +75,7 @@
                 </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="MYx-4q-R9K"/>
+            <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="MYx-4q-R9K" firstAttribute="trailing" secondItem="yUV-MP-U3s" secondAttribute="trailing" id="12m-lB-FwK"/>
                 <constraint firstItem="948-qn-2nr" firstAttribute="trailing" secondItem="MYx-4q-R9K" secondAttribute="trailing" id="3Bw-zH-qcz"/>
@@ -94,8 +95,16 @@
                 <constraint firstItem="rn9-XT-Xa6" firstAttribute="leading" secondItem="MYx-4q-R9K" secondAttribute="leading" id="xTL-mu-Wul"/>
                 <constraint firstItem="948-qn-2nr" firstAttribute="leading" secondItem="rn9-XT-Xa6" secondAttribute="trailing" id="zlp-cN-GGi"/>
             </constraints>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="GIP-Dw-Giv" appends="YES" id="1r0-Vy-uX2"/>
+            </connections>
             <point key="canvasLocation" x="137.68115942028987" y="-74.330357142857139"/>
         </view>
+        <tapGestureRecognizer id="GIP-Dw-Giv">
+            <connections>
+                <action selector="dismissKeyboard:" destination="-1" id="5zC-Hm-9wD"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
     <resources>
         <image name="icon-dot" width="32" height="32"/>

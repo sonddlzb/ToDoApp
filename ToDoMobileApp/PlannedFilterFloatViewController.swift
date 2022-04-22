@@ -7,6 +7,12 @@
 
 import UIKit
 
+protocol PlannedFilterFloatViewControllerDelegate
+{
+    func plannedFilterFloatViewController(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    //re-set opacity for planned viewController
+    func plannedFilterFloatViewController()
+}
 class PlannedFilterFloatViewController: UIViewController {
     
     @IBOutlet weak private var filterTableView: UITableView!
@@ -25,6 +31,7 @@ class PlannedFilterFloatViewController: UIViewController {
     {
         print("dismiss")
         self.dismiss(animated: true, completion: nil)
+        delegate?.plannedFilterFloatViewController()
     }
 
 }
@@ -48,11 +55,8 @@ extension PlannedFilterFloatViewController: UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("Row at \(indexPath.row) is selected")
         delegate?.plannedFilterFloatViewController(tableView, didSelectRowAt: indexPath)
+        delegate?.plannedFilterFloatViewController()
         self.dismiss(animated: true, completion: nil)
     }
 }
 
-protocol PlannedFilterFloatViewControllerDelegate
-{
-    func plannedFilterFloatViewController(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
-}

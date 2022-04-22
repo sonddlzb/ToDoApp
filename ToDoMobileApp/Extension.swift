@@ -19,6 +19,11 @@ extension Date {
         let dayCount: Int = Calendar.current.component(.day, from: self)
         return "\(dayCount)"
     }
+    var week: Int
+    {
+        let weekCount: Int = Calendar.current.component(.yearForWeekOfYear, from: self)
+        return weekCount
+    }
     var monthString: String
     {
         let monthCount = Calendar.current.component(.weekday, from: self)

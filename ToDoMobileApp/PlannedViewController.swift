@@ -6,24 +6,31 @@
 //
 
 import UIKit
+import SwiftUI
 class PlannedViewController: UIViewController, UIViewControllerTransitioningDelegate {
     var taskStore: TaskStore!
     var currentFilter: Int = 0
     var isMyDay = false
+    var nextDate: Date!
     var currentDeadlineType: DeadlineType = .Today
     let nameValue = ["All Planned", "Overdue", "Today", "Tomorrow", "This Week", "Later"]
     @IBOutlet weak var addTaskTextField: UITextField!
     @IBOutlet weak var plannedTableView: UITableView!
     @IBOutlet weak var filterButton: UIButton!
     @IBOutlet weak var myDayButton: UIButton!
+    @IBOutlet weak var dueButton: UIButton!
+    @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var viewMove: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         plannedTableView.register(UINib(nibName: "TaskTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "TaskTableViewCell")
         plannedTableView.delegate = self
         plannedTableView.dataSource = self
+        addTaskTextField.delegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(PlannedViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PlannedViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         // Do any additional setup after loading the view.
     }
-
     @IBAction func addTask(_ sender: UIButton) {
         if let taskName = addTaskTextField.text, !taskName.isEmpty
         {
@@ -34,10 +41,13 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
                 case .Tomorrow: dayComponent.day = 1
                 case .Today: dayComponent.day = 0
                 case .NextWeek: dayComponent.day = 7
-                case .Other: dayComponent.day = 100
+                case .Other: dayComponent.day = -1
             }
             let theCalendar = Calendar.current
-            let nextDate = theCalendar.date(byAdding: dayComponent, to: Date())
+            if(currentDeadlineType == .Today || currentDeadlineType == .NextWeek || currentDeadlineType == .Tomorrow )
+            {
+                nextDate = theCalendar.date(byAdding: dayComponent, to: Date())
+            }
             print(nextDate)
             let newTask: Task
             if(!isMyDay)
@@ -51,7 +61,11 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
             taskStore.addTask(task: newTask)
             let index = taskStore.planTask.count - 1
             let indexPath = IndexPath(row: index, section: 0)
-            plannedTableView.insertRows(at: [indexPath], with: .automatic)
+            if newTask.due.rawValue == currentFilter || currentFilter == 0
+            {
+                plannedTableView.insertRows(at: [indexPath], with: .automatic)
+            }
+            addTaskTextField.text = ""
         }
     }
     
@@ -62,8 +76,8 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
         plannedFilterFloatViewController.transitioningDelegate = self
         plannedFilterFloatViewController.modalTransitionStyle = .coverVertical
         plannedFilterFloatViewController.delegate = self
+        self.view.layer.opacity = 0.5
         self.present(plannedFilterFloatViewController, animated: true, completion: nil)
-        
     }
     
     @IBAction func myDayDidTap(_ sender: UIButton)
@@ -84,6 +98,24 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
         }
     }
     
+    // MARK: - tap to return
+    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        addTaskTextField.resignFirstResponder()
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+           // if keyboard size is not available for some reason, dont do anything
+           return
+        }
+
+      // move the root view up by the distance of keyboard height
+        self.viewMove.frame.origin.y = view.bounds.height - keyboardSize.height - viewMove.bounds.height
+    }
+    @objc func keyboardWillHide(notification: NSNotification) {
+      // move back the root view origin
+        self.viewMove.frame.origin.y = view.bounds.height - viewMove.bounds.height - 40
+    }
     @IBAction func deadlineDidTap(_ sender: UIButton)
     {
         print("Load deadline presentation")
@@ -93,6 +125,7 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
         deadlineViewController.modalTransitionStyle = .coverVertical
         deadlineViewController.delegate = self
         self.present(deadlineViewController, animated: true, completion: nil)
+        self.view.layer.opacity = 0.5
     }
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController?
     {
@@ -112,17 +145,55 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
 extension PlannedViewController: UITableViewDelegate, UITableViewDataSource
 {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch currentFilter
+        {
+            case 0: return taskStore.planTask.count
+            case 1: return taskStore.planOverdueTask.count
+            case 2: return taskStore.planTodayTask.count
+            case 3: return taskStore.planTomorrowTask.count
+            case 4: return taskStore.planThisWeekTask.count + taskStore.planTomorrowTask.count + taskStore.planTodayTask.count
+            case 5: return taskStore.planLaterTask.count
+            default: print("wrong index of filter")
+        }
         return taskStore.planTask.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = plannedTableView.dequeueReusableCell(withIdentifier: "TaskTableViewCell") as! TaskTableViewCell
-        cell.task = taskStore.planTask[indexPath.row]
+        switch currentFilter
+        {
+            case 0: cell.task = taskStore.planTask[indexPath.row]
+            case 1: cell.task = taskStore.planOverdueTask[indexPath.row]
+            case 2: cell.task = taskStore.planTodayTask[indexPath.row]
+            case 3: cell.task = taskStore.planTomorrowTask[indexPath.row]
+            case 4:
+            let thisWeek = taskStore.planTodayTask + taskStore.planTomorrowTask + taskStore.planThisWeekTask
+            cell.task = thisWeek[indexPath.row]
+            case 5: cell.task = taskStore.planLaterTask[indexPath.row]
+            default: print("wrong index of filter for cell")
+        }
         cell.delegate = self
-        cell.initCellForPlannedViewController()
+        cell.initCellForPlannedViewController(isMyDay: isMyDay)
         return cell
     }
-    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete
+        {
+            let id: String
+            switch currentFilter
+            {
+                case 0: id = taskStore.allTask[indexPath.row].taskID
+                case 1: id = taskStore.planOverdueTask[indexPath.row].taskID
+                case 2: id = taskStore.planTodayTask[indexPath.row].taskID
+                case 3: id = taskStore.planTomorrowTask[indexPath.row].taskID
+                case 4: id = taskStore.planThisWeekTask[indexPath.row].taskID
+                case 5: id = taskStore.planLaterTask[indexPath.row].taskID
+                default: id = ""
+            }
+            taskStore.removeByID(id: id)
+            plannedTableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
 }
 // MARK: - delegate from cell
 extension PlannedViewController: TaskTableViewCellDelegate
@@ -153,6 +224,11 @@ extension PlannedViewController: TaskTableViewCellDelegate
 // MARK: - delegate from PlannedFilterFloatViewControlle
 extension PlannedViewController: PlannedFilterFloatViewControllerDelegate
 {
+    func plannedFilterFloatViewController() {
+        self.view.layer.opacity = 1.0
+        plannedTableView.reloadData()
+    }
+    
     func plannedFilterFloatViewController(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         currentFilter = indexPath.row
         filterButton.setTitle(nameValue[indexPath.row], for: .normal)
@@ -164,17 +240,43 @@ extension PlannedViewController: PlannedFilterFloatViewControllerDelegate
 // MARK: - delegate from DeadlineViewController
 extension PlannedViewController: DeadlineViewControllerDelegate
 {
-    func deadlineViewControllerDelagate(didSelectRowAt indexPath: IndexPath) {
+    func deadlineViewController(currentDateSelect datePicker: Date) {
+        nextDate = datePicker
+        dueButton.setTitle("Due \(nextDate.dayofTheWeek), \(nextDate.day) \(nextDate.monthString)", for: .normal)
+    }
+    
+    func deadlineViewController(Opacity opacity: Float) {
+        self.view.layer.opacity = opacity
+    }
+    
+    func deadlineViewController(didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row
         {
-            case 0: currentDeadlineType = .Today
-            case 1: currentDeadlineType = .Tomorrow
-            case 2: currentDeadlineType = .NextWeek
-            case 3: currentDeadlineType = .Other
+            case 0:
+                currentDeadlineType = .Today
+                dueButton.setTitle("Due Today", for: .normal)
+            case 1:
+                currentDeadlineType = .Tomorrow
+                dueButton.setTitle("Due Tomorrow", for: .normal)
+            case 2:
+                currentDeadlineType = .NextWeek
+                dueButton.setTitle("Due Next Week", for: .normal)
+            case 3:
+                currentDeadlineType = .Other
+                
             default: print("Wrong deadline!")
         }
     }
     
-    
 }
+
+// MARK: - delegate from textField for returning
+extension PlannedViewController: UITextFieldDelegate
+{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+}
+
 

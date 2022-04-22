@@ -67,7 +67,27 @@ class TaskStore
         }
         return plan
     }
+    var planOverdueTask: [Task]
+    {
+        return planTask.filter{$0.due == .Overdue}
+    }
+    var planTodayTask: [Task]
+    {
+        return planTask.filter{$0.due == .Today}
+    }
+    var planTomorrowTask: [Task]
+    {
+        return planTask.filter{$0.due == .Tomorrow}
+    }
     
+    var planThisWeekTask: [Task]
+    {
+        return planTask.filter{$0.due == .ThisWeek}
+    }
+    var planLaterTask: [Task]
+    {
+        return planTask.filter{$0.due == .Later}
+    }
     var normalTask: [Task]
     {
         var normal: [Task] = []
@@ -103,6 +123,11 @@ class TaskStore
             }
         }
         return res
+    }
+    
+    func removeByID(id: String)
+    {
+        allTask = allTask.filter{$0.taskID != id}
     }
 }
 

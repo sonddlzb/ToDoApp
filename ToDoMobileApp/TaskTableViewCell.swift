@@ -27,9 +27,7 @@ class TaskTableViewCell: UITableViewCell {
         if sender.imageView!.image!.description.contains("checkmark.circle.fill")
         {
             sender.setImage(UIImage(systemName: "circle"), for: .normal)
-            delegate?.taskTableViewCell(self, didTapFinishButtonAtTask: task, didTapFinishButtonToState: false)
-            
-        }
+            delegate?.taskTableViewCell(self, didTapFinishButtonAtTask: task, didTapFinishButtonToState: false)        }
         else
         {
             //finishedButton.imageView?.image = UIImage(systemName: "checkmark.circle.fill")
@@ -181,26 +179,44 @@ class TaskTableViewCell: UITableViewCell {
         }
     }
     //init cell for plannedViewController
-    func initCellForPlannedViewController()
+    func initCellForPlannedViewController(isMyDay: Bool)
     {
         self.taskNameLabel.text = task.detail
         self.taskNameLabel.contentMode = .left
         self.task.isFinished = false
-        let interval = task.timePlanned - Date()
+        let nextDay = Int(task.timePlanned.day)
+        let currentDay = Int(Date().day)
+        let distance = nextDay! - currentDay!
         var deadline: String = " "
-        if(interval.day! == 0)
+        if(distance == 0)
         {
-            deadline += "Today"
+                deadline += "Today"
         }
-        else if(interval.day! == 1)
+        else if(distance == 1)
         {
             deadline += "Tomorrow"
+        }
+        else if(distance == -1)
+        {
+            deadline += "Yesterday"
         }
         else
         {
             deadline += "\(task.timePlanned.dayofTheWeek), \(task.timePlanned.day) \(task.timePlanned.monthString)"
         }
-        self.moreInfoLabel.text = "Tasks" + deadline
+        if(distance < 0)
+        {
+            self.moreInfoLabel.textColor = UIColor.red
+        }
+        if(isMyDay)
+        {
+            self.moreInfoLabel.text = "My Day"
+        }
+        else
+        {
+            self.moreInfoLabel.text = ""
+        }
+        self.moreInfoLabel.text! += " Tasks" + deadline
         self.moreInfoLabel.contentMode = .left
         self.finishButton.imageView?.image = UIImage(systemName: "circle")
         if(task.isInterested)

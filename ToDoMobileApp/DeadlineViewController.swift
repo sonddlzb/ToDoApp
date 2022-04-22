@@ -9,10 +9,14 @@ import UIKit
 
 protocol DeadlineViewControllerDelegate
 {
-    func deadlineViewControllerDelagate(didSelectRowAt indexPath: IndexPath)
+    func deadlineViewController(didSelectRowAt indexPath: IndexPath)
+    //set opacity
+    func deadlineViewController(Opacity opacity: Float )
+    //pass Date from DatePicker
+    func deadlineViewController(currentDateSelect datePicker: Date)
 }
 
-class DeadlineViewController: UIViewController {
+class DeadlineViewController: UIViewController, UIViewControllerTransitioningDelegate {
     @IBOutlet private weak var deadlineTableView: UITableView!
     var delegate: DeadlineViewControllerDelegate?
     override func viewDidLoad() {
@@ -26,8 +30,19 @@ class DeadlineViewController: UIViewController {
     {
         print("dismiss")
         self.dismiss(animated: true, completion: nil)
+        delegate?.deadlineViewController(Opacity: 1.0)
+     }
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController?
+    {
+            return HalfSizePresentationController(presentedViewController: presented, presenting: presentingViewController)
     }
-
+    
+    class HalfSizePresentationController: UIPresentationController {
+        override var frameOfPresentedViewInContainerView: CGRect {
+            guard let bounds = containerView?.bounds else { return .zero }
+            return CGRect(x: 0, y: bounds.height/2, width: bounds.width, height: bounds.height/2)
+        }
+    }
 }
 
 extension DeadlineViewController: UITableViewDelegate, UITableViewDataSource
@@ -48,7 +63,37 @@ extension DeadlineViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("Row at \(indexPath.row) is selected")
-        delegate?.deadlineViewControllerDelagate(didSelectRowAt: indexPath)
-        self.dismiss(animated: true, completion: nil)
+        if(indexPath.row == 3)
+        {
+            print("Load Date Picker present ")
+            let datePicker = DatePickerViewController()
+            datePicker.modalPresentationStyle = .custom
+            datePicker.transitioningDelegate = self
+            datePicker.modalTransitionStyle = .crossDissolve
+            datePicker.delegate = self
+            delegate?.deadlineViewController(Opacity: 0.5)
+            self.present(datePicker, animated: true, completion: nil)
+        }
+        delegate?.deadlineViewController(Opacity: 1.0)
+        delegate?.deadlineViewController(didSelectRowAt: indexPath)
+        if(indexPath.row != 3)
+        {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 }
+
+// MARK: - delegate from datePicker
+extension DeadlineViewController: DatePickerViewControllerDelegate
+{
+    func datePickerViewController() {
+        delegate?.deadlineViewController(Opacity: 0.5)
+    }
+    
+    func datePickerViewController(currentDateSelect datePicker: Date) {
+        self.delegate?.deadlineViewController(currentDateSelect: datePicker)
+    }
+    
+    
+}
+

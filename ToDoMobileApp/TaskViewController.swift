@@ -32,9 +32,14 @@ class TaskViewController: UIViewController {
             let index = taskStore.taskNotFinished.count - 1
             let indexPath = IndexPath(row: index, section: 0)
             taskTableView.insertRows(at: [indexPath], with: .automatic)
+            addTaskTextField.text = ""
         }
     }
 
+    // MARK: - tap to return
+    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        addTaskTextField.resignFirstResponder()
+    }
 
 }
 

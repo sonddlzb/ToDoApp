@@ -3,9 +3,80 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TaskDetailViewController" customModule="ToDoMobileApp" customModuleProvider="target"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <viewController id="H11-YR-y2X">
+            <view key="view" contentMode="scaleToFill" id="arl-NJ-4KS">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NRs-00-rTZ">
+                        <rect key="frame" x="0.0" y="44" width="414" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="bgX-a6-3vf"/>
+                        </constraints>
+                        <items>
+                            <navigationItem id="kZ5-l9-piA"/>
+                        </items>
+                    </navigationBar>
+                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g6v-7k-brS">
+                        <rect key="frame" x="0.0" y="84" width="414" height="50"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7y0-5J-yIk">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="KvS-qn-XnM"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" horizontalCompressionResistancePriority="748" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xua-Bn-QPB">
+                                <rect key="frame" x="50" y="0.0" width="314" height="50"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aAU-lI-mBs">
+                                <rect key="frame" x="364" y="0.0" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="t5R-gs-g3R"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="aAU-lI-mBs" firstAttribute="top" secondItem="g6v-7k-brS" secondAttribute="top" id="27C-Hh-jGn"/>
+                            <constraint firstItem="7y0-5J-yIk" firstAttribute="leading" secondItem="g6v-7k-brS" secondAttribute="leading" id="4mw-jO-7uH"/>
+                            <constraint firstItem="7y0-5J-yIk" firstAttribute="top" secondItem="g6v-7k-brS" secondAttribute="top" id="5uf-Qa-nnR"/>
+                            <constraint firstAttribute="height" constant="50" id="9ad-od-MAu"/>
+                            <constraint firstAttribute="bottom" secondItem="aAU-lI-mBs" secondAttribute="bottom" id="L2B-hL-qKU"/>
+                            <constraint firstAttribute="bottom" secondItem="7y0-5J-yIk" secondAttribute="bottom" id="NLp-yi-dLR"/>
+                            <constraint firstAttribute="trailing" secondItem="aAU-lI-mBs" secondAttribute="trailing" id="NMl-yk-cPa"/>
+                        </constraints>
+                    </stackView>
+                </subviews>
+                <viewLayoutGuide key="safeArea" id="qsa-jA-W9x"/>
+                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                <constraints>
+                    <constraint firstItem="g6v-7k-brS" firstAttribute="leading" secondItem="qsa-jA-W9x" secondAttribute="leading" id="919-Zp-XfM"/>
+                    <constraint firstItem="NRs-00-rTZ" firstAttribute="top" secondItem="qsa-jA-W9x" secondAttribute="top" id="RRz-fm-koj"/>
+                    <constraint firstItem="NRs-00-rTZ" firstAttribute="leading" secondItem="qsa-jA-W9x" secondAttribute="leading" id="YHC-0T-h5g"/>
+                    <constraint firstItem="NRs-00-rTZ" firstAttribute="trailing" secondItem="qsa-jA-W9x" secondAttribute="trailing" id="Ykt-Lv-FiJ"/>
+                    <constraint firstItem="g6v-7k-brS" firstAttribute="top" secondItem="NRs-00-rTZ" secondAttribute="bottom" id="dYJ-g2-kXj"/>
+                    <constraint firstItem="qsa-jA-W9x" firstAttribute="trailing" secondItem="g6v-7k-brS" secondAttribute="trailing" id="sep-QI-uYo"/>
+                </constraints>
+            </view>
+            <point key="canvasLocation" x="220" y="55"/>
+        </viewController>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

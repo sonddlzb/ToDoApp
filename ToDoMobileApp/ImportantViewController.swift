@@ -41,7 +41,13 @@ class ImportantViewController: UIViewController {
             print(index)
             let indexPath = IndexPath(row: index, section: 0)
             importantTableView.insertRows(at: [indexPath], with: .automatic)
+            addTaskTextField.text = ""
         }
+    }
+    
+    // MARK: - tap to return
+    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        addTaskTextField.resignFirstResponder()
     }
 }
 

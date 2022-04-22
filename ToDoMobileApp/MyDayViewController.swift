@@ -72,7 +72,13 @@ class MyDayViewController: UIViewController {
             let index = myDayTaskNotFinished.count - 1
             let indexPath = IndexPath(row: index, section: 0)
             myDayTableView.insertRows(at: [indexPath], with: .automatic)
+            addTaskTextField.text = ""
         }
+    }
+    
+    // MARK: - tap to return
+    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        addTaskTextField.resignFirstResponder()
     }
     
 

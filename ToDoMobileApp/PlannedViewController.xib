@@ -10,11 +10,14 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlannedViewController" customModule="ToDoMobileApp" customModuleProvider="target">
             <connections>
+                <outlet property="addButton" destination="AsN-Un-9Rc" id="yh1-7S-WYb"/>
                 <outlet property="addTaskTextField" destination="9tg-EV-tBo" id="8I0-Iv-mNz"/>
+                <outlet property="dueButton" destination="aZe-dV-nyM" id="bHg-kS-L1I"/>
                 <outlet property="filterButton" destination="BVx-yq-s59" id="uk0-FF-hLw"/>
                 <outlet property="myDayButton" destination="GMq-Kv-0Kb" id="C9G-XX-YSS"/>
                 <outlet property="plannedTableView" destination="SSp-dB-dOG" id="kVW-Sd-cEA"/>
                 <outlet property="view" destination="O3C-ZV-l5S" id="AXL-JB-17A"/>
+                <outlet property="viewMove" destination="2aq-GN-6wA" id="rXv-hP-grt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -37,66 +40,86 @@
                     <rect key="frame" x="0.0" y="158" width="414" height="614"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9tg-EV-tBo">
-                    <rect key="frame" x="40" y="812" width="374" height="50"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2aq-GN-6wA">
+                    <rect key="frame" x="0.0" y="772" width="414" height="90"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9tg-EV-tBo">
+                            <rect key="frame" x="40" y="40" width="374" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="aLt-g1-uFa"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AsN-Un-9Rc">
+                            <rect key="frame" x="0.0" y="40" width="40" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="5qR-aK-Rt4"/>
+                                <constraint firstAttribute="width" constant="40" id="uxo-xJ-ntd"/>
+                            </constraints>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="+">
+                                <fontDescription key="titleFontDescription" type="boldSystem" pointSize="30"/>
+                            </buttonConfiguration>
+                            <connections>
+                                <action selector="addTask:" destination="-1" eventType="touchUpInside" id="BZg-fk-kUp"/>
+                            </connections>
+                        </button>
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8XR-iz-5YE">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GMq-Kv-0Kb">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="40"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" image="homekit" catalog="system"/>
+                                    <connections>
+                                        <action selector="myDayDidTap:" destination="-1" eventType="touchUpInside" id="wgP-er-Omz"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LD1-pB-P3V">
+                                    <rect key="frame" x="50" y="0.0" width="44.5" height="40"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" image="bell" catalog="system"/>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" horizontalCompressionResistancePriority="748" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aZe-dV-nyM">
+                                    <rect key="frame" x="94.5" y="0.0" width="319.5" height="40"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" image="calendar" catalog="system"/>
+                                    <connections>
+                                        <action selector="deadlineDidTap:" destination="-1" eventType="touchUpInside" id="ONb-bw-lij"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="gul-2g-24g"/>
+                            </constraints>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="50" id="aLt-g1-uFa"/>
+                        <constraint firstItem="8XR-iz-5YE" firstAttribute="top" secondItem="2aq-GN-6wA" secondAttribute="top" id="Fcs-9d-rTZ"/>
+                        <constraint firstItem="9tg-EV-tBo" firstAttribute="top" secondItem="8XR-iz-5YE" secondAttribute="bottom" id="Yd3-1s-hBT"/>
+                        <constraint firstAttribute="trailing" secondItem="9tg-EV-tBo" secondAttribute="trailing" id="hhW-Io-Jhq"/>
+                        <constraint firstItem="9tg-EV-tBo" firstAttribute="top" secondItem="8XR-iz-5YE" secondAttribute="bottom" id="hyb-yV-yIe"/>
+                        <constraint firstItem="AsN-Un-9Rc" firstAttribute="leading" secondItem="2aq-GN-6wA" secondAttribute="leading" id="kdV-xF-RwI"/>
+                        <constraint firstItem="9tg-EV-tBo" firstAttribute="leading" secondItem="AsN-Un-9Rc" secondAttribute="trailing" id="m7g-KN-Ys6"/>
+                        <constraint firstItem="8XR-iz-5YE" firstAttribute="leading" secondItem="2aq-GN-6wA" secondAttribute="leading" id="rkN-0d-XST"/>
+                        <constraint firstAttribute="bottom" secondItem="9tg-EV-tBo" secondAttribute="bottom" id="uiD-ZF-wCY"/>
+                        <constraint firstAttribute="trailing" secondItem="8XR-iz-5YE" secondAttribute="trailing" id="vRk-mz-TiB"/>
+                        <constraint firstAttribute="bottom" secondItem="AsN-Un-9Rc" secondAttribute="bottom" id="xpm-Ps-lcm"/>
+                        <constraint firstItem="AsN-Un-9Rc" firstAttribute="top" secondItem="8XR-iz-5YE" secondAttribute="bottom" id="zrg-2m-mbk"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AsN-Un-9Rc">
-                    <rect key="frame" x="0.0" y="812" width="40" height="50"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="40" id="uxo-xJ-ntd"/>
-                    </constraints>
-                    <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" title="+">
-                        <fontDescription key="titleFontDescription" type="boldSystem" pointSize="30"/>
-                    </buttonConfiguration>
-                    <connections>
-                        <action selector="addTask:" destination="-1" eventType="touchUpInside" id="BZg-fk-kUp"/>
-                    </connections>
-                </button>
+                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BVx-yq-s59">
                     <rect key="frame" x="0.0" y="100" width="414" height="38"/>
                     <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" title="Today">
+                    <buttonConfiguration key="configuration" style="plain" title="All Planned">
                         <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
                     </buttonConfiguration>
                     <connections>
                         <action selector="addPresentView:" destination="-1" eventType="touchUpInside" id="zc9-NT-rhl"/>
                     </connections>
                 </button>
-                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="8XR-iz-5YE">
-                    <rect key="frame" x="0.0" y="772" width="414" height="40"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GMq-Kv-0Kb">
-                            <rect key="frame" x="0.0" y="0.0" width="138" height="40"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" image="homekit" catalog="system"/>
-                            <connections>
-                                <action selector="myDayDidTap:" destination="-1" eventType="touchUpInside" id="wgP-er-Omz"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LD1-pB-P3V">
-                            <rect key="frame" x="138" y="0.0" width="138" height="40"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" image="bell" catalog="system"/>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aZe-dV-nyM">
-                            <rect key="frame" x="276" y="0.0" width="138" height="40"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" image="calendar" catalog="system"/>
-                            <connections>
-                                <action selector="deadlineDidTap:" destination="-1" eventType="touchUpInside" id="ONb-bw-lij"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="40" id="gul-2g-24g"/>
-                    </constraints>
-                </stackView>
                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="WVY-KP-oNG">
                     <rect key="frame" x="0.0" y="168" width="414" height="44"/>
                     <autoresizingMask key="autoresizingMask"/>
@@ -108,30 +131,32 @@
             </subviews>
             <viewLayoutGuide key="safeArea" id="bhL-G2-v9e"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <gestureRecognizers/>
             <constraints>
-                <constraint firstItem="9tg-EV-tBo" firstAttribute="trailing" secondItem="bhL-G2-v9e" secondAttribute="trailing" id="02C-YE-C6d"/>
                 <constraint firstItem="BVx-yq-s59" firstAttribute="leading" secondItem="bhL-G2-v9e" secondAttribute="leading" id="09P-cT-lZ8"/>
-                <constraint firstItem="9tg-EV-tBo" firstAttribute="leading" secondItem="AsN-Un-9Rc" secondAttribute="trailing" id="1Ev-kp-6C4"/>
-                <constraint firstItem="8XR-iz-5YE" firstAttribute="trailing" secondItem="bhL-G2-v9e" secondAttribute="trailing" id="43N-9o-0K6"/>
+                <constraint firstItem="2aq-GN-6wA" firstAttribute="leading" secondItem="bhL-G2-v9e" secondAttribute="leading" id="0Z8-7r-2GB"/>
+                <constraint firstItem="2aq-GN-6wA" firstAttribute="trailing" secondItem="bhL-G2-v9e" secondAttribute="trailing" id="1Dh-yo-Fl4"/>
                 <constraint firstItem="z2k-ac-eZp" firstAttribute="top" secondItem="bhL-G2-v9e" secondAttribute="top" constant="-44" id="5LB-av-boe"/>
-                <constraint firstItem="9tg-EV-tBo" firstAttribute="bottom" secondItem="bhL-G2-v9e" secondAttribute="bottom" id="7Yt-ys-I5r"/>
+                <constraint firstItem="2aq-GN-6wA" firstAttribute="top" secondItem="SSp-dB-dOG" secondAttribute="bottom" id="6OY-k8-qNZ"/>
                 <constraint firstItem="SSp-dB-dOG" firstAttribute="top" secondItem="BVx-yq-s59" secondAttribute="bottom" constant="20" id="8Ia-zB-QAV"/>
                 <constraint firstItem="z2k-ac-eZp" firstAttribute="trailing" secondItem="bhL-G2-v9e" secondAttribute="trailing" id="BB0-Jg-knO"/>
-                <constraint firstItem="AsN-Un-9Rc" firstAttribute="top" secondItem="8XR-iz-5YE" secondAttribute="bottom" id="IAW-Ih-sqe"/>
-                <constraint firstItem="AsN-Un-9Rc" firstAttribute="bottom" secondItem="bhL-G2-v9e" secondAttribute="bottom" id="P5H-Gi-Oyx"/>
-                <constraint firstItem="AsN-Un-9Rc" firstAttribute="leading" secondItem="bhL-G2-v9e" secondAttribute="leading" id="SVt-mt-UXp"/>
-                <constraint firstItem="9tg-EV-tBo" firstAttribute="top" secondItem="SSp-dB-dOG" secondAttribute="bottom" constant="40" id="WHB-tL-rUd"/>
                 <constraint firstItem="bhL-G2-v9e" firstAttribute="trailing" secondItem="SSp-dB-dOG" secondAttribute="trailing" id="WTk-xb-Ycs"/>
-                <constraint firstItem="9tg-EV-tBo" firstAttribute="top" secondItem="SSp-dB-dOG" secondAttribute="bottom" constant="40" id="WUb-uO-biM"/>
                 <constraint firstItem="z2k-ac-eZp" firstAttribute="leading" secondItem="bhL-G2-v9e" secondAttribute="leading" id="b4w-Ph-Y5v"/>
+                <constraint firstItem="2aq-GN-6wA" firstAttribute="bottom" secondItem="bhL-G2-v9e" secondAttribute="bottom" id="chH-A3-5N6"/>
                 <constraint firstItem="bhL-G2-v9e" firstAttribute="trailing" secondItem="BVx-yq-s59" secondAttribute="trailing" id="jFp-Cn-pbS"/>
                 <constraint firstItem="SSp-dB-dOG" firstAttribute="leading" secondItem="bhL-G2-v9e" secondAttribute="leading" id="l2W-ih-JSJ"/>
                 <constraint firstItem="BVx-yq-s59" firstAttribute="top" secondItem="z2k-ac-eZp" secondAttribute="bottom" constant="50" id="lbd-jA-vWG"/>
-                <constraint firstItem="8XR-iz-5YE" firstAttribute="leading" secondItem="bhL-G2-v9e" secondAttribute="leading" id="uxz-xE-F9S"/>
-                <constraint firstItem="9tg-EV-tBo" firstAttribute="top" secondItem="8XR-iz-5YE" secondAttribute="bottom" id="zq2-dw-h9E"/>
             </constraints>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="uT3-0w-I43" appends="YES" id="ZX0-pZ-JKa"/>
+            </connections>
             <point key="canvasLocation" x="137.68115942028987" y="-74.330357142857139"/>
         </view>
+        <tapGestureRecognizer id="uT3-0w-I43">
+            <connections>
+                <action selector="dismissKeyboard:" destination="-1" id="HKW-Df-LWk"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
     <resources>
         <image name="bell" catalog="system" width="128" height="124"/>

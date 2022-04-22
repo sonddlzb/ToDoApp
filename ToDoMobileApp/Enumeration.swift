@@ -12,6 +12,7 @@ enum DeadlineType
     case Tomorrow
     case NextWeek
     case Other
+    
 }
 enum TaskType
 {
@@ -20,4 +21,12 @@ enum TaskType
     case important
     case normal
     case listed
+}
+enum DueType: Int
+{
+    case Overdue = 1
+    case Today = 2
+    case Tomorrow = 3
+    case ThisWeek = 4
+    case Later = 5
 }

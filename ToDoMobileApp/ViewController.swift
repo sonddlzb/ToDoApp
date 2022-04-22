@@ -16,16 +16,35 @@ class ViewController: UIViewController {
     @IBOutlet weak var addListButton: UIButton!
     @IBOutlet weak var createGroupButton: UIButton!
     @IBOutlet weak var addListTextField: UITextField!
-    
+    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var allStackView: UIStackView!
     override func viewDidLoad() {
+        print("loadVIew")
         initGui()
+        self.hideKeyboardWhenTappedAround()
         self.tableView.register(UINib(nibName: "TableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "TableViewCell")
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
         addListTextField.delegate = self
         self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-        // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+           // if keyboard size is not available for some reason, dont do anything
+            return
+        }
+        print("move textField above")
+      // move the root view up by the distance of keyboard height
+        self.stackView.frame.origin.y = view.bounds.height - keyboardSize.height - stackView.bounds.height
+    }
+    @objc func keyboardWillHide(notification: NSNotification) {
+      // move back the root view origin
+        print("move textField back")
+        self.stackView.frame.origin.y = view.bounds.height - stackView.bounds.height - view.safeAreaInsets.bottom
     }
     private func initGui()
     {
@@ -141,5 +160,17 @@ extension ViewController: UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
+    }
+}
+
+extension ViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }

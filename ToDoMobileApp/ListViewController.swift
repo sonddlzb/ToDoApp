@@ -33,6 +33,7 @@ class ListViewController: UIViewController{
             let index = listStore.allList[currentList].taskNotFinished.count - 1
             let indexPath = IndexPath(row: index, section: 0)
             myDayTableView.insertRows(at: [indexPath], with: .automatic)
+            addTaskTextField.text = ""
         }
     }
 
