@@ -26,7 +26,7 @@ extension Date {
     }
     var monthString: String
     {
-        let monthCount = Calendar.current.component(.weekday, from: self)
+        let monthCount = Calendar.current.component(.month, from: self)
         // day number starts from 1 but array count from 0
         return monthsCount[monthCount - 1]
     }

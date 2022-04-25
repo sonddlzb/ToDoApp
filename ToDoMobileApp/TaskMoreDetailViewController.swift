@@ -11,9 +11,10 @@ protocol TaskMoreDetailViewControllerDelegate
 {
     func taskMoreDetailViewController(_ indexPath: IndexPath, didTapFinishButtonAtTask task: Task, didTapFinishButtonToState state: Bool)
     func taskMoreDetailViewController(_ indexPath: IndexPath, didTapImportantButtonAtTask task: Task, didTapImportantButtonToState state: Bool)
-    func taskMoreDetailViewController(changeToMyDay isMyDay: Bool)
+    func taskMoreDetailViewController(DeleteTarget target: Task)
+    func taskMoreDetailViewController(targetTask target: Task, changeMyDayState state: Bool)
 }
-class TaskMoreDetailViewController: UIViewController {
+class TaskMoreDetailViewController: UIViewController, UIViewControllerTransitioningDelegate {
     @IBOutlet weak var taskNameTextField: UITextField!
    @IBOutlet weak var finishAllButton: UIButton!
    @IBOutlet weak var updateLabel: UILabel!
@@ -23,7 +24,7 @@ class TaskMoreDetailViewController: UIViewController {
    @IBOutlet weak var detailView: UIView!
     @IBOutlet weak var taskTableView: UITableView!
     @IBOutlet weak var stepNameTextField: UITextField!
-    @IBOutlet weak var noteTextField: UITextField!
+    @IBOutlet weak var noteLabel: UILabel!
     var task: Task!
     var currentIndexPath: IndexPath!
     var isMyDay: Bool = false
@@ -34,6 +35,8 @@ class TaskMoreDetailViewController: UIViewController {
            stepNameTextField.borderStyle = .none
            taskNameTextField.contentMode = .left
            taskNameTextField.borderStyle = .none
+           
+           //init state of task
            if(!task.isFinished)
            {
                finishAllButton.setImage(UIImage(systemName: "circle"), for: .normal)
@@ -51,12 +54,40 @@ class TaskMoreDetailViewController: UIViewController {
                importantButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
                
            }
+           //add action for note view
+           let gesture = UITapGestureRecognizer(target: self, action: #selector(self.addNote(_:)))
+           detailView.addGestureRecognizer(gesture)
+           if noteLabel.text == ""
+           {
+               noteLabel.text = "Add note"
+           }
+           
        }
+
+    @objc func addNote(_ sender: UITapGestureRecognizer)
+    {
+        var noteViewController =  NoteViewController()
+        noteViewController.modalPresentationStyle = .popover
+        noteViewController.modalTransitionStyle = .coverVertical
+        noteViewController.delegate = self
+        noteViewController.task = task
+        if let note = noteLabel.text, !note.isEmpty
+        {
+            noteViewController.currentNote = note
+        }
+        else
+        {
+            noteViewController.currentNote = ""
+        }
+        self.present(noteViewController, animated: true, completion: nil)
+    }
        override func viewDidLoad() {
            initGui()
            super.viewDidLoad()
            taskTableView.delegate = self
            taskTableView.dataSource = self
+           self.taskNameTextField.delegate = self
+           self.stepNameTextField.delegate = self
            taskTableView.register(UINib(nibName: "TableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "TableViewCell")
            taskTableView.register(UINib(nibName: "StepTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "StepTableViewCell")
        }
@@ -101,6 +132,23 @@ class TaskMoreDetailViewController: UIViewController {
         }
     }
     
+    //delete this Task
+    @IBAction func deleteTask(_ sender: UIButton)
+    {
+        let alert = UIAlertController(title: nil, message: "\("\(task.detail)") will be permanently deleted", preferredStyle: .actionSheet)
+        let yesAction = UIAlertAction(title: "Delete task", style: .destructive)
+        {
+            _ in
+            self.delegate?.taskMoreDetailViewController(DeleteTarget: self.task)
+            self.navigationController?.popViewController(animated: true)
+            
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(yesAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
+    }
+    //add current task to My Day
     func addToMyDay()
     {
         let indexPath = IndexPath(row: 0, section: 1)
@@ -116,7 +164,26 @@ class TaskMoreDetailViewController: UIViewController {
             task.secondTaskType = .normal
         }
         cell.changeToMyDay(state: isMyDay)
+        delegate?.taskMoreDetailViewController(targetTask: task, changeMyDayState: isMyDay)
     }
+    
+    //display deadline viewcontroller to pick a due
+    func selectDeadline()
+    {
+        print("Load deadline picker presentation")
+        let deadlineViewController = DeadlineViewController()
+        deadlineViewController.modalPresentationStyle = .custom
+        deadlineViewController.transitioningDelegate = self
+        deadlineViewController.modalTransitionStyle = .coverVertical
+        deadlineViewController.delegate = self
+        self.present(deadlineViewController, animated: true, completion: nil)
+        self.view.layer.opacity = 0.5
+    }
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return HalfSizePresentationController(presentedViewController: presented, presenting: presentingViewController)
+    }
+    
+    
 }
 
 // MARK: - delegate from table View
@@ -142,7 +209,9 @@ extension TaskMoreDetailViewController: UITableViewDelegate, UITableViewDataSour
         {
             let cell = taskTableView.dequeueReusableCell(withIdentifier: "TableViewCell")
             as! TableViewCell
-            cell.initCellForTaskMoreDetailViewController(indexPath: indexPath, myDayState: task.secondTaskType == .myDay)
+            cell.task = task
+            let state = task.taskType == .myDay || (task.taskType == .planned && task.secondTaskType == .myDay)
+            cell.initCellForTaskMoreDetailViewController(indexPath: indexPath, myDayState: state)
             return cell
         }
         else
@@ -171,6 +240,7 @@ extension TaskMoreDetailViewController: UITableViewDelegate, UITableViewDataSour
             switch indexPath.row
             {
             case 0: addToMyDay()
+            case 2: selectDeadline()
             default: print("Wrong selection")
             }
         }
@@ -182,6 +252,13 @@ extension TaskMoreDetailViewController: UITextFieldDelegate
 {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
+        if(textField == taskNameTextField)
+        {
+            if let newName  = textField.text, textField.hasText
+            {
+                task.detail = newName
+            }
+        }
         return false
     }
 }
@@ -218,4 +295,48 @@ extension TaskMoreDetailViewController: StepTableViewCellDelegate
         }
     }
 }
+
+// MARK: - delegate from deadline viewController
+
+extension TaskMoreDetailViewController: DeadlineViewControllerDelegate
+{
+    func deadlineViewController(didSelectRowAt indexPath: IndexPath) {
+        var dayComponent = DateComponents()
+        switch indexPath.row
+        {
+        case 0: dayComponent.day = 0
+        case 1: dayComponent.day = 1
+        case 2: dayComponent.day = 7
+//        case 3: 
+            
+        default: print("Wrong deadline selection!")
+        }
+        if(indexPath.row != 3)
+        {
+            task.timePlanned = Calendar.current.date(byAdding: dayComponent, to: Date())!
+            taskTableView.reloadData()
+        }
+    }
+    
+    func deadlineViewController(Opacity opacity: Float) {
+        self.view.layer.opacity = opacity
+    }
+    
+    func deadlineViewController(currentDateSelect datePicker: Date) {
+        task.timePlanned = datePicker
+        taskTableView.reloadData()
+    }
+    
+    
+}
+
+// MARK: - delegate from Note ViewController
+extension TaskMoreDetailViewController: NoteViewControllerDelegate
+{
+    func noteViewController(_ noteText: String) {
+        noteLabel.text = noteText
+    }
+    
+}
+
 

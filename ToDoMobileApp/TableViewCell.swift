@@ -10,6 +10,7 @@ import UIKit
 class TableViewCell: UITableViewCell {
     var taskStore: TaskStore!
     var listStore: ListStore!
+    var task: Task!
     var functionName: [String] = ["Add to My Day", "Remind Me", "Add Due Date", "Repeat", "Add File"]
     var imageName: [String] = [ "sun.max", "bell", "calendar", "repeat", "tag"]
     var listOfImportantTask: [Task]
@@ -58,7 +59,7 @@ class TableViewCell: UITableViewCell {
             case 0: number = taskStore.myDayTask.count
             case 1: number = listOfImportantTask.count + listStore.numberOfImportantTaskInList()
             case 2: number = taskStore.planTask.count
-        case 4: number = taskStore.taskNotFinished.count
+            case 4: number = taskStore.taskNotFinished.count
             default: number = 0
         }
         if(number != 0)
@@ -75,12 +76,47 @@ class TableViewCell: UITableViewCell {
     func initCellForTaskMoreDetailViewController(indexPath: IndexPath, myDayState: Bool)
     {
         self.nameLabel.text = functionName[indexPath.row]
+        self.nameLabel.textColor = .black
         self.nameLabel.contentMode = .left
         self.imageViewCell.image = UIImage(systemName: imageName[indexPath.row])
         if(indexPath.section == 1 && indexPath.row == 0)
         {
           changeToMyDay(state: myDayState)
         }
+        if(indexPath.row == 2)
+        {
+            let plan = task.timePlanned
+            let nextDay = Int(plan.day)
+            let currentDay = Int(Date().day)
+            let distance = nextDay! - currentDay!
+            var deadline: String = " "
+            if(distance == 0)
+            {
+                    deadline += "Today"
+            }
+            else if(distance == 1)
+            {
+                deadline += "Tomorrow"
+            }
+            else if(distance == -1)
+            {
+                deadline += "Yesterday"
+            }
+            else
+            {
+                deadline += "\(task.timePlanned.dayofTheWeek), \(task.timePlanned.day) \(task.timePlanned.monthString)"
+            }
+            if(Date() > plan)
+            {
+                nameLabel.textColor = UIColor.red
+            }
+            else
+            {
+                nameLabel.textColor = UIColor.blue
+            }
+              nameLabel.text = deadline
+        }
+        
     }
     
     func changeToMyDay(state: Bool)
@@ -97,3 +133,4 @@ class TableViewCell: UITableViewCell {
         }
     }
 }
+

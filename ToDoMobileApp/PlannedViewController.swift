@@ -139,13 +139,6 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
     {
             return HalfSizePresentationController(presentedViewController: presented, presenting: presentingViewController)
     }
-    
-    class HalfSizePresentationController: UIPresentationController {
-        override var frameOfPresentedViewInContainerView: CGRect {
-            guard let bounds = containerView?.bounds else { return .zero }
-            return CGRect(x: 0, y: bounds.height/2, width: bounds.width, height: bounds.height/2)
-        }
-    }
 
 }
 
@@ -181,7 +174,7 @@ extension PlannedViewController: UITableViewDelegate, UITableViewDataSource
             default: print("wrong index of filter for cell")
         }
         cell.delegate = self
-        cell.initCellForPlannedViewController(isMyDay: isMyDay)
+        cell.initCellForPlannedViewController()
         return cell
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -313,6 +306,23 @@ extension PlannedViewController: UITextFieldDelegate
 
 extension PlannedViewController: TaskMoreDetailViewControllerDelegate
 {
+    func taskMoreDetailViewController(targetTask target: Task, changeMyDayState state: Bool) {
+        if(state)
+        {
+            target.secondTaskType = .myDay
+        }
+        else
+        {
+            target.secondTaskType = .normal
+        }
+        plannedTableView.reloadData()
+    }
+    
+    func taskMoreDetailViewController(DeleteTarget target: Task) {
+        taskStore.removeByID(id: target.taskID)
+        plannedTableView.reloadData()
+    }
+    
     func taskMoreDetailViewController(changeToMyDay isMyDay: Bool) {
         self.isMyDay = isMyDay
     }

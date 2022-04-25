@@ -62,4 +62,8 @@ class Task
 
         return .Later
     }
+    func setTimePlanned(due: Date)
+    {
+        self.timePlanned = due
+    }
 }

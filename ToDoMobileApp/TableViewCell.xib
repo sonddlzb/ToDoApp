@@ -50,7 +50,6 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="countLabel" destination="3Ct-Uh-HJd" id="hpF-5T-K8y"/>
-                <outlet property="imageView" destination="lkK-Wk-uIE" id="leW-Fb-JGL"/>
                 <outlet property="imageViewCell" destination="lkK-Wk-uIE" id="VSR-2M-XWo"/>
                 <outlet property="nameLabel" destination="2Qh-7s-e3n" id="N6D-78-pTZ"/>
             </connections>

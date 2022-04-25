@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NoteViewController" customModule="ToDoMobileApp" customModuleProvider="target">
+            <connections>
+                <outlet property="navigationBar" destination="cDc-c4-CRH" id="uQN-is-7Sy"/>
+                <outlet property="noteTextField" destination="N34-Yc-vpg" id="B8r-Z2-fIZ"/>
+                <outlet property="previewBarButton" destination="136-O3-wcg" id="JDw-D4-9jW"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cDc-c4-CRH">
+                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="LEZ-Fp-bva"/>
+                    </constraints>
+                    <items>
+                        <navigationItem id="seC-CG-8ud">
+                            <barButtonItem key="leftBarButtonItem" title="Preview" id="136-O3-wcg">
+                                <connections>
+                                    <action selector="previewButtonTapped:" destination="-1" id="t81-A1-dHj"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem key="rightBarButtonItem" systemItem="done" id="bLM-0o-BqP">
+                                <connections>
+                                    <action selector="doneButtonTapped:" destination="-1" id="14P-zb-KOx"/>
+                                </connections>
+                            </barButtonItem>
+                        </navigationItem>
+                    </items>
+                </navigationBar>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N34-Yc-vpg">
+                    <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="N34-Yc-vpg" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="3yf-0O-Znr"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="N34-Yc-vpg" secondAttribute="trailing" id="G8x-Si-T9R"/>
+                <constraint firstItem="cDc-c4-CRH" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="GJf-ts-5HZ"/>
+                <constraint firstItem="N34-Yc-vpg" firstAttribute="top" secondItem="cDc-c4-CRH" secondAttribute="bottom" id="Jql-vX-KPo"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="N34-Yc-vpg" secondAttribute="bottom" id="c0E-T7-UHZ"/>
+                <constraint firstItem="cDc-c4-CRH" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="c7U-7d-EOv"/>
+                <constraint firstItem="cDc-c4-CRH" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="gI8-Da-gD6"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="81"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

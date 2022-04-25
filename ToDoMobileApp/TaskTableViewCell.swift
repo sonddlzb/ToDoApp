@@ -187,7 +187,44 @@ class TaskTableViewCell: UITableViewCell {
     //init cell for myDayViewController
     func initCellForMyDayViewController(indexPath: IndexPath)
     {
-        self.moreInfoLabel.text = "Tasks"
+        let due = task.timePlanned
+        let nextDay = Int(task.timePlanned.day)
+        let currentDay = Int(Date().day)
+        let distance = nextDay! - currentDay!
+        var deadline: String = " "
+        if(distance == 0)
+        {
+                deadline += "Today"
+        }
+        else if(distance == 1)
+        {
+            deadline += "Tomorrow"
+        }
+        else if(distance == -1)
+        {
+            deadline += "Yesterday"
+        }
+        else
+        {
+            deadline += "\(task.timePlanned.dayofTheWeek), \(task.timePlanned.day) \(task.timePlanned.monthString)"
+        }
+        if(Date() > due)
+        {
+            self.moreInfoLabel.textColor = UIColor.red
+        }
+        else
+        {
+            self.moreInfoLabel.textColor = UIColor.black
+        }
+        if(task.taskType == .myDay || (task.taskType == .planned && task.secondTaskType == .myDay))
+        {
+            self.moreInfoLabel.text = "My Day"
+        }
+        else
+        {
+            self.moreInfoLabel.text = ""
+        }
+        self.moreInfoLabel.text! += " Tasks" + deadline
         self.moreInfoLabel.contentMode = .left
         self.taskNameLabel.text = self.task.detail
         self.taskNameLabel.contentMode = .left
@@ -211,7 +248,7 @@ class TaskTableViewCell: UITableViewCell {
         }
     }
     //init cell for plannedViewController
-    func initCellForPlannedViewController(isMyDay: Bool)
+    func initCellForPlannedViewController()
     {
         initGui()
         self.taskNameLabel.text = task.detail
@@ -225,6 +262,7 @@ class TaskTableViewCell: UITableViewCell {
         {
             self.interestButton.imageView?.image = UIImage(systemName: "star")
         }
+        let due = task.timePlanned
         let nextDay = Int(task.timePlanned.day)
         let currentDay = Int(Date().day)
         let distance = nextDay! - currentDay!
@@ -245,11 +283,15 @@ class TaskTableViewCell: UITableViewCell {
         {
             deadline += "\(task.timePlanned.dayofTheWeek), \(task.timePlanned.day) \(task.timePlanned.monthString)"
         }
-        if(distance < 0)
+        if(Date() > due)
         {
             self.moreInfoLabel.textColor = UIColor.red
         }
-        if(isMyDay)
+        else
+        {
+            self.moreInfoLabel.textColor = UIColor.black
+        }
+        if(task.taskType == .myDay || (task.taskType == .planned && task.secondTaskType == .myDay))
         {
             self.moreInfoLabel.text = "My Day"
         }

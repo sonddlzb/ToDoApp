@@ -25,7 +25,6 @@ class DeadlineViewController: UIViewController, UIViewControllerTransitioningDel
         deadlineTableView.dataSource = self
         deadlineTableView.register(UINib(nibName: "PlannedFilterFloatTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PlannedFilterFloatTableViewCell")
     }
-
     @IBAction func doneWithButton(_ sender: UIBarButtonItem)
     {
         print("dismiss")
@@ -37,12 +36,6 @@ class DeadlineViewController: UIViewController, UIViewControllerTransitioningDel
             return HalfSizePresentationController(presentedViewController: presented, presenting: presentingViewController)
     }
     
-    class HalfSizePresentationController: UIPresentationController {
-        override var frameOfPresentedViewInContainerView: CGRect {
-            guard let bounds = containerView?.bounds else { return .zero }
-            return CGRect(x: 0, y: bounds.height/2, width: bounds.width, height: bounds.height/2)
-        }
-    }
 }
 
 extension DeadlineViewController: UITableViewDelegate, UITableViewDataSource
@@ -74,7 +67,10 @@ extension DeadlineViewController: UITableViewDelegate, UITableViewDataSource
             delegate?.deadlineViewController(Opacity: 0.5)
             self.present(datePicker, animated: true, completion: nil)
         }
-        delegate?.deadlineViewController(Opacity: 1.0)
+        else
+        {
+            delegate?.deadlineViewController(Opacity: 1.0)
+        }
         delegate?.deadlineViewController(didSelectRowAt: indexPath)
         if(indexPath.row != 3)
         {

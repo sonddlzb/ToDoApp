@@ -14,7 +14,7 @@
                 <outlet property="detailView" destination="qsB-BD-m2v" id="UiJ-t7-084"/>
                 <outlet property="finishAllButton" destination="eux-hj-BIR" id="szh-Sg-xEb"/>
                 <outlet property="importantButton" destination="s1I-bG-w4a" id="Zwf-nc-pmP"/>
-                <outlet property="noteTextField" destination="bTs-rm-GaE" id="BJJ-RR-VC8"/>
+                <outlet property="noteLabel" destination="hTs-VJ-fbQ" id="h7v-b9-FjG"/>
                 <outlet property="stepNameTextField" destination="g6p-tF-Dw2" id="eql-i4-HBT"/>
                 <outlet property="taskNameTextField" destination="PIA-nq-JZG" id="EYI-iX-z2d"/>
                 <outlet property="taskTableView" destination="Vzw-JH-VaO" id="vBG-Ph-zao"/>
@@ -99,47 +99,51 @@
                     </constraints>
                     <state key="normal" title="Button"/>
                     <buttonConfiguration key="configuration" style="plain" image="trash" catalog="system"/>
+                    <connections>
+                        <action selector="deleteTask:" destination="-1" eventType="touchUpInside" id="Qey-YD-jTQ"/>
+                    </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qsB-BD-m2v">
                     <rect key="frame" x="0.0" y="662" width="414" height="150"/>
                     <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hTs-VJ-fbQ">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
+                            <gestureRecognizers/>
+                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ee-Tm-1WC">
-                            <rect key="frame" x="350" y="110" width="64" height="40"/>
+                            <rect key="frame" x="344" y="90" width="70" height="60"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="40" id="gGR-Bk-Lqs"/>
+                                <constraint firstAttribute="height" constant="60" id="Tw9-X9-PYL"/>
+                                <constraint firstAttribute="width" constant="70" id="xIW-Ww-7dC"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EuH-LU-mOr">
-                            <rect key="frame" x="0.0" y="110" width="350" height="40"/>
+                            <rect key="frame" x="0.0" y="90" width="414" height="60"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="350" id="dsH-bp-ysO"/>
-                                <constraint firstAttribute="height" constant="40" id="nvy-11-ocV"/>
+                                <constraint firstAttribute="height" constant="60" id="NXA-AX-jlN"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add Note" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bTs-rm-GaE">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="110"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </textField>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="EuH-LU-mOr" firstAttribute="leading" secondItem="qsB-BD-m2v" secondAttribute="leading" id="4GF-k5-J17"/>
-                        <constraint firstAttribute="trailing" secondItem="bTs-rm-GaE" secondAttribute="trailing" id="5b1-KK-arS"/>
-                        <constraint firstItem="EuH-LU-mOr" firstAttribute="top" secondItem="bTs-rm-GaE" secondAttribute="bottom" id="Pj1-rP-bur"/>
-                        <constraint firstAttribute="bottom" secondItem="5ee-Tm-1WC" secondAttribute="bottom" id="Xzf-us-WB5"/>
-                        <constraint firstItem="5ee-Tm-1WC" firstAttribute="leading" secondItem="EuH-LU-mOr" secondAttribute="trailing" id="gIt-hv-Ijz"/>
-                        <constraint firstItem="bTs-rm-GaE" firstAttribute="top" secondItem="qsB-BD-m2v" secondAttribute="top" id="gc6-Gk-aKI"/>
-                        <constraint firstItem="bTs-rm-GaE" firstAttribute="leading" secondItem="qsB-BD-m2v" secondAttribute="leading" id="k3a-To-hTX"/>
+                        <constraint firstAttribute="trailing" secondItem="5ee-Tm-1WC" secondAttribute="trailing" id="2n0-3s-EGE"/>
+                        <constraint firstItem="hTs-VJ-fbQ" firstAttribute="top" secondItem="qsB-BD-m2v" secondAttribute="top" id="5kb-QV-QxL"/>
+                        <constraint firstAttribute="trailing" secondItem="EuH-LU-mOr" secondAttribute="trailing" id="Dhb-ZX-zKc"/>
+                        <constraint firstItem="hTs-VJ-fbQ" firstAttribute="leading" secondItem="qsB-BD-m2v" secondAttribute="leading" id="Es4-G4-n6j"/>
+                        <constraint firstAttribute="bottom" secondItem="EuH-LU-mOr" secondAttribute="bottom" id="dmO-sq-Hx8"/>
+                        <constraint firstItem="EuH-LU-mOr" firstAttribute="leading" secondItem="qsB-BD-m2v" secondAttribute="leading" id="gB4-LH-t0k"/>
+                        <constraint firstAttribute="trailing" secondItem="hTs-VJ-fbQ" secondAttribute="trailing" id="gN3-ug-OYi"/>
+                        <constraint firstAttribute="bottom" secondItem="5ee-Tm-1WC" secondAttribute="bottom" id="lit-e3-1cF"/>
                         <constraint firstAttribute="height" constant="150" id="nmu-aC-8tD"/>
-                        <constraint firstAttribute="trailing" secondItem="5ee-Tm-1WC" secondAttribute="trailing" id="r70-R3-I3v"/>
-                        <constraint firstAttribute="bottom" secondItem="EuH-LU-mOr" secondAttribute="bottom" id="wZq-KH-nlW"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p2i-TA-vaN">
@@ -192,6 +196,7 @@
             </constraints>
             <point key="canvasLocation" x="66.666666666666671" y="57.589285714285708"/>
         </view>
+        <tapGestureRecognizer id="821-JR-IZN"/>
     </objects>
     <resources>
         <image name="plus" catalog="system" width="128" height="113"/>

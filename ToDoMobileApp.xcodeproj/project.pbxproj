@@ -41,6 +41,9 @@
 		C866BFD427FD985F0027EFF1 /* ToDoMobileAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C866BFD327FD985F0027EFF1 /* ToDoMobileAppTests.swift */; };
 		C866BFDE27FD985F0027EFF1 /* ToDoMobileAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C866BFDD27FD985F0027EFF1 /* ToDoMobileAppUITests.swift */; };
 		C866BFE027FD985F0027EFF1 /* ToDoMobileAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C866BFDF27FD985F0027EFF1 /* ToDoMobileAppUITestsLaunchTests.swift */; };
+		C895EA0228162E4D00A9072C /* HalfSizePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C895EA0128162E4D00A9072C /* HalfSizePresentationController.swift */; };
+		C895EA05281678D400A9072C /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C895EA03281678D400A9072C /* NoteViewController.swift */; };
+		C895EA06281678D400A9072C /* NoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C895EA04281678D400A9072C /* NoteViewController.xib */; };
 		C8EA498F2812491C00B4971D /* TaskMoreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EA498D2812491C00B4971D /* TaskMoreDetailViewController.swift */; };
 		C8EA49902812491C00B4971D /* TaskMoreDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8EA498E2812491C00B4971D /* TaskMoreDetailViewController.xib */; };
 		C8EA49932812655B00B4971D /* StepTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EA49912812655B00B4971D /* StepTableViewCell.swift */; };
@@ -116,6 +119,9 @@
 		C866BFD927FD985F0027EFF1 /* ToDoMobileAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoMobileAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C866BFDD27FD985F0027EFF1 /* ToDoMobileAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoMobileAppUITests.swift; sourceTree = "<group>"; };
 		C866BFDF27FD985F0027EFF1 /* ToDoMobileAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoMobileAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		C895EA0128162E4D00A9072C /* HalfSizePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSizePresentationController.swift; sourceTree = "<group>"; };
+		C895EA03281678D400A9072C /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
+		C895EA04281678D400A9072C /* NoteViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteViewController.xib; sourceTree = "<group>"; };
 		C8EA498D2812491C00B4971D /* TaskMoreDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskMoreDetailViewController.swift; sourceTree = "<group>"; };
 		C8EA498E2812491C00B4971D /* TaskMoreDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskMoreDetailViewController.xib; sourceTree = "<group>"; };
 		C8EA49912812655B00B4971D /* StepTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTableViewCell.swift; sourceTree = "<group>"; };
@@ -225,6 +231,9 @@
 				C8EA498E2812491C00B4971D /* TaskMoreDetailViewController.xib */,
 				C8EA49912812655B00B4971D /* StepTableViewCell.swift */,
 				C8EA49922812655B00B4971D /* StepTableViewCell.xib */,
+				C895EA0128162E4D00A9072C /* HalfSizePresentationController.swift */,
+				C895EA03281678D400A9072C /* NoteViewController.swift */,
+				C895EA04281678D400A9072C /* NoteViewController.xib */,
 			);
 			path = ToDoMobileApp;
 			sourceTree = "<group>";
@@ -394,6 +403,7 @@
 				C83A95E52806B98D0044EA99 /* ImportantViewController.xib in Resources */,
 				C8EA49902812491C00B4971D /* TaskMoreDetailViewController.xib in Resources */,
 				C866BFC427FD985E0027EFF1 /* Main.storyboard in Resources */,
+				C895EA06281678D400A9072C /* NoteViewController.xib in Resources */,
 				C8330DAC280D4C230064FE4C /* DeadlineViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -535,10 +545,12 @@
 				C806874527FFE9DA00491787 /* ListStore.swift in Sources */,
 				C8330DB0280D6B430064FE4C /* Extension.swift in Sources */,
 				C83A95E42806B98D0044EA99 /* ImportantViewController.swift in Sources */,
+				C895EA0228162E4D00A9072C /* HalfSizePresentationController.swift in Sources */,
 				C806874227FFD7FC00491787 /* ListViewController.swift in Sources */,
 				C8330DAE280D6A940064FE4C /* Enumeration.swift in Sources */,
 				C806873E27FFC65200491787 /* TableViewCell.swift in Sources */,
 				C8330DA7280CF3890064FE4C /* AssignToMeViewController.swift in Sources */,
+				C895EA05281678D400A9072C /* NoteViewController.swift in Sources */,
 				C806873B27FFC25B00491787 /* List.swift in Sources */,
 				C83A95DA28066BA20044EA99 /* TaskViewController.swift in Sources */,
 				C8EFFB7B28092E22001770AD /* PlannedFilterFloatTableViewCell.swift in Sources */,
