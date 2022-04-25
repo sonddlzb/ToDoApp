@@ -30,8 +30,6 @@
 		C83A95DA28066BA20044EA99 /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83A95D828066BA20044EA99 /* TaskViewController.swift */; };
 		C83A95DB28066BA20044EA99 /* TaskViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C83A95D928066BA20044EA99 /* TaskViewController.xib */; };
 		C83A95DD280670CE0044EA99 /* TaskStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83A95DC280670CE0044EA99 /* TaskStore.swift */; };
-		C83A95E02806AEC60044EA99 /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83A95DE2806AEC60044EA99 /* TaskDetailViewController.swift */; };
-		C83A95E12806AEC70044EA99 /* TaskDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C83A95DF2806AEC60044EA99 /* TaskDetailViewController.xib */; };
 		C83A95E42806B98D0044EA99 /* ImportantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83A95E22806B98D0044EA99 /* ImportantViewController.swift */; };
 		C83A95E52806B98D0044EA99 /* ImportantViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C83A95E32806B98D0044EA99 /* ImportantViewController.xib */; };
 		C866BFBD27FD985E0027EFF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C866BFBC27FD985E0027EFF1 /* AppDelegate.swift */; };
@@ -43,6 +41,10 @@
 		C866BFD427FD985F0027EFF1 /* ToDoMobileAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C866BFD327FD985F0027EFF1 /* ToDoMobileAppTests.swift */; };
 		C866BFDE27FD985F0027EFF1 /* ToDoMobileAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C866BFDD27FD985F0027EFF1 /* ToDoMobileAppUITests.swift */; };
 		C866BFE027FD985F0027EFF1 /* ToDoMobileAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C866BFDF27FD985F0027EFF1 /* ToDoMobileAppUITestsLaunchTests.swift */; };
+		C8EA498F2812491C00B4971D /* TaskMoreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EA498D2812491C00B4971D /* TaskMoreDetailViewController.swift */; };
+		C8EA49902812491C00B4971D /* TaskMoreDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8EA498E2812491C00B4971D /* TaskMoreDetailViewController.xib */; };
+		C8EA49932812655B00B4971D /* StepTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EA49912812655B00B4971D /* StepTableViewCell.swift */; };
+		C8EA49942812655B00B4971D /* StepTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8EA49922812655B00B4971D /* StepTableViewCell.xib */; };
 		C8EFFB73280901AA001770AD /* MyDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EFFB71280901AA001770AD /* MyDayViewController.swift */; };
 		C8EFFB74280901AA001770AD /* MyDayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8EFFB72280901AA001770AD /* MyDayViewController.xib */; };
 		C8EFFB7728092D38001770AD /* PlannedFilterFloatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EFFB7528092D38001770AD /* PlannedFilterFloatViewController.swift */; };
@@ -99,8 +101,6 @@
 		C83A95D828066BA20044EA99 /* TaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
 		C83A95D928066BA20044EA99 /* TaskViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskViewController.xib; sourceTree = "<group>"; };
 		C83A95DC280670CE0044EA99 /* TaskStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStore.swift; sourceTree = "<group>"; };
-		C83A95DE2806AEC60044EA99 /* TaskDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailViewController.swift; sourceTree = "<group>"; };
-		C83A95DF2806AEC60044EA99 /* TaskDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskDetailViewController.xib; sourceTree = "<group>"; };
 		C83A95E22806B98D0044EA99 /* ImportantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportantViewController.swift; sourceTree = "<group>"; };
 		C83A95E32806B98D0044EA99 /* ImportantViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImportantViewController.xib; sourceTree = "<group>"; };
 		C866BFB927FD985E0027EFF1 /* ToDoMobileApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoMobileApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -116,6 +116,10 @@
 		C866BFD927FD985F0027EFF1 /* ToDoMobileAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoMobileAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C866BFDD27FD985F0027EFF1 /* ToDoMobileAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoMobileAppUITests.swift; sourceTree = "<group>"; };
 		C866BFDF27FD985F0027EFF1 /* ToDoMobileAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoMobileAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		C8EA498D2812491C00B4971D /* TaskMoreDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskMoreDetailViewController.swift; sourceTree = "<group>"; };
+		C8EA498E2812491C00B4971D /* TaskMoreDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskMoreDetailViewController.xib; sourceTree = "<group>"; };
+		C8EA49912812655B00B4971D /* StepTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTableViewCell.swift; sourceTree = "<group>"; };
+		C8EA49922812655B00B4971D /* StepTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepTableViewCell.xib; sourceTree = "<group>"; };
 		C8EFFB71280901AA001770AD /* MyDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDayViewController.swift; sourceTree = "<group>"; };
 		C8EFFB72280901AA001770AD /* MyDayViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyDayViewController.xib; sourceTree = "<group>"; };
 		C8EFFB7528092D38001770AD /* PlannedFilterFloatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannedFilterFloatViewController.swift; sourceTree = "<group>"; };
@@ -199,8 +203,6 @@
 				C83A95D828066BA20044EA99 /* TaskViewController.swift */,
 				C83A95D928066BA20044EA99 /* TaskViewController.xib */,
 				C83A95DC280670CE0044EA99 /* TaskStore.swift */,
-				C83A95DE2806AEC60044EA99 /* TaskDetailViewController.swift */,
-				C83A95DF2806AEC60044EA99 /* TaskDetailViewController.xib */,
 				C83A95E22806B98D0044EA99 /* ImportantViewController.swift */,
 				C83A95E32806B98D0044EA99 /* ImportantViewController.xib */,
 				C8EFFB71280901AA001770AD /* MyDayViewController.swift */,
@@ -219,6 +221,10 @@
 				C8330DAF280D6B430064FE4C /* Extension.swift */,
 				C82CB6A2280FA34500A147AD /* DatePickerViewController.swift */,
 				C82CB6A3280FA34500A147AD /* DatePickerViewController.xib */,
+				C8EA498D2812491C00B4971D /* TaskMoreDetailViewController.swift */,
+				C8EA498E2812491C00B4971D /* TaskMoreDetailViewController.xib */,
+				C8EA49912812655B00B4971D /* StepTableViewCell.swift */,
+				C8EA49922812655B00B4971D /* StepTableViewCell.xib */,
 			);
 			path = ToDoMobileApp;
 			sourceTree = "<group>";
@@ -373,11 +379,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8EFFB80280931AF001770AD /* PlannedViewController.xib in Resources */,
+				C8EA49942812655B00B4971D /* StepTableViewCell.xib in Resources */,
 				C806874327FFD7FC00491787 /* ListViewController.xib in Resources */,
 				C8330DA8280CF3890064FE4C /* AssignToMeViewController.xib in Resources */,
 				C83A95DB28066BA20044EA99 /* TaskViewController.xib in Resources */,
 				C8EFFB7C28092E22001770AD /* PlannedFilterFloatTableViewCell.xib in Resources */,
-				C83A95E12806AEC70044EA99 /* TaskDetailViewController.xib in Resources */,
 				C866BFC927FD985F0027EFF1 /* LaunchScreen.storyboard in Resources */,
 				C806873F27FFC65200491787 /* TableViewCell.xib in Resources */,
 				C82CB6A5280FA34500A147AD /* DatePickerViewController.xib in Resources */,
@@ -386,6 +392,7 @@
 				C83A95CF2806686F0044EA99 /* TaskTableViewCell.xib in Resources */,
 				C866BFC627FD985F0027EFF1 /* Assets.xcassets in Resources */,
 				C83A95E52806B98D0044EA99 /* ImportantViewController.xib in Resources */,
+				C8EA49902812491C00B4971D /* TaskMoreDetailViewController.xib in Resources */,
 				C866BFC427FD985E0027EFF1 /* Main.storyboard in Resources */,
 				C8330DAC280D4C230064FE4C /* DeadlineViewController.xib in Resources */,
 			);
@@ -516,6 +523,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8EFFB7728092D38001770AD /* PlannedFilterFloatViewController.swift in Sources */,
+				C8EA49932812655B00B4971D /* StepTableViewCell.swift in Sources */,
 				C806873927FFC1BC00491787 /* Task.swift in Sources */,
 				C866BFC127FD985E0027EFF1 /* ViewController.swift in Sources */,
 				C83A95DD280670CE0044EA99 /* TaskStore.swift in Sources */,
@@ -531,11 +539,11 @@
 				C8330DAE280D6A940064FE4C /* Enumeration.swift in Sources */,
 				C806873E27FFC65200491787 /* TableViewCell.swift in Sources */,
 				C8330DA7280CF3890064FE4C /* AssignToMeViewController.swift in Sources */,
-				C83A95E02806AEC60044EA99 /* TaskDetailViewController.swift in Sources */,
 				C806873B27FFC25B00491787 /* List.swift in Sources */,
 				C83A95DA28066BA20044EA99 /* TaskViewController.swift in Sources */,
 				C8EFFB7B28092E22001770AD /* PlannedFilterFloatTableViewCell.swift in Sources */,
 				C866BFBF27FD985E0027EFF1 /* SceneDelegate.swift in Sources */,
+				C8EA498F2812491C00B4971D /* TaskMoreDetailViewController.swift in Sources */,
 				C8330DAB280D4C230064FE4C /* DeadlineViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

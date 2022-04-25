@@ -16,7 +16,7 @@
                 <outlet property="filterButton" destination="BVx-yq-s59" id="uk0-FF-hLw"/>
                 <outlet property="myDayButton" destination="GMq-Kv-0Kb" id="C9G-XX-YSS"/>
                 <outlet property="plannedTableView" destination="SSp-dB-dOG" id="kVW-Sd-cEA"/>
-                <outlet property="view" destination="O3C-ZV-l5S" id="AXL-JB-17A"/>
+                <outlet property="view" destination="O3C-ZV-l5S" id="zUv-Dh-bp9"/>
                 <outlet property="viewMove" destination="2aq-GN-6wA" id="rXv-hP-grt"/>
             </connections>
         </placeholder>
@@ -152,7 +152,7 @@
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="-74.330357142857139"/>
         </view>
-        <tapGestureRecognizer id="uT3-0w-I43">
+        <tapGestureRecognizer cancelsTouchesInView="NO" id="uT3-0w-I43">
             <connections>
                 <action selector="dismissKeyboard:" destination="-1" id="HKW-Df-LWk"/>
             </connections>

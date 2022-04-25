@@ -27,9 +27,15 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
         plannedTableView.delegate = self
         plannedTableView.dataSource = self
         addTaskTextField.delegate = self
+        self.plannedTableView.isUserInteractionEnabled = true
+        self.plannedTableView.allowsSelection = true
         NotificationCenter.default.addObserver(self, selector: #selector(PlannedViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(PlannedViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        plannedTableView.reloadData()
     }
     @IBAction func addTask(_ sender: UIButton) {
         if let taskName = addTaskTextField.text, !taskName.isEmpty
@@ -114,8 +120,10 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
     }
     @objc func keyboardWillHide(notification: NSNotification) {
       // move back the root view origin
-        self.viewMove.frame.origin.y = view.bounds.height - viewMove.bounds.height - 40
+        self.viewMove.frame.origin.y = view.bounds.height - viewMove.bounds.height - view.safeAreaInsets.bottom
     }
+    
+    
     @IBAction func deadlineDidTap(_ sender: UIButton)
     {
         print("Load deadline presentation")
@@ -193,6 +201,28 @@ extension PlannedViewController: UITableViewDelegate, UITableViewDataSource
             taskStore.removeByID(id: id)
             plannedTableView.deleteRows(at: [indexPath], with: .automatic)
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("select row at \(indexPath.row)")
+        var taskSelect: Task = taskStore.taskNotFinished[indexPath.row]
+        switch currentFilter
+        {
+            case 0: taskSelect = taskStore.taskNotFinished[indexPath.row]
+            case 1: taskSelect = taskStore.planOverdueTask[indexPath.row]
+            case 2: taskSelect = taskStore.planTodayTask[indexPath.row]
+            case 3: taskSelect = taskStore.planTomorrowTask[indexPath.row]
+            case 4: taskSelect = taskStore.planThisWeekTask[indexPath.row]
+            case 5: taskSelect = taskStore.planLaterTask[indexPath.row]
+            default:
+                print("Wrong filter")
+        }
+        var detailTaskViewController = TaskMoreDetailViewController()
+        detailTaskViewController.task = taskSelect
+        detailTaskViewController.delegate = self
+        detailTaskViewController.currentIndexPath = indexPath
+        self.navigationController?.pushViewController(detailTaskViewController, animated: true)
+        detailTaskViewController.reloadInputViews()
     }
 }
 // MARK: - delegate from cell
@@ -278,5 +308,32 @@ extension PlannedViewController: UITextFieldDelegate
         return false
     }
 }
+
+// MARK: - delegate from TaskMoreDetailViewController
+
+extension PlannedViewController: TaskMoreDetailViewControllerDelegate
+{
+    func taskMoreDetailViewController(changeToMyDay isMyDay: Bool) {
+        self.isMyDay = isMyDay
+    }
+    
+    func taskMoreDetailViewController(_ indexPath: IndexPath, didTapFinishButtonAtTask task: Task, didTapFinishButtonToState state: Bool) {
+        print("update finished database of \(task.detail)!")
+        task.isFinished = state
+        if(state)
+        {
+            plannedTableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+        self.plannedTableView.reloadData()
+    }
+    
+    func taskMoreDetailViewController(_ indexPath: IndexPath, didTapImportantButtonAtTask task: Task, didTapImportantButtonToState state: Bool) {
+        print("update finished database of \(task.detail)!")
+        task.isInterested = state
+    }
+    
+    
+}
+
 
 

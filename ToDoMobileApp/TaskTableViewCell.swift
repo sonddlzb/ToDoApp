@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol TaskTableViewCellDelegate
+{
+    func taskTableViewCell(_ cell: TaskTableViewCell, didTapFinishButtonAtTask task: Task,didTapFinishButtonToState state: Bool)
+    func taskTableViewCell(_ cell: TaskTableViewCell, didTapInterestButtonAtTask task: Task,didTapInterestButtonToState state: Bool)
+}
 class TaskTableViewCell: UITableViewCell {
 
     var delegate : TaskTableViewCellDelegate?
@@ -17,6 +22,28 @@ class TaskTableViewCell: UITableViewCell {
     @IBOutlet weak var moreInfoLabel: UILabel!
     var taskStore: TaskStore!
     var task: Task!
+    func initGui()
+    {
+        taskNameLabel.text = task.detail
+        taskNameLabel.contentMode = .left
+        if(!task.isFinished)
+        {
+            finishButton.setImage(UIImage(systemName: "circle"), for: .normal)
+        }
+        else
+        {
+            finishButton.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
+        }
+        if(task.isInterested || task.taskType == .important)
+        {
+            interestButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+        }
+        else
+        {
+            interestButton.setImage(UIImage(systemName: "star"), for: .normal)
+            
+        }
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -61,6 +88,7 @@ class TaskTableViewCell: UITableViewCell {
         if indexPath.section == 0
         {
             self.task = taskStore.taskNotFinished[indexPath.row]
+            initGui()
             self.taskNameLabel.text = taskStore.taskNotFinished[indexPath.row].detail
             self.taskNameLabel.contentMode = .left
             self.task.isFinished = false
@@ -77,6 +105,7 @@ class TaskTableViewCell: UITableViewCell {
         else
         {
             self.task = taskStore.taskFinished[indexPath.row]
+            initGui()
             self.taskNameLabel.text = taskStore.taskFinished[indexPath.row].detail
             self.taskNameLabel.contentMode = .left
 
@@ -101,6 +130,7 @@ class TaskTableViewCell: UITableViewCell {
         if indexPath.section == 0
         {
             self.task = list.taskNotFinished[indexPath.row]
+            initGui()
             self.taskNameLabel.text = list.taskNotFinished[indexPath.row].detail
             self.taskNameLabel.contentMode = .left
             self.task.isFinished = false
@@ -117,6 +147,7 @@ class TaskTableViewCell: UITableViewCell {
         else
         {
             self.task = list.taskFinished[indexPath.row]
+            initGui()
             self.taskNameLabel.text = list.taskFinished[indexPath.row].detail
             self.taskNameLabel.contentMode = .left
 
@@ -140,6 +171,7 @@ class TaskTableViewCell: UITableViewCell {
         self.moreInfoLabel.contentMode = .left
         print(listOfImportantTask.count)
         self.task = listOfImportantTask[indexPath.row]
+        initGui()
         if(task.taskType == .listed)
         {
             print("add list name")
@@ -161,29 +193,38 @@ class TaskTableViewCell: UITableViewCell {
         self.taskNameLabel.contentMode = .left
         if(task.isInterested)
         {
+            self.interestButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+        }
+        else
+        {
+            self.interestButton.setImage(UIImage(systemName: "star"), for: .normal)
+        }
+        if(indexPath.section == 0)
+        {
+            self.task.isFinished = false
+            self.finishButton.setImage(UIImage(systemName: "circle"), for: .normal)
+        }
+        else
+        {
+            self.task.isFinished = true
+            self.finishButton.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
+        }
+    }
+    //init cell for plannedViewController
+    func initCellForPlannedViewController(isMyDay: Bool)
+    {
+        initGui()
+        self.taskNameLabel.text = task.detail
+        self.taskNameLabel.contentMode = .left
+        self.task.isFinished = false
+        if(task.isInterested)
+        {
             self.interestButton.imageView?.image = UIImage(systemName: "star.fill")
         }
         else
         {
             self.interestButton.imageView?.image = UIImage(systemName: "star")
         }
-        if(indexPath.section == 0)
-        {
-            self.task.isFinished = false
-            self.finishButton.imageView?.image = UIImage(systemName: "circle")
-        }
-        else
-        {
-            self.task.isFinished = true
-            self.finishButton.imageView?.image = UIImage(systemName: "checkmark.circle.fill")
-        }
-    }
-    //init cell for plannedViewController
-    func initCellForPlannedViewController(isMyDay: Bool)
-    {
-        self.taskNameLabel.text = task.detail
-        self.taskNameLabel.contentMode = .left
-        self.task.isFinished = false
         let nextDay = Int(task.timePlanned.day)
         let currentDay = Int(Date().day)
         let distance = nextDay! - currentDay!
@@ -230,12 +271,6 @@ class TaskTableViewCell: UITableViewCell {
     }
 }
 
-
-protocol TaskTableViewCellDelegate
-{
-    func taskTableViewCell(_ cell: TaskTableViewCell, didTapFinishButtonAtTask task: Task,didTapFinishButtonToState state: Bool)
-    func taskTableViewCell(_ cell: TaskTableViewCell, didTapInterestButtonAtTask task: Task,didTapInterestButtonToState state: Bool)
-}
 
 
 

@@ -10,6 +10,8 @@ import UIKit
 class TableViewCell: UITableViewCell {
     var taskStore: TaskStore!
     var listStore: ListStore!
+    var functionName: [String] = ["Add to My Day", "Remind Me", "Add Due Date", "Repeat", "Add File"]
+    var imageName: [String] = [ "sun.max", "bell", "calendar", "repeat", "tag"]
     var listOfImportantTask: [Task]
     {
         return listStore.importantTaskListStore + taskStore.importantTaskTaskStore
@@ -66,6 +68,31 @@ class TableViewCell: UITableViewCell {
         }
         else
         {
+            self.countLabel.text = ""
+        }
+    }
+    
+    func initCellForTaskMoreDetailViewController(indexPath: IndexPath, myDayState: Bool)
+    {
+        self.nameLabel.text = functionName[indexPath.row]
+        self.nameLabel.contentMode = .left
+        self.imageViewCell.image = UIImage(systemName: imageName[indexPath.row])
+        if(indexPath.section == 1 && indexPath.row == 0)
+        {
+          changeToMyDay(state: myDayState)
+        }
+    }
+    
+    func changeToMyDay(state: Bool)
+    {
+        if(state)
+        {
+            self.nameLabel.textColor = UIColor.blue
+            self.countLabel.text = "x"
+        }
+        else
+        {
+            self.nameLabel.textColor = UIColor.black
             self.countLabel.text = ""
         }
     }

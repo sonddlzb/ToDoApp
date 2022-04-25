@@ -40,6 +40,7 @@ class Task
     }
 
     var taskType: TaskType
+    var steps: [(Bool,String)] = []
     var secondTaskType: TaskType = .normal
     var due: DueType
     {
