@@ -26,7 +26,7 @@ class MyDayViewController: UIViewController, UIViewControllerTransitioningDelega
             {
                 res.append(value)
             }
-            if value.taskType == .planned && value.secondTaskType == .myDay && value.isFinished
+            if value.secondTaskType == .myDay && value.isFinished
             {
                 res.append(value)
             }
@@ -43,7 +43,7 @@ class MyDayViewController: UIViewController, UIViewControllerTransitioningDelega
             {
                 res.append(value)
             }
-            if value.taskType == .planned && value.secondTaskType == .myDay && !value.isFinished
+            if value.secondTaskType == .myDay && !value.isFinished
             {
                 res.append(value)
             }
@@ -88,6 +88,7 @@ class MyDayViewController: UIViewController, UIViewControllerTransitioningDelega
     @IBAction func addTask(_ sender: UIButton) {
         if let taskName = addTaskTextField.text, !taskName.isEmpty
         {
+            //determine due date for new Task
             var dayComponent = DateComponents()
             switch currentDeadlineType
             {
@@ -101,7 +102,6 @@ class MyDayViewController: UIViewController, UIViewControllerTransitioningDelega
             {
                 nextDate = theCalendar.date(byAdding: dayComponent, to: Date())
             }
-            print(nextDate)
             let newTask: Task
             newTask = Task(detail:taskName, taskType: .myDay, timeCreate: Date(), timePlanned: nextDate!)
             taskStore.addTask(task: newTask)
@@ -114,6 +114,7 @@ class MyDayViewController: UIViewController, UIViewControllerTransitioningDelega
     
     @IBAction func deadlineDidTap(_ sender: UIButton)
     {
+        //display deadline picker screen
         print("Load deadline presentation")
         let deadlineViewController = DeadlineViewController()
         deadlineViewController.modalPresentationStyle = .custom
@@ -127,7 +128,6 @@ class MyDayViewController: UIViewController, UIViewControllerTransitioningDelega
     {
             return HalfSizePresentationController(presentedViewController: presented, presenting: presentingViewController)
     }
-    
     // MARK: - tap to return
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         addTaskTextField.resignFirstResponder()
@@ -182,7 +182,9 @@ extension MyDayViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var detailTaskViewController = TaskMoreDetailViewController()
+        
+        //display task detail screen for each task
+        let detailTaskViewController = TaskMoreDetailViewController()
         if(indexPath.section == 0)
         {
             detailTaskViewController.task = myDayTaskNotFinished[indexPath.row]
@@ -227,6 +229,7 @@ extension MyDayViewController: TaskTableViewCellDelegate
 // MARK: - delegate from Task Detail View Controller
 extension MyDayViewController: TaskMoreDetailViewControllerDelegate
 {
+    //change my day property in task detail screen
     func taskMoreDetailViewController(targetTask target: Task, changeMyDayState state: Bool) {
         if(state)
         {
@@ -251,6 +254,7 @@ extension MyDayViewController: TaskMoreDetailViewControllerDelegate
         task.isInterested = state
     }
     
+    //delete a task from task detail screen
     func taskMoreDetailViewController(DeleteTarget target: Task) {
         taskStore.removeByID(id: target.taskID)
         myDayTableView.reloadData()
@@ -258,6 +262,7 @@ extension MyDayViewController: TaskMoreDetailViewControllerDelegate
 }
 extension MyDayViewController: DeadlineViewControllerDelegate
 {
+    //receive due type from Deadline screen
     func deadlineViewController(didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row
         {
@@ -282,6 +287,7 @@ extension MyDayViewController: DeadlineViewControllerDelegate
         self.view.layer.opacity = opacity
     }
     
+    //get date from date picker
     func deadlineViewController(currentDateSelect datePicker: Date) {
         nextDate = datePicker
         dueButton.setTitle("Due \(nextDate.dayofTheWeek), \(nextDate.day) \(nextDate.monthString)", for: .normal)

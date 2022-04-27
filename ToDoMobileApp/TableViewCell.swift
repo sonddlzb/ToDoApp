@@ -57,7 +57,7 @@ class TableViewCell: UITableViewCell {
         switch indexPath.row
         {
             case 0: number = taskStore.myDayTask.count
-            case 1: number = listOfImportantTask.count + listStore.numberOfImportantTaskInList()
+            case 1: number = listOfImportantTask.count
             case 2: number = taskStore.planTask.count
             case 4: number = taskStore.taskNotFinished.count
             default: number = 0

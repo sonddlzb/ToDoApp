@@ -62,6 +62,7 @@ class ViewController: UIViewController {
             let indexPath = IndexPath(row: index, section: 1)
             tableView.insertRows(at: [indexPath], with: .automatic)
         }
+        addListTextField.text = ""
     }
     override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
