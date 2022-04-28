@@ -11,6 +11,7 @@ protocol StepTableViewCellDelegate
 {
     func stepTableViewCell(_ cell: StepTableViewCell, didDeleteButtonAtStep step: Int)
     func stepTableViewCell(_ cell: StepTableViewCell, didFinishButtonAtStep step: Int)
+    func stepTableViewCell(_ cell: StepTableViewCell, didEditStepNameAt step: Int, toValue newName: String)
 }
 class StepTableViewCell: UITableViewCell {
 
@@ -22,6 +23,7 @@ class StepTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        stepNameTextField.delegate = self
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -54,4 +56,16 @@ class StepTableViewCell: UITableViewCell {
         delegate?.stepTableViewCell(self, didFinishButtonAtStep: currentStep)
     }
     
+}
+
+extension StepTableViewCell: UITextFieldDelegate
+{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.endEditing(true)
+        if let newName = textField.text, textField.hasText
+        {
+        delegate?.stepTableViewCell(self, didEditStepNameAt: currentStep, toValue: newName)
+        }
+        return false
+    }
 }

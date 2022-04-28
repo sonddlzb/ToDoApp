@@ -210,7 +210,7 @@ extension TaskMoreDetailViewController: UITableViewDelegate, UITableViewDataSour
             let cell = taskTableView.dequeueReusableCell(withIdentifier: "TableViewCell")
             as! TableViewCell
             cell.task = task
-            let state = task.taskType == .myDay || (task.taskType == .planned && task.secondTaskType == .myDay)
+            let state = task.taskType == .myDay || ( task.secondTaskType == .myDay)
             cell.initCellForTaskMoreDetailViewController(indexPath: indexPath, myDayState: state)
             return cell
         }
@@ -224,7 +224,7 @@ extension TaskMoreDetailViewController: UITableViewDelegate, UITableViewDataSour
         }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat(50.0)
+        return CGFloat(60.0)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -293,6 +293,9 @@ extension TaskMoreDetailViewController: StepTableViewCellDelegate
             cell.finishButton.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
             task.steps[step].0 = true
         }
+    }
+    func stepTableViewCell(_ cell: StepTableViewCell, didEditStepNameAt step: Int, toValue newName: String) {
+        task.steps[step].1 = newName
     }
 }
 

@@ -105,19 +105,7 @@ class TaskStore
         var res: [Task] = []
         for task in allTask
         {
-            if(task.taskType == .important && !task.isFinished)
-            {
-                res.append(task)
-            }
-            if(task.taskType == .myDay && task.isInterested && !task.isFinished)
-            {
-                res.append(task)
-            }
-            if(task.taskType == .planned && task.isInterested && !task.isFinished)
-            {
-                res.append(task)
-            }
-            if(task.taskType == .normal && task.isInterested && !task.isFinished)
+            if(task.taskType != .listed && task.isInterested && !task.isFinished)
             {
                 res.append(task)
             }

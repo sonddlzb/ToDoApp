@@ -22,6 +22,7 @@ class ViewController: UIViewController {
         print("loadVIew")
         initGui()
         self.hideKeyboardWhenTappedAround()
+        self.title = "TODO APP"
         self.tableView.register(UINib(nibName: "TableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "TableViewCell")
         super.viewDidLoad()
         tableView.dataSource = self
@@ -150,7 +151,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource
             }
         }
     }
-    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 20))
+        return footerView
+    }
 
     
 }

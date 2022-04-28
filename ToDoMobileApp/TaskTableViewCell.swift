@@ -20,6 +20,7 @@ class TaskTableViewCell: UITableViewCell {
     @IBOutlet weak var taskNameLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var moreInfoLabel: UILabel!
+    var isOnEditMode: Bool!
     var taskStore: TaskStore!
     var task: Task!
     func initGui()
@@ -34,7 +35,7 @@ class TaskTableViewCell: UITableViewCell {
         {
             finishButton.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
         }
-        if(task.isInterested || task.taskType == .important)
+        if(task.isInterested)
         {
             interestButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
         }
@@ -93,7 +94,7 @@ class TaskTableViewCell: UITableViewCell {
             self.taskNameLabel.contentMode = .left
             self.task.isFinished = false
             self.finishButton.imageView?.image = UIImage(systemName: "circle")
-            if(self.task.isInterested || self.task.taskType == .important)
+            if(self.task.isInterested)
             {
                 self.interestButton.imageView?.image = UIImage(systemName: "star.fill")
             }
@@ -111,7 +112,7 @@ class TaskTableViewCell: UITableViewCell {
 
             self.task.isFinished = true
             self.finishButton.imageView?.image = UIImage(systemName: "checkmark.circle.fill")
-            if(self.task.isInterested || self.task.taskType == .important)
+            if(self.task.isInterested)
             {
                 self.interestButton.imageView?.image = UIImage(systemName: "star.fill")
             }
@@ -309,6 +310,16 @@ class TaskTableViewCell: UITableViewCell {
         else
         {
             self.interestButton.imageView?.image = UIImage(systemName: "star")
+        }
+        if(isOnEditMode)
+        {
+            self.interestButton.isHidden = true
+            self.finishButton.tintColor = UIColor.black
+        }
+        else
+        {
+            self.interestButton.isHidden = false
+            self.finishButton.tintColor = .systemBlue
         }
     }
 }

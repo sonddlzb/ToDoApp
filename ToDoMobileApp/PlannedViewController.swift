@@ -8,12 +8,15 @@
 import UIKit
 import SwiftUI
 class PlannedViewController: UIViewController, UIViewControllerTransitioningDelegate {
+    var isOnEditMode: Bool = false
     var taskStore: TaskStore!
     var currentFilter: Int = 0
     var isMyDay = false
     var nextDate: Date!
     var currentDeadlineType: DeadlineType = .Today
+    var isSelected: [Bool] = [Bool](repeating: false, count: 1000)
     let nameValue = ["All Planned", "Overdue", "Today", "Tomorrow", "This Week", "Later"]
+    @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var addTaskTextField: UITextField!
     @IBOutlet weak var plannedTableView: UITableView!
     @IBOutlet weak var filterButton: UIButton!
@@ -21,8 +24,15 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
     @IBOutlet weak var dueButton: UIButton!
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var viewMove: UIView!
+    @IBOutlet weak var selectAllButton: UIButton!
+    @IBOutlet weak var moveButton: UIButton!
+    @IBOutlet weak var dueDateButton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
+        stackView.isHidden = true
+        let optionBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(listOptionDidTap(_:)))
+        self.navigationItem.rightBarButtonItem  = optionBarButtonItem
         plannedTableView.register(UINib(nibName: "TaskTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "TaskTableViewCell")
         plannedTableView.delegate = self
         plannedTableView.dataSource = self
@@ -33,8 +43,34 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
         NotificationCenter.default.addObserver(self, selector: #selector(PlannedViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         // Do any additional setup after loading the view.
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
+        plannedTableView.reloadData()
+    }
+    // MARK: -edit mode on
+    func stackViewAppear()
+    {
+        isOnEditMode = true
+        stackView.isHidden = false
+        viewMove.isHidden = true
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        let bottomConstraint = stackView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50)
+        let leadingConstraint = stackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
+        let trailingConstraint = stackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+        bottomConstraint.isActive = true
+        leadingConstraint.isActive = true
+        trailingConstraint.isActive = true
+        plannedTableView.reloadData()
+    }
+    
+    // MARK: -edit mode off
+    @objc func stackViewDismiss()
+    {
+        isOnEditMode = false
+        stackView.isHidden = true
+        viewMove.isHidden = false
+        let optionBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(listOptionDidTap(_:)))
+        self.navigationItem.setRightBarButton(optionBarButtonItem, animated: true)
         plannedTableView.reloadData()
     }
     @IBAction func addTask(_ sender: UIButton) {
@@ -65,16 +101,79 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
                 newTask = Task(detail:taskName, taskType: .planned, secondTaskType: .myDay, timeCreate: Date(), timePlanned: nextDate!)
             }
             taskStore.addTask(task: newTask)
-            let index = taskStore.planTask.count - 1
+            var index: Int
+            switch currentFilter
+            {
+                case 0: index = taskStore.planTask.count - 1
+                case 1: index = taskStore.planOverdueTask.count - 1
+                case 2: index = taskStore.planTodayTask.count - 1
+                case 3: index = taskStore.planTomorrowTask.count - 1
+                case 4: index = taskStore.planThisWeekTask.count - 1
+                case 5: index = taskStore.planLaterTask.count - 1
+                default: index = 0
+            }
             let indexPath = IndexPath(row: index, section: 0)
             if newTask.due.rawValue == currentFilter || currentFilter == 0
             {
+                
                 plannedTableView.insertRows(at: [indexPath], with: .automatic)
             }
             addTaskTextField.text = ""
         }
     }
     
+    // MARK: - select all tap
+    @IBAction func selectAllTap(_ sender: UIButton)
+    {
+        if let title = sender.titleLabel?.text, title == "Select all"
+        {
+            sender.setTitle("Clear all", for: .normal)
+            isSelected = [Bool](repeating: true, count: 1000)
+            for i in 0...(self.taskStore.planTask.count - 1)
+            {
+                let indexPath = IndexPath(row: i, section: 0)
+                (plannedTableView.cellForRow(at: indexPath) as! TaskTableViewCell).finishButton.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
+            }
+        }
+        else
+        {
+            sender.setTitle("Select all", for: .normal)
+            isSelected = [Bool](repeating: false, count: 1000)
+            for i in 0...(self.taskStore.planTask.count - 1)
+            {
+                let indexPath = IndexPath(row: i, section: 0)
+                (plannedTableView.cellForRow(at: indexPath) as! TaskTableViewCell).finishButton.setImage(UIImage(systemName: "circle"), for: .normal)
+            }
+        }
+        updateOptionButtons()
+        
+    }
+    
+    // MARK: - delete selected Tasks
+    @IBAction func deleteSelectedTasksTap(_ sender: UIButton)
+    {
+        let alert = UIAlertController(title: nil, message: "Are you sure you want to permanently delete these tasks?", preferredStyle: .actionSheet)
+        let yesAction = UIAlertAction(title: "Delete task", style: .destructive)
+        {   _ in
+            var idRemove = [String]()
+            for i in 0...(self.taskStore.planTask.count-1)
+            {
+                if(self.isSelected[i])
+                {
+                    idRemove.append(self.taskStore.planTask[i].taskID)
+                }
+            }
+            for value in idRemove
+            {
+                self.taskStore.removeByID(id: value)
+            }
+            self.plannedTableView.reloadData()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(yesAction)
+        alert.addAction(cancelAction)
+        present(alert,animated: true, completion: nil)
+    }
     @IBAction func addPresentView(_ sender: UIButton) {
         print("Load present ")
         let plannedFilterFloatViewController = PlannedFilterFloatViewController()
@@ -108,7 +207,8 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         addTaskTextField.resignFirstResponder()
     }
-    
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    // MARK: - keyboard show
     @objc func keyboardWillShow(notification: NSNotification) {
         guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
            // if keyboard size is not available for some reason, dont do anything
@@ -122,7 +222,44 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
       // move back the root view origin
         self.viewMove.frame.origin.y = view.bounds.height - viewMove.bounds.height - view.safeAreaInsets.bottom
     }
-    
+     
+    // MARK: - update option buttons
+    func updateOptionButtons()
+    {
+        if let value = isSelected.firstIndex(of: true)
+        {
+            moveButton.tintColor = UIColor.systemBlue
+            dueDateButton.tintColor = UIColor.systemBlue
+            deleteButton.tintColor = UIColor.red
+            deleteButton.isUserInteractionEnabled = true
+            dueDateButton.isUserInteractionEnabled = true
+            moveButton.isUserInteractionEnabled = true
+        }
+        else
+        {
+            if let title = selectAllButton.titleLabel?.text, title == "Select all"
+            {
+                selectAllButton.setTitle("Clear all", for: .normal)
+            }
+            moveButton.tintColor = UIColor.black
+            dueDateButton.tintColor = UIColor.black
+            deleteButton.tintColor = UIColor.black
+            deleteButton.isUserInteractionEnabled = false
+            dueDateButton.isUserInteractionEnabled = false
+            moveButton.isUserInteractionEnabled = false
+        }
+        if let value = isSelected.firstIndex(of: false), value > taskStore.planTask.count
+        {
+            
+        }
+        else
+        {
+            if let title = selectAllButton.titleLabel?.text, title == "Clear all"
+            {
+                selectAllButton.setTitle("Select all", for: .normal)
+            }
+        }
+    }
     
     @IBAction func deadlineDidTap(_ sender: UIButton)
     {
@@ -133,6 +270,19 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
         deadlineViewController.modalTransitionStyle = .coverVertical
         deadlineViewController.delegate = self
         self.present(deadlineViewController, animated: true, completion: nil)
+        self.view.layer.opacity = 0.5
+    }
+    
+    // MARK: -tap list option
+    @objc func listOptionDidTap(_ sender: UIBarButtonItem)
+    {
+        print("Load list of options presentation")
+        let listOptionView = ListOptionViewController()
+        listOptionView.modalTransitionStyle = .coverVertical
+        listOptionView.modalPresentationStyle = .custom
+        listOptionView.transitioningDelegate = self
+        listOptionView.delegate = self
+        self.present(listOptionView, animated: true, completion: nil)
         self.view.layer.opacity = 0.5
     }
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController?
@@ -174,6 +324,7 @@ extension PlannedViewController: UITableViewDelegate, UITableViewDataSource
             default: print("wrong index of filter for cell")
         }
         cell.delegate = self
+        cell.isOnEditMode = isOnEditMode
         cell.initCellForPlannedViewController()
         return cell
     }
@@ -223,15 +374,24 @@ extension PlannedViewController: TaskTableViewCellDelegate
 {
     func taskTableViewCell(_ cell: TaskTableViewCell, didTapFinishButtonAtTask task: Task, didTapFinishButtonToState state: Bool) {
         print("update finished database of \(task.detail)!")
-        task.isFinished = state
-        let indexPath = plannedTableView.indexPath(for: cell)
-        if let index = indexPath
+        if(!isOnEditMode)
         {
-            plannedTableView.deleteRows(at: [index], with: .automatic)
+            task.isFinished = state
+            let indexPath = plannedTableView.indexPath(for: cell)
+            if let index = indexPath
+            {
+                plannedTableView.deleteRows(at: [index], with: .automatic)
+            }
+            else
+            {
+                print("Unexpected error!")
+            }
         }
         else
         {
-            print("Unexpected error!")
+            isSelected[plannedTableView.indexPath(for: cell)!.row] = state
+            print(plannedTableView.indexPath(for: cell)!.row)
+            updateOptionButtons()
         }
         //importantTableView.reloadData()
     }
@@ -293,7 +453,7 @@ extension PlannedViewController: DeadlineViewControllerDelegate
     
 }
 
-// MARK: - delegate from textField for returning
+// MARK: - delegate from textField
 extension PlannedViewController: UITextFieldDelegate
 {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -323,10 +483,6 @@ extension PlannedViewController: TaskMoreDetailViewControllerDelegate
         plannedTableView.reloadData()
     }
     
-    func taskMoreDetailViewController(changeToMyDay isMyDay: Bool) {
-        self.isMyDay = isMyDay
-    }
-    
     func taskMoreDetailViewController(_ indexPath: IndexPath, didTapFinishButtonAtTask task: Task, didTapFinishButtonToState state: Bool) {
         print("update finished database of \(task.detail)!")
         task.isFinished = state
@@ -340,6 +496,23 @@ extension PlannedViewController: TaskMoreDetailViewControllerDelegate
     func taskMoreDetailViewController(_ indexPath: IndexPath, didTapImportantButtonAtTask task: Task, didTapImportantButtonToState state: Bool) {
         print("update finished database of \(task.detail)!")
         task.isInterested = state
+    }
+    
+    
+}
+
+// MARK: - delegate from ListOptionViewController
+extension PlannedViewController: ListOptionViewControllerDelegate
+{
+    func listOptionViewController() {
+        stackViewAppear()
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(stackViewDismiss))
+        self.navigationItem.setRightBarButton(cancelButton, animated: true)
+        
+    }
+    
+    func listOptionViewController(Opacity opacity: Float) {
+        self.view.layer.opacity = opacity
     }
     
     

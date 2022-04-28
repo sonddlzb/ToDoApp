@@ -18,23 +18,6 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FQV-qP-erY">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                    <color key="backgroundColor" systemColor="labelColor"/>
-                    <color key="tintColor" systemColor="labelColor"/>
-                    <textAttributes key="titleTextAttributes">
-                        <color key="textColor" systemColor="systemGreenColor"/>
-                    </textAttributes>
-                    <textAttributes key="largeTitleTextAttributes">
-                        <color key="textColor" systemColor="systemGreenColor"/>
-                    </textAttributes>
-                    <items>
-                        <navigationItem title="Assign To Me" id="eKv-nE-fTb">
-                            <barButtonItem key="rightBarButtonItem" title="Item" image="icon-dot" id="Yid-Ba-MWD"/>
-                        </navigationItem>
-                    </items>
-                    <navigationBarAppearance key="scrollEdgeAppearance"/>
-                </navigationBar>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="assign-to-me" translatesAutoresizingMaskIntoConstraints="NO" id="tAL-0x-C1F">
                     <rect key="frame" x="87" y="393" width="240" height="120"/>
                     <constraints>
@@ -55,10 +38,7 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="labelColor"/>
             <constraints>
-                <constraint firstItem="FQV-qP-erY" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="DeY-RV-w3L"/>
                 <constraint firstItem="kBb-NX-2pO" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Slj-Lb-0iq"/>
-                <constraint firstItem="FQV-qP-erY" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="TRc-wL-Pyv"/>
-                <constraint firstItem="FQV-qP-erY" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="-44" id="ai1-lf-Btc"/>
                 <constraint firstItem="tAL-0x-C1F" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="jxw-qV-Zki"/>
                 <constraint firstItem="tAL-0x-C1F" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="o8U-Ps-xm2"/>
                 <constraint firstItem="kBb-NX-2pO" firstAttribute="top" secondItem="tAL-0x-C1F" secondAttribute="bottom" constant="20" id="wzF-fh-MdK"/>
@@ -68,7 +48,6 @@
     </objects>
     <resources>
         <image name="assign-to-me" width="511" height="397"/>
-        <image name="icon-dot" width="32" height="32"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

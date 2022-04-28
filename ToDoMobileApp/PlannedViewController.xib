@@ -12,10 +12,16 @@
             <connections>
                 <outlet property="addButton" destination="AsN-Un-9Rc" id="yh1-7S-WYb"/>
                 <outlet property="addTaskTextField" destination="9tg-EV-tBo" id="8I0-Iv-mNz"/>
+                <outlet property="bottomConstraint" destination="chH-A3-5N6" id="skO-LD-yt1"/>
+                <outlet property="deleteButton" destination="csd-Ao-WFG" id="7L0-Sx-x4s"/>
                 <outlet property="dueButton" destination="aZe-dV-nyM" id="bHg-kS-L1I"/>
+                <outlet property="dueDateButton" destination="1gN-5j-VoI" id="C9t-ot-D25"/>
                 <outlet property="filterButton" destination="BVx-yq-s59" id="uk0-FF-hLw"/>
+                <outlet property="moveButton" destination="1VC-rF-o9t" id="Qu9-zE-v64"/>
                 <outlet property="myDayButton" destination="GMq-Kv-0Kb" id="C9G-XX-YSS"/>
                 <outlet property="plannedTableView" destination="SSp-dB-dOG" id="kVW-Sd-cEA"/>
+                <outlet property="selectAllButton" destination="4sh-R9-5Gb" id="iyd-m2-LrF"/>
+                <outlet property="stackView" destination="RK4-NU-X94" id="cc4-Q2-gde"/>
                 <outlet property="view" destination="O3C-ZV-l5S" id="zUv-Dh-bp9"/>
                 <outlet property="viewMove" destination="2aq-GN-6wA" id="rXv-hP-grt"/>
             </connections>
@@ -25,19 +31,8 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z2k-ac-eZp">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="WsV-NR-RRK"/>
-                    </constraints>
-                    <items>
-                        <navigationItem id="7n3-9G-ujo">
-                            <barButtonItem key="rightBarButtonItem" image="icon-dot" id="jYt-tV-hl5"/>
-                        </navigationItem>
-                    </items>
-                </navigationBar>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="SSp-dB-dOG">
-                    <rect key="frame" x="0.0" y="158" width="414" height="614"/>
+                    <rect key="frame" x="0.0" y="84" width="414" height="688"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2aq-GN-6wA">
@@ -111,7 +106,10 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BVx-yq-s59">
-                    <rect key="frame" x="0.0" y="100" width="414" height="38"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="yik-jh-S8H"/>
+                    </constraints>
                     <state key="normal" title="Button"/>
                     <buttonConfiguration key="configuration" style="plain" title="All Planned">
                         <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
@@ -120,8 +118,44 @@
                         <action selector="addPresentView:" destination="-1" eventType="touchUpInside" id="zc9-NT-rhl"/>
                     </connections>
                 </button>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" id="RK4-NU-X94">
+                    <rect key="frame" x="107" y="513" width="200" height="90"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4sh-R9-5Gb">
+                            <rect key="frame" x="0.0" y="0.0" width="50" height="90"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="list.bullet" catalog="system" imagePlacement="top" title="Select all"/>
+                            <connections>
+                                <action selector="selectAllTap:" destination="-1" eventType="touchUpInside" id="UBc-8V-zPA"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1VC-rF-o9t">
+                            <rect key="frame" x="50" y="0.0" width="50" height="90"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="list.triangle" catalog="system" imagePlacement="top" title="Move"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1gN-5j-VoI">
+                            <rect key="frame" x="100" y="0.0" width="50" height="90"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="calendar" catalog="system" imagePlacement="top" title="Due Date"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="csd-Ao-WFG">
+                            <rect key="frame" x="150" y="0.0" width="50" height="90"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="trash" catalog="system" imagePlacement="top" title="Delete"/>
+                            <connections>
+                                <action selector="deleteSelectedTasksTap:" destination="-1" eventType="touchUpInside" id="xQj-6M-cAC"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="pH6-s7-uA2"/>
+                </stackView>
                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="WVY-KP-oNG">
-                    <rect key="frame" x="0.0" y="168" width="414" height="44"/>
+                    <rect key="frame" x="0.0" y="92" width="414" height="44"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WVY-KP-oNG" id="K0N-v3-Etz">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -133,19 +167,16 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <gestureRecognizers/>
             <constraints>
-                <constraint firstItem="BVx-yq-s59" firstAttribute="leading" secondItem="bhL-G2-v9e" secondAttribute="leading" id="09P-cT-lZ8"/>
                 <constraint firstItem="2aq-GN-6wA" firstAttribute="leading" secondItem="bhL-G2-v9e" secondAttribute="leading" id="0Z8-7r-2GB"/>
+                <constraint firstItem="BVx-yq-s59" firstAttribute="top" secondItem="bhL-G2-v9e" secondAttribute="top" id="108-o8-9bJ"/>
                 <constraint firstItem="2aq-GN-6wA" firstAttribute="trailing" secondItem="bhL-G2-v9e" secondAttribute="trailing" id="1Dh-yo-Fl4"/>
-                <constraint firstItem="z2k-ac-eZp" firstAttribute="top" secondItem="bhL-G2-v9e" secondAttribute="top" constant="-44" id="5LB-av-boe"/>
-                <constraint firstItem="2aq-GN-6wA" firstAttribute="top" secondItem="SSp-dB-dOG" secondAttribute="bottom" id="6OY-k8-qNZ"/>
-                <constraint firstItem="SSp-dB-dOG" firstAttribute="top" secondItem="BVx-yq-s59" secondAttribute="bottom" constant="20" id="8Ia-zB-QAV"/>
-                <constraint firstItem="z2k-ac-eZp" firstAttribute="trailing" secondItem="bhL-G2-v9e" secondAttribute="trailing" id="BB0-Jg-knO"/>
-                <constraint firstItem="bhL-G2-v9e" firstAttribute="trailing" secondItem="SSp-dB-dOG" secondAttribute="trailing" id="WTk-xb-Ycs"/>
-                <constraint firstItem="z2k-ac-eZp" firstAttribute="leading" secondItem="bhL-G2-v9e" secondAttribute="leading" id="b4w-Ph-Y5v"/>
+                <constraint firstItem="BVx-yq-s59" firstAttribute="trailing" secondItem="bhL-G2-v9e" secondAttribute="trailing" id="2k9-zL-jq4"/>
+                <constraint firstItem="SSp-dB-dOG" firstAttribute="top" secondItem="BVx-yq-s59" secondAttribute="bottom" id="LvU-Vq-WN8"/>
+                <constraint firstItem="BVx-yq-s59" firstAttribute="leading" secondItem="bhL-G2-v9e" secondAttribute="leading" id="NGT-xC-Xqh"/>
+                <constraint firstItem="SSp-dB-dOG" firstAttribute="trailing" secondItem="bhL-G2-v9e" secondAttribute="trailing" id="NRP-7w-6jm"/>
+                <constraint firstItem="2aq-GN-6wA" firstAttribute="top" secondItem="SSp-dB-dOG" secondAttribute="bottom" id="Q0W-9b-n1d"/>
                 <constraint firstItem="2aq-GN-6wA" firstAttribute="bottom" secondItem="bhL-G2-v9e" secondAttribute="bottom" id="chH-A3-5N6"/>
-                <constraint firstItem="bhL-G2-v9e" firstAttribute="trailing" secondItem="BVx-yq-s59" secondAttribute="trailing" id="jFp-Cn-pbS"/>
-                <constraint firstItem="SSp-dB-dOG" firstAttribute="leading" secondItem="bhL-G2-v9e" secondAttribute="leading" id="l2W-ih-JSJ"/>
-                <constraint firstItem="BVx-yq-s59" firstAttribute="top" secondItem="z2k-ac-eZp" secondAttribute="bottom" constant="50" id="lbd-jA-vWG"/>
+                <constraint firstItem="SSp-dB-dOG" firstAttribute="leading" secondItem="bhL-G2-v9e" secondAttribute="leading" id="pyg-Zy-Hnu"/>
             </constraints>
             <connections>
                 <outletCollection property="gestureRecognizers" destination="uT3-0w-I43" appends="YES" id="ZX0-pZ-JKa"/>
@@ -162,7 +193,9 @@
         <image name="bell" catalog="system" width="128" height="124"/>
         <image name="calendar" catalog="system" width="128" height="106"/>
         <image name="homekit" catalog="system" width="128" height="106"/>
-        <image name="icon-dot" width="32" height="32"/>
+        <image name="list.bullet" catalog="system" width="128" height="88"/>
+        <image name="list.triangle" catalog="system" width="128" height="91"/>
+        <image name="trash" catalog="system" width="121" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

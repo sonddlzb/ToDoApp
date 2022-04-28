@@ -23,22 +23,8 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B0f-Lf-cwK">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="8kw-kr-phm"/>
-                    </constraints>
-                    <textAttributes key="titleTextAttributes">
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                    </textAttributes>
-                    <items>
-                        <navigationItem id="V84-m7-eWL">
-                            <barButtonItem key="rightBarButtonItem" image="icon-dot" id="QGH-wM-YM6"/>
-                        </navigationItem>
-                    </items>
-                </navigationBar>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="53f-aa-oCs">
-                    <rect key="frame" x="0.0" y="50" width="414" height="722"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="728"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lz3-PM-dxM">
@@ -106,7 +92,7 @@
                     </constraints>
                 </view>
                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="T9P-6d-Hne">
-                    <rect key="frame" x="0.0" y="50" width="414" height="44"/>
+                    <rect key="frame" x="0.0" y="127" width="414" height="44"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="T9P-6d-Hne" id="6X1-FG-P0H">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -119,22 +105,19 @@
             <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="Lz3-PM-dxM" firstAttribute="bottom" secondItem="Iya-XX-dT9" secondAttribute="bottom" id="8HA-VU-7aa"/>
-                <constraint firstItem="B0f-Lf-cwK" firstAttribute="trailing" secondItem="Iya-XX-dT9" secondAttribute="trailing" id="FmS-7Z-wJY"/>
-                <constraint firstItem="B0f-Lf-cwK" firstAttribute="top" secondItem="Iya-XX-dT9" secondAttribute="top" constant="-44" id="H5d-0V-SuJ"/>
-                <constraint firstItem="B0f-Lf-cwK" firstAttribute="leading" secondItem="Iya-XX-dT9" secondAttribute="leading" id="Jrp-3E-qA4"/>
-                <constraint firstItem="Lz3-PM-dxM" firstAttribute="top" secondItem="53f-aa-oCs" secondAttribute="bottom" id="P2D-iB-F2u"/>
-                <constraint firstItem="53f-aa-oCs" firstAttribute="trailing" secondItem="Iya-XX-dT9" secondAttribute="trailing" id="egG-Eh-Ybo"/>
+                <constraint firstItem="53f-aa-oCs" firstAttribute="top" secondItem="Iya-XX-dT9" secondAttribute="top" id="CMU-uj-Bfh"/>
+                <constraint firstItem="53f-aa-oCs" firstAttribute="leading" secondItem="Iya-XX-dT9" secondAttribute="leading" id="MWj-LQ-BFh"/>
+                <constraint firstItem="Lz3-PM-dxM" firstAttribute="top" secondItem="53f-aa-oCs" secondAttribute="bottom" id="TeZ-tS-1Dv"/>
                 <constraint firstItem="Iya-XX-dT9" firstAttribute="trailing" secondItem="Lz3-PM-dxM" secondAttribute="trailing" id="fwA-vJ-rVM"/>
+                <constraint firstItem="53f-aa-oCs" firstAttribute="trailing" secondItem="Iya-XX-dT9" secondAttribute="trailing" id="fze-bN-oDl"/>
                 <constraint firstItem="Lz3-PM-dxM" firstAttribute="leading" secondItem="Iya-XX-dT9" secondAttribute="leading" id="uRS-2c-WpO"/>
-                <constraint firstItem="53f-aa-oCs" firstAttribute="leading" secondItem="Iya-XX-dT9" secondAttribute="leading" id="waQ-Q5-KBN"/>
-                <constraint firstItem="53f-aa-oCs" firstAttribute="top" secondItem="B0f-Lf-cwK" secondAttribute="bottom" id="z9L-Ar-7a8"/>
             </constraints>
             <connections>
                 <outletCollection property="gestureRecognizers" destination="9Df-wn-D1p" appends="YES" id="pGI-r6-0VH"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="-74.330357142857139"/>
         </view>
-        <tapGestureRecognizer id="9Df-wn-D1p">
+        <tapGestureRecognizer cancelsTouchesInView="NO" id="9Df-wn-D1p">
             <connections>
                 <action selector="dismissKeyboard:" destination="-1" id="38H-gX-lk5"/>
             </connections>
@@ -144,7 +127,6 @@
         <image name="bell" catalog="system" width="128" height="124"/>
         <image name="calendar" catalog="system" width="128" height="106"/>
         <image name="homekit" catalog="system" width="128" height="106"/>
-        <image name="icon-dot" width="32" height="32"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

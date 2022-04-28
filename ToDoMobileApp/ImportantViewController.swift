@@ -27,6 +27,7 @@ class ImportantViewController: UIViewController, UIViewControllerTransitioningDe
     //combine important tasks in both listStore and taskStore
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Important"
         importantTableView.register(UINib(nibName: "TaskTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "TaskTableViewCell")
         importantTableView.reloadData()
         importantTableView.delegate = self
@@ -140,6 +141,18 @@ extension ImportantViewController: UITableViewDelegate, UITableViewDataSource
         cell.delegate = self
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        //display task detail screen for each task
+        let detailTaskViewController = TaskMoreDetailViewController()
+        detailTaskViewController.task = importantTask[indexPath.row]
+        detailTaskViewController.delegate = self
+        detailTaskViewController.currentIndexPath = indexPath
+        detailTaskViewController.isMyDay = (importantTask[indexPath.row].secondTaskType == .myDay)
+        self.navigationController?.pushViewController(detailTaskViewController, animated: true)
+    }
+
 }
 // MARK: - delegate from UITextField
 
@@ -202,6 +215,45 @@ extension ImportantViewController: DeadlineViewControllerDelegate
         nextDate = datePicker
         dueButton.setTitle("Due \(nextDate.dayofTheWeek), \(nextDate.day) \(nextDate.monthString)", for: .normal)
 
+    }
+    
+    
+}
+
+// MARK: - delegate from Task Detail ViewController
+
+extension ImportantViewController: TaskMoreDetailViewControllerDelegate
+{
+    func taskMoreDetailViewController(_ indexPath: IndexPath, didTapFinishButtonAtTask task: Task, didTapFinishButtonToState state: Bool) {
+        print("update finished database of \(task.detail)!")
+        task.isFinished = state
+        if(state)
+        {
+            importantTableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+        self.importantTableView.reloadData()
+    }
+    
+    func taskMoreDetailViewController(_ indexPath: IndexPath, didTapImportantButtonAtTask task: Task, didTapImportantButtonToState state: Bool) {
+        print("update finished database of \(task.detail)!")
+        task.isInterested = state
+    }
+    
+    func taskMoreDetailViewController(DeleteTarget target: Task) {
+        taskStore.removeByID(id: target.taskID)
+        importantTableView.reloadData()
+    }
+    
+    func taskMoreDetailViewController(targetTask target: Task, changeMyDayState state: Bool) {
+        if(state)
+        {
+            target.secondTaskType = .myDay
+        }
+        else
+        {
+            target.secondTaskType = .normal
+        }
+        importantTableView.reloadData()
     }
     
     

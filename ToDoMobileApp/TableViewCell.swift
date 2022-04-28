@@ -77,6 +77,7 @@ class TableViewCell: UITableViewCell {
     {
         self.nameLabel.text = functionName[indexPath.row]
         self.nameLabel.textColor = .black
+        self.countLabel.text = ""
         self.nameLabel.contentMode = .left
         self.imageViewCell.image = UIImage(systemName: imageName[indexPath.row])
         if(indexPath.section == 1 && indexPath.row == 0)
@@ -131,6 +132,19 @@ class TableViewCell: UITableViewCell {
             self.nameLabel.textColor = UIColor.black
             self.countLabel.text = ""
         }
+    }
+    
+    func initCellForListOptionViewController(indexPath: IndexPath)
+    {
+        let optionName: [String] = ["Edit", "Change Theme", "Print List","Group by", "Send a Copy", "Show Completed Tasks"]
+        let optionImage: [String] = ["pencil", "photo.artframe", "printer","rectangle.3.group", "square.and.arrow.up", "checkmark.circle"]
+        self.nameLabel.text = optionName[indexPath.row]
+        self.imageViewCell.image = UIImage(systemName: optionImage[indexPath.row])
+        if(indexPath.row == 1 || indexPath.row == 3)
+        {
+            self.countLabel.text = ">"
+        }
+        
     }
 }
 

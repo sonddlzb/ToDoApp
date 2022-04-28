@@ -17,6 +17,10 @@ class Task
     @objc dynamic var timePlanned: Date
     init(detail: String, taskType: TaskType, timeCreate: Date)
     {
+        if(taskType == .important)
+        {
+            self.isInterested = true
+        }
         self.detail = detail
         self.taskType = taskType
         self.timeCreate = timeCreate
@@ -25,6 +29,10 @@ class Task
     
     init(detail: String, taskType: TaskType, timeCreate: Date, timePlanned: Date)
     {
+        if(taskType == .important)
+        {
+            self.isInterested = true
+        }
         self.detail = detail
         self.taskType = taskType
         self.timeCreate = timeCreate
@@ -32,6 +40,10 @@ class Task
     }
     init(detail: String, taskType: TaskType, secondTaskType: TaskType, timeCreate: Date, timePlanned: Date)
     {
+        if(taskType == .important)
+        {
+            self.isInterested = true
+        }
         self.detail = detail
         self.taskType = taskType
         self.timeCreate = timeCreate

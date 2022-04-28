@@ -25,6 +25,8 @@
 		C8330DAC280D4C230064FE4C /* DeadlineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8330DAA280D4C230064FE4C /* DeadlineViewController.xib */; };
 		C8330DAE280D6A940064FE4C /* Enumeration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8330DAD280D6A940064FE4C /* Enumeration.swift */; };
 		C8330DB0280D6B430064FE4C /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8330DAF280D6B430064FE4C /* Extension.swift */; };
+		C83380DA2818EEF70025E423 /* ListOptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83380D82818EEF70025E423 /* ListOptionViewController.swift */; };
+		C83380DB2818EEF70025E423 /* ListOptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C83380D92818EEF70025E423 /* ListOptionViewController.xib */; };
 		C83A95CE2806686F0044EA99 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83A95CC2806686F0044EA99 /* TaskTableViewCell.swift */; };
 		C83A95CF2806686F0044EA99 /* TaskTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C83A95CD2806686F0044EA99 /* TaskTableViewCell.xib */; };
 		C83A95DA28066BA20044EA99 /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83A95D828066BA20044EA99 /* TaskViewController.swift */; };
@@ -99,6 +101,8 @@
 		C8330DAA280D4C230064FE4C /* DeadlineViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeadlineViewController.xib; sourceTree = "<group>"; };
 		C8330DAD280D6A940064FE4C /* Enumeration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enumeration.swift; sourceTree = "<group>"; };
 		C8330DAF280D6B430064FE4C /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		C83380D82818EEF70025E423 /* ListOptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOptionViewController.swift; sourceTree = "<group>"; };
+		C83380D92818EEF70025E423 /* ListOptionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListOptionViewController.xib; sourceTree = "<group>"; };
 		C83A95CC2806686F0044EA99 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		C83A95CD2806686F0044EA99 /* TaskTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskTableViewCell.xib; sourceTree = "<group>"; };
 		C83A95D828066BA20044EA99 /* TaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
@@ -234,6 +238,8 @@
 				C895EA0128162E4D00A9072C /* HalfSizePresentationController.swift */,
 				C895EA03281678D400A9072C /* NoteViewController.swift */,
 				C895EA04281678D400A9072C /* NoteViewController.xib */,
+				C83380D82818EEF70025E423 /* ListOptionViewController.swift */,
+				C83380D92818EEF70025E423 /* ListOptionViewController.xib */,
 			);
 			path = ToDoMobileApp;
 			sourceTree = "<group>";
@@ -397,6 +403,7 @@
 				C806873F27FFC65200491787 /* TableViewCell.xib in Resources */,
 				C82CB6A5280FA34500A147AD /* DatePickerViewController.xib in Resources */,
 				C8EFFB7828092D38001770AD /* PlannedFilterFloatViewController.xib in Resources */,
+				C83380DB2818EEF70025E423 /* ListOptionViewController.xib in Resources */,
 				C8EFFB74280901AA001770AD /* MyDayViewController.xib in Resources */,
 				C83A95CF2806686F0044EA99 /* TaskTableViewCell.xib in Resources */,
 				C866BFC627FD985F0027EFF1 /* Assets.xcassets in Resources */,
@@ -547,6 +554,7 @@
 				C83A95E42806B98D0044EA99 /* ImportantViewController.swift in Sources */,
 				C895EA0228162E4D00A9072C /* HalfSizePresentationController.swift in Sources */,
 				C806874227FFD7FC00491787 /* ListViewController.swift in Sources */,
+				C83380DA2818EEF70025E423 /* ListOptionViewController.swift in Sources */,
 				C8330DAE280D6A940064FE4C /* Enumeration.swift in Sources */,
 				C806873E27FFC65200491787 /* TableViewCell.swift in Sources */,
 				C8330DA7280CF3890064FE4C /* AssignToMeViewController.swift in Sources */,
