@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImportantViewController" customModule="ToDoMobileApp" customModuleProvider="target">
             <connections>
                 <outlet property="addTaskTextField" destination="Qct-RU-EoF" id="UlS-4n-Pea"/>
+                <outlet property="bottomConstraint" destination="8HA-VU-7aa" id="vyK-g7-E3G"/>
                 <outlet property="dueButton" destination="UUy-oE-z80" id="fBg-q5-MVO"/>
                 <outlet property="importantTableView" destination="53f-aa-oCs" id="RUk-z2-yrv"/>
                 <outlet property="myDayButton" destination="vCj-W4-WHM" id="lX3-cA-qYE"/>
@@ -92,7 +93,7 @@
                     </constraints>
                 </view>
                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="T9P-6d-Hne">
-                    <rect key="frame" x="0.0" y="127" width="414" height="44"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="T9P-6d-Hne" id="6X1-FG-P0H">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -112,16 +113,8 @@
                 <constraint firstItem="53f-aa-oCs" firstAttribute="trailing" secondItem="Iya-XX-dT9" secondAttribute="trailing" id="fze-bN-oDl"/>
                 <constraint firstItem="Lz3-PM-dxM" firstAttribute="leading" secondItem="Iya-XX-dT9" secondAttribute="leading" id="uRS-2c-WpO"/>
             </constraints>
-            <connections>
-                <outletCollection property="gestureRecognizers" destination="9Df-wn-D1p" appends="YES" id="pGI-r6-0VH"/>
-            </connections>
             <point key="canvasLocation" x="137.68115942028987" y="-74.330357142857139"/>
         </view>
-        <tapGestureRecognizer cancelsTouchesInView="NO" id="9Df-wn-D1p">
-            <connections>
-                <action selector="dismissKeyboard:" destination="-1" id="38H-gX-lk5"/>
-            </connections>
-        </tapGestureRecognizer>
     </objects>
     <resources>
         <image name="bell" catalog="system" width="128" height="124"/>

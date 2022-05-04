@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyDayViewController" customModule="ToDoMobileApp" customModuleProvider="target">
             <connections>
                 <outlet property="addTaskTextField" destination="948-qn-2nr" id="yuS-ai-gt4"/>
+                <outlet property="bottomConstraint" destination="kga-UU-xgP" id="4AZ-sg-mj9"/>
                 <outlet property="dateLabel" destination="5yf-Ld-CbD" id="fdi-kp-oSJ"/>
                 <outlet property="dueButton" destination="ywK-3h-c85" id="THd-c6-ghO"/>
                 <outlet property="myDayButton" destination="86J-ED-h7G" id="j2Y-lS-Taz"/>
@@ -28,14 +29,6 @@
                     <rect key="frame" x="0.0" y="89" width="414" height="683"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
-                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="1dP-p2-P0i">
-                    <rect key="frame" x="0.0" y="133" width="414" height="44"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1dP-p2-P0i" id="aVA-pJ-QPh">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </tableViewCellContentView>
-                </tableViewCell>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="okh-AX-Ztf">
                     <rect key="frame" x="0.0" y="772" width="414" height="90"/>
                     <subviews>
@@ -105,6 +98,14 @@
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="1dP-p2-P0i">
+                    <rect key="frame" x="0.0" y="89" width="414" height="44"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1dP-p2-P0i" id="aVA-pJ-QPh">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </tableViewCellContentView>
+                </tableViewCell>
             </subviews>
             <viewLayoutGuide key="safeArea" id="MYx-4q-R9K"/>
             <gestureRecognizers/>
@@ -120,16 +121,8 @@
                 <constraint firstItem="MYx-4q-R9K" firstAttribute="trailing" secondItem="okh-AX-Ztf" secondAttribute="trailing" id="nNx-Gk-G5G"/>
                 <constraint firstItem="okh-AX-Ztf" firstAttribute="top" secondItem="yUV-MP-U3s" secondAttribute="bottom" id="uWU-A7-QYw"/>
             </constraints>
-            <connections>
-                <outletCollection property="gestureRecognizers" destination="GIP-Dw-Giv" appends="YES" id="1r0-Vy-uX2"/>
-            </connections>
             <point key="canvasLocation" x="137.68115942028987" y="-74.330357142857139"/>
         </view>
-        <tapGestureRecognizer cancelsTouchesInView="NO" id="GIP-Dw-Giv">
-            <connections>
-                <action selector="dismissKeyboard:" destination="-1" id="5zC-Hm-9wD"/>
-            </connections>
-        </tapGestureRecognizer>
     </objects>
     <resources>
         <image name="bell" catalog="system" width="128" height="124"/>

@@ -122,31 +122,42 @@
                     <rect key="frame" x="107" y="513" width="200" height="90"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4sh-R9-5Gb">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="4sh-R9-5Gb">
                             <rect key="frame" x="0.0" y="0.0" width="50" height="90"/>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" image="list.bullet" catalog="system" imagePlacement="top" title="Select all"/>
+                            <buttonConfiguration key="configuration" style="plain" image="list.bullet" catalog="system" imagePlacement="top" title="Select all">
+                                <fontDescription key="titleFontDescription" name="TimesNewRomanPSMT" family="System Font" pointSize="12"/>
+                            </buttonConfiguration>
                             <connections>
                                 <action selector="selectAllTap:" destination="-1" eventType="touchUpInside" id="UBc-8V-zPA"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1VC-rF-o9t">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="1VC-rF-o9t">
                             <rect key="frame" x="50" y="0.0" width="50" height="90"/>
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" image="list.triangle" catalog="system" imagePlacement="top" title="Move"/>
+                            <buttonConfiguration key="configuration" style="plain" image="list.triangle" catalog="system" imagePlacement="top" title="Move">
+                                <fontDescription key="titleFontDescription" name="TimesNewRomanPSMT" family="System Font" pointSize="12"/>
+                            </buttonConfiguration>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1gN-5j-VoI">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="1gN-5j-VoI">
                             <rect key="frame" x="100" y="0.0" width="50" height="90"/>
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" image="calendar" catalog="system" imagePlacement="top" title="Due Date"/>
+                            <buttonConfiguration key="configuration" style="plain" image="calendar" catalog="system" imagePlacement="top" title="Due Date">
+                                <fontDescription key="titleFontDescription" name="TimesNewRomanPSMT" family="System Font" pointSize="12"/>
+                            </buttonConfiguration>
+                            <connections>
+                                <action selector="deadlineDidTap:" destination="-1" eventType="touchUpInside" id="lmf-tP-5qk"/>
+                            </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="csd-Ao-WFG">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="csd-Ao-WFG">
                             <rect key="frame" x="150" y="0.0" width="50" height="90"/>
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" image="trash" catalog="system" imagePlacement="top" title="Delete"/>
+                            <buttonConfiguration key="configuration" style="plain" image="trash" catalog="system" imagePlacement="top" title="Delete">
+                                <fontDescription key="titleFontDescription" name="TimesNewRomanPSMT" family="System Font" pointSize="12"/>
+                            </buttonConfiguration>
                             <connections>
                                 <action selector="deleteSelectedTasksTap:" destination="-1" eventType="touchUpInside" id="xQj-6M-cAC"/>
                             </connections>
@@ -178,16 +189,8 @@
                 <constraint firstItem="2aq-GN-6wA" firstAttribute="bottom" secondItem="bhL-G2-v9e" secondAttribute="bottom" id="chH-A3-5N6"/>
                 <constraint firstItem="SSp-dB-dOG" firstAttribute="leading" secondItem="bhL-G2-v9e" secondAttribute="leading" id="pyg-Zy-Hnu"/>
             </constraints>
-            <connections>
-                <outletCollection property="gestureRecognizers" destination="uT3-0w-I43" appends="YES" id="ZX0-pZ-JKa"/>
-            </connections>
             <point key="canvasLocation" x="137.68115942028987" y="-74.330357142857139"/>
         </view>
-        <tapGestureRecognizer cancelsTouchesInView="NO" id="uT3-0w-I43">
-            <connections>
-                <action selector="dismissKeyboard:" destination="-1" id="HKW-Df-LWk"/>
-            </connections>
-        </tapGestureRecognizer>
     </objects>
     <resources>
         <image name="bell" catalog="system" width="128" height="124"/>

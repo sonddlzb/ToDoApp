@@ -15,6 +15,7 @@ class ListViewController: UIViewController{
     @IBOutlet weak private var addTaskTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         self.title = listStore.allList[currentList].name
         addTaskTextField.delegate = self
         myDayTableView.delegate = self
@@ -100,4 +101,17 @@ extension ListViewController: TaskTableViewCellDelegate
         task.isInterested = state
     }
     
+}
+
+// MARK: - add TapGestureRecognizer
+extension ListViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }

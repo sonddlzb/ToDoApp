@@ -18,6 +18,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var addListTextField: UITextField!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var allStackView: UIStackView!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     override func viewDidLoad() {
         print("loadVIew")
         initGui()
@@ -32,20 +33,28 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    var isMoved: Bool = false
     
+    // MARK: - keyboard show
     @objc func keyboardWillShow(notification: NSNotification) {
+        if(isMoved)
+        {
+            return
+        }
         guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
            // if keyboard size is not available for some reason, dont do anything
             return
         }
         print("move textField above")
       // move the root view up by the distance of keyboard height
-        self.stackView.frame.origin.y = view.bounds.height - keyboardSize.height - stackView.bounds.height
+        self.bottomConstraint.constant += keyboardSize.height - 30
+        isMoved = true
     }
     @objc func keyboardWillHide(notification: NSNotification) {
       // move back the root view origin
         print("move textField back")
-        self.stackView.frame.origin.y = view.bounds.height - stackView.bounds.height - view.safeAreaInsets.bottom
+        self.bottomConstraint.constant = 0
+        isMoved = false
     }
     private func initGui()
     {
@@ -168,6 +177,7 @@ extension ViewController: UITextFieldDelegate
     }
 }
 
+// MARK: - add TapGestureRecognizer
 extension ViewController {
     func hideKeyboardWhenTappedAround() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))

@@ -60,6 +60,7 @@ class MyDayViewController: UIViewController, UIViewControllerTransitioningDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         initUI()
+        self.hideKeyboardWhenTappedAround()
         myDayTableView.register(UINib(nibName: "TaskTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "TaskTableViewCell")
         myDayTableView.delegate = self
         myDayTableView.dataSource = self
@@ -71,19 +72,27 @@ class MyDayViewController: UIViewController, UIViewControllerTransitioningDelega
     override func viewWillAppear(_ animated: Bool) {
         myDayTableView.reloadData()
     }
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    var isMoved: Bool = false
     //move viewMove to keyboard
     @objc func keyboardWillShow(notification: NSNotification) {
+        if(isMoved)
+        {
+            return
+        }
         guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
            // if keyboard size is not available for some reason, dont do anything
            return
         }
 
       // move the root view up by the distance of keyboard height
-        self.viewMove.frame.origin.y = view.bounds.height - keyboardSize.height - viewMove.bounds.height
+        bottomConstraint.constant += keyboardSize.height - 30
+        isMoved = true
     }
     @objc func keyboardWillHide(notification: NSNotification) {
       // move back the root view origin
-        self.viewMove.frame.origin.y = view.bounds.height - viewMove.bounds.height - view.safeAreaInsets.bottom
+        bottomConstraint.constant = 0
+        isMoved = false
     }
     @IBAction func addTask(_ sender: UIButton) {
         if let taskName = addTaskTextField.text, !taskName.isEmpty
@@ -294,4 +303,16 @@ extension MyDayViewController: DeadlineViewControllerDelegate
     }
     
     
+}
+// MARK: - add TapGestureRecognizer
+extension MyDayViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }

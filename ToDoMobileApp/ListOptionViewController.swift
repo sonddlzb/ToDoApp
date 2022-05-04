@@ -12,7 +12,7 @@ protocol ListOptionViewControllerDelegate
     func listOptionViewController(Opacity opacity: Float)
     func listOptionViewController()
 }
-class ListOptionViewController: UIViewController {
+class ListOptionViewController: UIViewController, UIViewControllerTransitioningDelegate {
 
     var delegate: ListOptionViewControllerDelegate?
     @IBOutlet private weak var listOptionTableView: UITableView!
@@ -28,7 +28,21 @@ class ListOptionViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
         delegate?.listOptionViewController(Opacity: 1.0)
     }
-
+    
+    //present theme viewcontroller
+    func presentColorViewController()
+    {
+        let themeViewController = ColorViewController()
+        themeViewController.transitioningDelegate = self
+        themeViewController.modalTransitionStyle = .coverVertical
+        themeViewController.modalPresentationStyle = .custom
+        themeViewController.delegate = self
+        self.present(themeViewController, animated: true, completion: nil)
+    }
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController?
+    {
+            return OneFifthSizePresentationController(presentedViewController: presented, presenting: presentingViewController)
+    }
 }
 
 // MARK: - delegate from table View
@@ -54,8 +68,19 @@ extension ListOptionViewController: UITableViewDelegate, UITableViewDataSource
             delegate?.listOptionViewController()
             delegate?.listOptionViewController(Opacity: 1.0)
             self.dismiss(animated: true, completion: nil)
+        case 1: presentColorViewController()
         default: "wrong option!"
         }
     }
+}
+
+// MARK: -ColorViewControllerDelegate
+extension ListOptionViewController: ColorViewControllerDelegate
+{
+    func colorViewController(Opacity opacity: Float) {
+        delegate?.listOptionViewController(Opacity: opacity)
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     
 }

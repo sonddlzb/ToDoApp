@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ejd-hp-qGr">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -80,6 +81,7 @@
                     <connections>
                         <outlet property="addListButton" destination="WLu-U0-9l4" id="Era-Ay-LEI"/>
                         <outlet property="addListTextField" destination="LCc-k4-eei" id="9UP-6A-HVV"/>
+                        <outlet property="bottomConstraint" destination="UAQ-fJ-Vs8" id="j5s-eN-Acg"/>
                         <outlet property="createGroupButton" destination="0mN-or-NL0" id="EPy-Q4-CBy"/>
                         <outlet property="stackView" destination="gJR-Nn-x3i" id="4HA-HT-mgo"/>
                         <outlet property="tableView" destination="9xL-4q-BnB" id="YNr-6t-yvo"/>

@@ -34,6 +34,8 @@
 		C83A95DD280670CE0044EA99 /* TaskStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83A95DC280670CE0044EA99 /* TaskStore.swift */; };
 		C83A95E42806B98D0044EA99 /* ImportantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83A95E22806B98D0044EA99 /* ImportantViewController.swift */; };
 		C83A95E52806B98D0044EA99 /* ImportantViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C83A95E32806B98D0044EA99 /* ImportantViewController.xib */; };
+		C85B75BC281B95A9002746B2 /* ColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85B75BA281B95A9002746B2 /* ColorViewController.swift */; };
+		C85B75BD281B95A9002746B2 /* ColorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C85B75BB281B95A9002746B2 /* ColorViewController.xib */; };
 		C866BFBD27FD985E0027EFF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C866BFBC27FD985E0027EFF1 /* AppDelegate.swift */; };
 		C866BFBF27FD985E0027EFF1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C866BFBE27FD985E0027EFF1 /* SceneDelegate.swift */; };
 		C866BFC127FD985E0027EFF1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C866BFC027FD985E0027EFF1 /* ViewController.swift */; };
@@ -110,6 +112,8 @@
 		C83A95DC280670CE0044EA99 /* TaskStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStore.swift; sourceTree = "<group>"; };
 		C83A95E22806B98D0044EA99 /* ImportantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportantViewController.swift; sourceTree = "<group>"; };
 		C83A95E32806B98D0044EA99 /* ImportantViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImportantViewController.xib; sourceTree = "<group>"; };
+		C85B75BA281B95A9002746B2 /* ColorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorViewController.swift; sourceTree = "<group>"; };
+		C85B75BB281B95A9002746B2 /* ColorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorViewController.xib; sourceTree = "<group>"; };
 		C866BFB927FD985E0027EFF1 /* ToDoMobileApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoMobileApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C866BFBC27FD985E0027EFF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C866BFBE27FD985E0027EFF1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -240,6 +244,8 @@
 				C895EA04281678D400A9072C /* NoteViewController.xib */,
 				C83380D82818EEF70025E423 /* ListOptionViewController.swift */,
 				C83380D92818EEF70025E423 /* ListOptionViewController.xib */,
+				C85B75BA281B95A9002746B2 /* ColorViewController.swift */,
+				C85B75BB281B95A9002746B2 /* ColorViewController.xib */,
 			);
 			path = ToDoMobileApp;
 			sourceTree = "<group>";
@@ -411,6 +417,7 @@
 				C8EA49902812491C00B4971D /* TaskMoreDetailViewController.xib in Resources */,
 				C866BFC427FD985E0027EFF1 /* Main.storyboard in Resources */,
 				C895EA06281678D400A9072C /* NoteViewController.xib in Resources */,
+				C85B75BD281B95A9002746B2 /* ColorViewController.xib in Resources */,
 				C8330DAC280D4C230064FE4C /* DeadlineViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -546,6 +553,7 @@
 				C83A95DD280670CE0044EA99 /* TaskStore.swift in Sources */,
 				C82CB6A4280FA34500A147AD /* DatePickerViewController.swift in Sources */,
 				C8EFFB73280901AA001770AD /* MyDayViewController.swift in Sources */,
+				C85B75BC281B95A9002746B2 /* ColorViewController.swift in Sources */,
 				C83A95CE2806686F0044EA99 /* TaskTableViewCell.swift in Sources */,
 				C8EFFB7F280931AF001770AD /* PlannedViewController.swift in Sources */,
 				C866BFBD27FD985E0027EFF1 /* AppDelegate.swift in Sources */,
@@ -752,6 +760,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -781,6 +790,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

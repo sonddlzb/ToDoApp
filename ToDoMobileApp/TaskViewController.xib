@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TaskViewController" customModule="ToDoMobileApp" customModuleProvider="target">
             <connections>
                 <outlet property="addTaskTextField" destination="zpC-bT-rJS" id="ad6-mM-l1K"/>
+                <outlet property="bottomConstraint" destination="uhS-Ok-PpZ" id="uZh-5S-4sw"/>
                 <outlet property="dueButton" destination="cbP-eh-28K" id="az5-ST-HBK"/>
                 <outlet property="myDayButton" destination="F9u-VS-Prd" id="fGU-oZ-1t1"/>
                 <outlet property="taskTableView" destination="5z6-qK-BZ0" id="KtA-XH-qkA"/>
@@ -92,7 +93,7 @@
                     </constraints>
                 </view>
                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="MYY-DL-jCe">
-                    <rect key="frame" x="0.0" y="109" width="414" height="44"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MYY-DL-jCe" id="XiH-79-PB9">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -112,16 +113,8 @@
                 <constraint firstItem="joA-aY-3XX" firstAttribute="top" secondItem="5z6-qK-BZ0" secondAttribute="bottom" id="u5O-Z9-ZeP"/>
                 <constraint firstItem="ssq-o7-n6X" firstAttribute="bottom" secondItem="joA-aY-3XX" secondAttribute="bottom" id="uhS-Ok-PpZ"/>
             </constraints>
-            <connections>
-                <outletCollection property="gestureRecognizers" destination="yR5-Ub-BQC" appends="YES" id="pDE-au-ujm"/>
-            </connections>
             <point key="canvasLocation" x="137.68115942028987" y="-74.330357142857139"/>
         </view>
-        <tapGestureRecognizer cancelsTouchesInView="NO" id="yR5-Ub-BQC">
-            <connections>
-                <action selector="dismissKeyboard:" destination="-1" id="HJM-cp-jn2"/>
-            </connections>
-        </tapGestureRecognizer>
     </objects>
     <resources>
         <image name="bell" catalog="system" width="128" height="124"/>

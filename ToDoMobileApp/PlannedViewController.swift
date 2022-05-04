@@ -30,7 +30,13 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
     @IBOutlet weak var deleteButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor.systemYellow
+        self.plannedTableView.separatorColor = .white
+        self.plannedTableView.backgroundColor = .systemYellow
+        viewMove.backgroundColor = .systemYellow
+        addTaskTextField.placeholder = "Add a Task"
         stackView.isHidden = true
+        self.hideKeyboardWhenTappedAround()
         let optionBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(listOptionDidTap(_:)))
         self.navigationItem.rightBarButtonItem  = optionBarButtonItem
         plannedTableView.register(UINib(nibName: "TaskTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "TaskTableViewCell")
@@ -50,9 +56,11 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
     // MARK: -edit mode on
     func stackViewAppear()
     {
+        
         isOnEditMode = true
         stackView.isHidden = false
         viewMove.isHidden = true
+        
         stackView.translatesAutoresizingMaskIntoConstraints = false
         let bottomConstraint = stackView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50)
         let leadingConstraint = stackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
@@ -66,6 +74,7 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
     // MARK: -edit mode off
     @objc func stackViewDismiss()
     {
+        isSelected = [Bool](repeating: false, count: 1000)
         isOnEditMode = false
         stackView.isHidden = true
         viewMove.isHidden = false
@@ -121,14 +130,25 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
             addTaskTextField.text = ""
         }
     }
-    
     // MARK: - select all tap
     @IBAction func selectAllTap(_ sender: UIButton)
     {
+        if(self.taskStore.planTask.count == 0)
+        {
+            return
+        }
         if let title = sender.titleLabel?.text, title == "Select all"
         {
             sender.setTitle("Clear all", for: .normal)
-            isSelected = [Bool](repeating: true, count: 1000)
+            let attributeText = NSMutableAttributedString(string: sender.title(for: .normal) ?? "", attributes: [
+                .font: UIFont(name: "Times New Roman", size: CGFloat(12))!
+            ])
+            sender.setAttributedTitle(attributeText, for: .normal)
+            //selectAllButton.setNeedsUpdateConfiguration()
+            print(selectAllButton.titleLabel?.font)
+            print(selectAllButton.titleLabel?.attributedText)
+            sender.titleLabel?.numberOfLines = 1
+            isSelected = [Bool](repeating: true, count: self.taskStore.planTask.count)
             for i in 0...(self.taskStore.planTask.count - 1)
             {
                 let indexPath = IndexPath(row: i, section: 0)
@@ -138,7 +158,11 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
         else
         {
             sender.setTitle("Select all", for: .normal)
-            isSelected = [Bool](repeating: false, count: 1000)
+            let attributeText = NSMutableAttributedString(string: sender.title(for: .normal) ?? "", attributes: [
+                .font: UIFont(name: "Times New Roman", size: CGFloat(12))!
+            ])
+            sender.setAttributedTitle(attributeText, for: .normal)
+            isSelected = [Bool](repeating: false, count: self.taskStore.planTask.count)
             for i in 0...(self.taskStore.planTask.count - 1)
             {
                 let indexPath = IndexPath(row: i, section: 0)
@@ -161,13 +185,14 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
                 if(self.isSelected[i])
                 {
                     idRemove.append(self.taskStore.planTask[i].taskID)
+                    self.isSelected[i] = false
                 }
             }
             for value in idRemove
             {
                 self.taskStore.removeByID(id: value)
             }
-            self.plannedTableView.reloadData()
+            self.stackViewDismiss()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(yesAction)
@@ -192,13 +217,12 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
         {
             isMyDay = true
             myDayButton.backgroundColor = UIColor.blue
-            myDayButton.setTitle("My Day", for: .normal)
             myDayButton.setTitleColor(UIColor.white, for: .normal)
         }
         else
         {
             isMyDay = false
-            myDayButton.backgroundColor = UIColor.white
+            myDayButton.backgroundColor = view.backgroundColor
             myDayButton.setTitle("", for: .normal)
         }
     }
@@ -208,19 +232,29 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
         addTaskTextField.resignFirstResponder()
     }
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    var isMoved: Bool = false;
     // MARK: - keyboard show
     @objc func keyboardWillShow(notification: NSNotification) {
+        if(isMoved)
+        {
+            return;
+        }
         guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
            // if keyboard size is not available for some reason, dont do anything
            return
         }
 
       // move the root view up by the distance of keyboard height
-        self.viewMove.frame.origin.y = view.bounds.height - keyboardSize.height - viewMove.bounds.height
+        //self.viewMove.frame.origin.y = view.bounds.height - keyboardSize.height - viewMove.bounds.height
+        self.bottomConstraint.constant -= keyboardSize.height - 30
+        self.view.layoutIfNeeded()
+        isMoved = true
     }
     @objc func keyboardWillHide(notification: NSNotification) {
       // move back the root view origin
-        self.viewMove.frame.origin.y = view.bounds.height - viewMove.bounds.height - view.safeAreaInsets.bottom
+        self.bottomConstraint.constant = 0
+        self.view.layoutIfNeeded()
+        isMoved = false
     }
      
     // MARK: - update option buttons
@@ -237,9 +271,13 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
         }
         else
         {
-            if let title = selectAllButton.titleLabel?.text, title == "Select all"
+            if let title = selectAllButton.titleLabel?.text, title == "Clear all"
             {
-                selectAllButton.setTitle("Clear all", for: .normal)
+                selectAllButton.setTitle("Select all", for: .normal)
+                let attributeText = NSMutableAttributedString(string: selectAllButton.title(for: .normal) ?? "", attributes: [
+                    .font: UIFont(name: "Times New Roman", size: CGFloat(12))!
+                ])
+                selectAllButton.setAttributedTitle(attributeText, for: .normal)
             }
             moveButton.tintColor = UIColor.black
             dueDateButton.tintColor = UIColor.black
@@ -248,15 +286,19 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
             dueDateButton.isUserInteractionEnabled = false
             moveButton.isUserInteractionEnabled = false
         }
-        if let value = isSelected.firstIndex(of: false), value > taskStore.planTask.count
+        if let value = isSelected.firstIndex(of: false), value < taskStore.planTask.count
         {
             
         }
         else
         {
-            if let title = selectAllButton.titleLabel?.text, title == "Clear all"
+            if let title = selectAllButton.titleLabel?.text, title == "Select all"
             {
-                selectAllButton.setTitle("Select all", for: .normal)
+                selectAllButton.setTitle("Clear all", for: .normal)
+                let attributeText = NSMutableAttributedString(string: selectAllButton.title(for: .normal) ?? "", attributes: [
+                    .font: UIFont(name: "Times New Roman", size: CGFloat(12))!
+                ])
+                selectAllButton.setAttributedTitle(attributeText, for: .normal)
             }
         }
     }
@@ -425,7 +467,24 @@ extension PlannedViewController: DeadlineViewControllerDelegate
 {
     func deadlineViewController(currentDateSelect datePicker: Date) {
         nextDate = datePicker
-        dueButton.setTitle("Due \(nextDate.dayofTheWeek), \(nextDate.day) \(nextDate.monthString)", for: .normal)
+        
+        if(isOnEditMode)
+        {
+            for (index,value) in isSelected.enumerated()
+            {
+                if(value)
+                {
+                    taskStore.planTask[index].timePlanned = nextDate
+                }
+            }
+            stackViewDismiss()
+            plannedTableView.reloadData()
+            
+        }
+        else
+        {
+            dueButton.setTitle("Due \(nextDate.dayofTheWeek), \(nextDate.day) \(nextDate.monthString)", for: .normal)
+        }
     }
     
     func deadlineViewController(Opacity opacity: Float) {
@@ -448,6 +507,32 @@ extension PlannedViewController: DeadlineViewControllerDelegate
                 currentDeadlineType = .Other
                 
             default: print("Wrong deadline!")
+        }
+        if(isOnEditMode)
+        {
+            var dayComponent    = DateComponents()
+            switch currentDeadlineType
+            {
+                case .Tomorrow: dayComponent.day = 1
+                case .Today: dayComponent.day = 0
+                case .NextWeek: dayComponent.day = 7
+                case .Other: dayComponent.day = -1
+            }
+            let theCalendar = Calendar.current
+            if(currentDeadlineType == .Today || currentDeadlineType == .NextWeek || currentDeadlineType == .Tomorrow )
+            {
+                nextDate = theCalendar.date(byAdding: dayComponent, to: Date())
+            }
+            for (index,value) in isSelected.enumerated()
+            {
+                if(value)
+                {
+                    taskStore.planTask[index].timePlanned = nextDate
+                }
+            }
+            stackViewDismiss()
+            plannedTableView.reloadData()
+            
         }
     }
     
@@ -501,11 +586,12 @@ extension PlannedViewController: TaskMoreDetailViewControllerDelegate
     
 }
 
-// MARK: - delegate from ListOptionViewController
+// MARK: - ListOptionViewController
 extension PlannedViewController: ListOptionViewControllerDelegate
 {
     func listOptionViewController() {
         stackViewAppear()
+        updateOptionButtons()
         let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(stackViewDismiss))
         self.navigationItem.setRightBarButton(cancelButton, animated: true)
         
@@ -515,7 +601,20 @@ extension PlannedViewController: ListOptionViewControllerDelegate
         self.view.layer.opacity = opacity
     }
     
+
+}
+
+// MARK: - add TapGestureRecognizer
+extension PlannedViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
     
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
 
 

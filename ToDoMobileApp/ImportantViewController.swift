@@ -26,7 +26,9 @@ class ImportantViewController: UIViewController, UIViewControllerTransitioningDe
     var isMyDay = false
     //combine important tasks in both listStore and taskStore
     override func viewDidLoad() {
+
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         self.title = "Important"
         importantTableView.register(UINib(nibName: "TaskTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "TaskTableViewCell")
         importantTableView.reloadData()
@@ -39,19 +41,27 @@ class ImportantViewController: UIViewController, UIViewControllerTransitioningDe
     override func viewWillAppear(_ animated: Bool) {
         importantTableView.reloadData()
     }
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    var isMoved: Bool = false
     //move viewMove to keyboard
     @objc func keyboardWillShow(notification: NSNotification) {
+        if(isMoved)
+        {
+            return
+        }
         guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
            // if keyboard size is not available for some reason, dont do anything
            return
         }
 
       // move the root view up by the distance of keyboard height
-        self.viewMove.frame.origin.y = view.bounds.height - keyboardSize.height - viewMove.bounds.height
+        bottomConstraint.constant -= keyboardSize.height - 30
+        isMoved = true
     }
     @objc func keyboardWillHide(notification: NSNotification) {
       // move back the root view origin
-        self.viewMove.frame.origin.y = view.bounds.height - viewMove.bounds.height - view.safeAreaInsets.bottom
+        bottomConstraint.constant = 0
+        isMoved = false
     }
 
     @IBAction func deadlineDidTap(_ sender: UIButton)
@@ -66,7 +76,7 @@ class ImportantViewController: UIViewController, UIViewControllerTransitioningDe
         self.present(deadlineViewController, animated: true, completion: nil)
         self.view.layer.opacity = 0.5
     }
-    
+    // MARK: - tap turn on my day
     @IBAction func myDayDidTap(_ sender: UIButton)
     {
         print("Myday picked!")
@@ -74,13 +84,12 @@ class ImportantViewController: UIViewController, UIViewControllerTransitioningDe
         {
             isMyDay = true
             myDayButton.backgroundColor = UIColor.blue
-            myDayButton.setTitle("My Day", for: .normal)
             myDayButton.setTitleColor(UIColor.white, for: .normal)
         }
         else
         {
             isMyDay = false
-            myDayButton.backgroundColor = UIColor.white
+            myDayButton.backgroundColor = view.backgroundColor
             myDayButton.setTitle("", for: .normal)
         }
     }
@@ -257,4 +266,16 @@ extension ImportantViewController: TaskMoreDetailViewControllerDelegate
     }
     
     
+}
+// MARK: - add TapGestureRecognizer
+extension ImportantViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }

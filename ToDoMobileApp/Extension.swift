@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 // MARK: - get day in week
 extension Date {
 
@@ -56,4 +57,28 @@ extension Date {
         return (month: month, day: day, hour: hour, minute: minute, second: second)
     }
 
+}
+
+extension UIColor
+{
+    enum ColorType: Int
+    {
+        case Blue = 0,Brown, Cyan, Green, Orange, Pink, Purple, Red, Yellow
+    }
+    func getColorFromInt(rawColorValue i: Int) -> UIColor
+    {
+        switch i
+        {
+        case 0: return .systemBlue
+        case 1: return .systemBrown
+        case 2: return .systemCyan
+        case 3: return .systemGreen
+        case 4: return .systemOrange
+        case 5: return .systemPink
+        case 6: return .systemPurple
+        case 7: return .systemRed
+        case 8: return .systemYellow
+        default: return .systemBackground
+        }
+    }
 }

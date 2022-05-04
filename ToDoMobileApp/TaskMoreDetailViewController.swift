@@ -342,4 +342,16 @@ extension TaskMoreDetailViewController: NoteViewControllerDelegate
     
 }
 
+// MARK: - add TapGestureRecognizer
+extension TaskMoreDetailViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
 
