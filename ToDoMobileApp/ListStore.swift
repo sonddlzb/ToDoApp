@@ -14,20 +14,18 @@ class ListStore
         let newList = List(name: name)
         allList.append(newList)
     }
-//    func findTaskByID(taskID: String) -> Task?
-//    {
-//        for list in allList
-//        {
-//            for task in list.listOfTask
-//            {
-//                if(taskID == task.taskID)
-//                {
-//                    return task
-//                }
-//            }
-//        }
-//        return nil
-//    }
+    func taskNotFinished(currentList: Int) -> [Task]
+    {
+        return allList[currentList].listOfTask.filter{
+            $0.isFinished ==  false
+        }
+    }
+    func taskFinished(currentList: Int) -> [Task]
+    {
+        return allList[currentList].listOfTask.filter{
+            $0.isFinished ==  true
+        }
+    }
     func numberOfImportantTaskInList() -> Int
     {
         var count = 0
@@ -43,7 +41,7 @@ class ListStore
         }
         return count
     }
-    var importantTaskListStore: [Task]
+    var importantTaskListStoreNotFinished: [Task]
     {
         var res = [Task]()
         for list in allList
@@ -51,6 +49,68 @@ class ListStore
             for task in list.listOfTask
             {
                 if(task.isInterested && !task.isFinished)
+                {
+                    res.append(task)
+                }
+            }
+        }
+        return res
+    }
+    
+    var importantTaskListStoreBoth: [Task]
+    {
+        var res = [Task]()
+        for list in allList
+        {
+            for task in list.listOfTask
+            {
+                if(task.isInterested )
+                {
+                    res.append(task)
+                }
+            }
+        }
+        return res
+    }
+    
+    var myDayListStore: [Task]
+    {
+        var res = [Task]()
+        for list in allList
+        {
+            for task in list.listOfTask
+            {
+                if(task.secondTaskType == .myDay)
+                {
+                    res.append(task)
+                }
+            }
+        }
+        return res
+    }
+    func removeByID(currentList: Int, id: String)
+    {
+        allList[currentList].listOfTask = allList[currentList].listOfTask.filter{$0.taskID != id}
+    }
+    
+    func removeByID(id: String)
+    {
+        for list in allList
+        {
+            list.listOfTask = list.listOfTask.filter{
+                $0.taskID != id
+            }
+        }
+    }
+    //search task
+    func findTaskBySearchingKey(searchingKey: String) -> [Task]
+    {
+        var res = [Task]()
+        for list in allList
+        {
+            for task in list.listOfTask
+            {
+                if task.detail.contains(searchingKey)
                 {
                     res.append(task)
                 }

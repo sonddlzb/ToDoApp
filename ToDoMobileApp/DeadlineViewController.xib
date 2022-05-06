@@ -35,14 +35,6 @@
                         </navigationItem>
                     </items>
                 </navigationBar>
-                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="f7N-Ox-Zgy">
-                    <rect key="frame" x="0.0" y="340" width="414" height="44"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="f7N-Ox-Zgy" id="L35-H9-6tY">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </tableViewCellContentView>
-                </tableViewCell>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vcx-s8-Dtr"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>

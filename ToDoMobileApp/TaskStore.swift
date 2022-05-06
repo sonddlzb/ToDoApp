@@ -67,6 +67,33 @@ class TaskStore
         }
         return plan
     }
+    var planTaskAnphabeticallySort: [Task]
+    {
+        var plan: [Task] = []
+        for value in allTask
+        {
+            if value.taskType == .planned && !value.isFinished
+            {
+                plan.append(value)
+            }
+        }
+        return plan.sorted{
+            $0.detail < $1.detail
+        }
+        
+    }
+    var bothPlanTask: [Task]
+    {
+        var plan: [Task] = []
+        for value in allTask
+        {
+            if value.taskType == .planned
+            {
+                plan.append(value)
+            }
+        }
+        return plan
+    }
     var planOverdueTask: [Task]
     {
         return planTask.filter{$0.due == .Overdue}
@@ -88,6 +115,27 @@ class TaskStore
     {
         return planTask.filter{$0.due == .Later}
     }
+    var bothPlanOverdueTask: [Task]
+    {
+        return bothPlanTask.filter{$0.due == .Overdue}
+    }
+    var bothPlanTodayTask: [Task]
+    {
+        return bothPlanTask.filter{$0.due == .Today}
+    }
+    var  bothPlanTomorrowTask: [Task]
+    {
+        return bothPlanTask.filter{$0.due == .Tomorrow}
+    }
+    
+    var bothPlanThisWeekTask: [Task]
+    {
+        return bothPlanTask.filter{$0.due == .ThisWeek}
+    }
+    var bothPlanLaterTask: [Task]
+    {
+        return bothPlanTask.filter{$0.due == .Later}
+    }
     var normalTask: [Task]
     {
         var normal: [Task] = []
@@ -100,7 +148,7 @@ class TaskStore
         }
         return normal
     }
-    var importantTaskTaskStore: [Task]
+    var importantTaskTaskStoreNotFinished: [Task]
     {
         var res: [Task] = []
         for task in allTask
@@ -112,10 +160,29 @@ class TaskStore
         }
         return res
     }
-    
+    var importantTaskTaskStoreBoth: [Task]
+    {
+        var res: [Task] = []
+        for task in allTask
+        {
+            if(task.taskType != .listed && task.isInterested)
+            {
+                res.append(task)
+            }
+        }
+        return res
+    }
     func removeByID(id: String)
     {
         allTask = allTask.filter{$0.taskID != id}
+    }
+    
+    //search Task
+    func searchTaskBySearchingKey(searchingKey: String) -> [Task]
+    {
+        return self.allTask.filter{
+            $0.detail.contains(searchingKey)
+        }
     }
 }
 

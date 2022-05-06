@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="sortViewController" customModule="ToDoMobileApp" customModuleProvider="target">
+            <connections>
+                <outlet property="sortTableView" destination="Gss-en-m2x" id="RFv-lC-Ytu"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0yt-nM-1fB">
+                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="Jje-Lw-HlK"/>
+                    </constraints>
+                    <items>
+                        <navigationItem title="Sort" id="bTa-y7-5CD">
+                            <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="gzk-QM-Ljp">
+                                <connections>
+                                    <action selector="cancelButtonTapped:" destination="-1" id="JUX-Cp-9tV"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem key="rightBarButtonItem" systemItem="done" id="Df3-M2-5CY">
+                                <connections>
+                                    <action selector="doneButtonTapped:" destination="-1" id="eKl-BD-c3a"/>
+                                </connections>
+                            </barButtonItem>
+                        </navigationItem>
+                    </items>
+                </navigationBar>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Gss-en-m2x">
+                    <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="0yt-nM-1fB" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="0lb-6Y-fyb"/>
+                <constraint firstItem="Gss-en-m2x" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="8ch-96-VLM"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Gss-en-m2x" secondAttribute="trailing" id="N28-Jl-hxp"/>
+                <constraint firstItem="Gss-en-m2x" firstAttribute="top" secondItem="0yt-nM-1fB" secondAttribute="bottom" id="SeN-Lr-dGI"/>
+                <constraint firstItem="0yt-nM-1fB" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="VSn-gm-VhK"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Gss-en-m2x" secondAttribute="bottom" id="kDe-Mn-rnX"/>
+                <constraint firstItem="0yt-nM-1fB" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="u62-9P-bfP"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="50"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

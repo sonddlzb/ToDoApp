@@ -13,9 +13,14 @@
                 <outlet property="addTaskTextField" destination="948-qn-2nr" id="yuS-ai-gt4"/>
                 <outlet property="bottomConstraint" destination="kga-UU-xgP" id="4AZ-sg-mj9"/>
                 <outlet property="dateLabel" destination="5yf-Ld-CbD" id="fdi-kp-oSJ"/>
+                <outlet property="deleteButton" destination="aOh-Ee-90r" id="EQS-ML-3vf"/>
                 <outlet property="dueButton" destination="ywK-3h-c85" id="THd-c6-ghO"/>
+                <outlet property="dueDateButton" destination="ahX-z2-M1Z" id="Cky-SY-Q5g"/>
+                <outlet property="moveButton" destination="HpB-g7-xYs" id="Fld-Kr-KgP"/>
                 <outlet property="myDayButton" destination="86J-ED-h7G" id="j2Y-lS-Taz"/>
                 <outlet property="myDayTableView" destination="yUV-MP-U3s" id="Kub-eJ-hZ0"/>
+                <outlet property="selectAllButton" destination="2DD-s2-BrT" id="7aG-kF-PGp"/>
+                <outlet property="stackView" destination="QWc-w6-0AD" id="X19-4d-Ow5"/>
                 <outlet property="view" destination="cWm-Mh-nda" id="kRR-Rm-nYq"/>
                 <outlet property="viewMove" destination="okh-AX-Ztf" id="gSs-cB-lQX"/>
             </connections>
@@ -32,29 +37,29 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="okh-AX-Ztf">
                     <rect key="frame" x="0.0" y="772" width="414" height="90"/>
                     <subviews>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="948-qn-2nr">
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add a Task" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="948-qn-2nr">
                             <rect key="frame" x="40" y="31" width="374" height="59"/>
                             <color key="textColor" systemColor="systemPurpleColor"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Vi-9N-ttg">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="31"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="86J-ED-h7G">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="31"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="45" height="31"/>
                                     <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" image="homekit" catalog="system"/>
+                                    <buttonConfiguration key="configuration" style="plain" image="house.circle" catalog="system"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N2e-r9-QGb">
-                                    <rect key="frame" x="50" y="0.0" width="44.5" height="31"/>
+                                    <rect key="frame" x="45" y="0.0" width="45" height="31"/>
                                     <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" image="bell" catalog="system"/>
+                                    <buttonConfiguration key="configuration" style="plain" image="bell.circle" catalog="system"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" horizontalCompressionResistancePriority="748" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ywK-3h-c85">
-                                    <rect key="frame" x="94.5" y="0.0" width="319.5" height="31"/>
+                                    <rect key="frame" x="90" y="0.0" width="324" height="31"/>
                                     <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" image="calendar" catalog="system"/>
+                                    <buttonConfiguration key="configuration" style="plain" image="calendar.circle" catalog="system"/>
                                     <connections>
                                         <action selector="deadlineDidTap:" destination="-1" eventType="touchUpInside" id="y0w-PE-Znr"/>
                                     </connections>
@@ -98,14 +103,53 @@
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="1dP-p2-P0i">
-                    <rect key="frame" x="0.0" y="89" width="414" height="44"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1dP-p2-P0i" id="aVA-pJ-QPh">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </tableViewCellContentView>
-                </tableViewCell>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" id="QWc-w6-0AD">
+                    <rect key="frame" x="139" y="362" width="200" height="90"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="2DD-s2-BrT">
+                            <rect key="frame" x="0.0" y="0.0" width="50" height="90"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="list.bullet" catalog="system" imagePlacement="top" title="Select all">
+                                <fontDescription key="titleFontDescription" name="TimesNewRomanPSMT" family="System Font" pointSize="12"/>
+                            </buttonConfiguration>
+                            <connections>
+                                <action selector="selectAllTap:" destination="-1" eventType="touchUpInside" id="chN-Dk-ohA"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="HpB-g7-xYs">
+                            <rect key="frame" x="50" y="0.0" width="50" height="90"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="list.triangle" catalog="system" imagePlacement="top" title="Move">
+                                <fontDescription key="titleFontDescription" name="TimesNewRomanPSMT" family="System Font" pointSize="12"/>
+                            </buttonConfiguration>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="ahX-z2-M1Z">
+                            <rect key="frame" x="100" y="0.0" width="50" height="90"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="calendar" catalog="system" imagePlacement="top" title="Due Date">
+                                <fontDescription key="titleFontDescription" name="TimesNewRomanPSMT" family="System Font" pointSize="12"/>
+                            </buttonConfiguration>
+                            <connections>
+                                <action selector="deadlineDidTap:" destination="-1" eventType="touchUpInside" id="sHD-HX-mWs"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="aOh-Ee-90r">
+                            <rect key="frame" x="150" y="0.0" width="50" height="90"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="trash" catalog="system" imagePlacement="top" title="Delete">
+                                <fontDescription key="titleFontDescription" name="TimesNewRomanPSMT" family="System Font" pointSize="12"/>
+                            </buttonConfiguration>
+                            <connections>
+                                <action selector="deleteSelectedTasksTap:" destination="-1" eventType="touchUpInside" id="b23-uX-Kwe"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="uah-jp-Gl6"/>
+                </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="MYx-4q-R9K"/>
             <gestureRecognizers/>
@@ -125,9 +169,13 @@
         </view>
     </objects>
     <resources>
-        <image name="bell" catalog="system" width="128" height="124"/>
+        <image name="bell.circle" catalog="system" width="128" height="121"/>
         <image name="calendar" catalog="system" width="128" height="106"/>
-        <image name="homekit" catalog="system" width="128" height="106"/>
+        <image name="calendar.circle" catalog="system" width="128" height="121"/>
+        <image name="house.circle" catalog="system" width="128" height="121"/>
+        <image name="list.bullet" catalog="system" width="128" height="88"/>
+        <image name="list.triangle" catalog="system" width="128" height="91"/>
+        <image name="trash" catalog="system" width="121" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

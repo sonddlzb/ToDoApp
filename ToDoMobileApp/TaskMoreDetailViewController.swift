@@ -35,7 +35,6 @@ class TaskMoreDetailViewController: UIViewController, UIViewControllerTransition
            stepNameTextField.borderStyle = .none
            taskNameTextField.contentMode = .left
            taskNameTextField.borderStyle = .none
-           
            //init state of task
            if(!task.isFinished)
            {
@@ -57,9 +56,13 @@ class TaskMoreDetailViewController: UIViewController, UIViewControllerTransition
            //add action for note view
            let gesture = UITapGestureRecognizer(target: self, action: #selector(self.addNote(_:)))
            detailView.addGestureRecognizer(gesture)
-           if noteLabel.text == ""
+           if self.task.note == ""
            {
                noteLabel.text = "Add note"
+           }
+           else
+           {
+               noteLabel.text = self.task.note
            }
            
        }
@@ -338,6 +341,7 @@ extension TaskMoreDetailViewController: NoteViewControllerDelegate
 {
     func noteViewController(_ noteText: String) {
         noteLabel.text = noteText
+        self.task.note = noteText
     }
     
 }

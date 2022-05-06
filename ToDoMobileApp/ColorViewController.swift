@@ -10,6 +10,7 @@ import Foundation
 protocol ColorViewControllerDelegate
 {
     func colorViewController(Opacity opacity: Float)
+    func colorViewController(setBackgroundColorTo newColor: UIColor)
 }
 class ColorViewController: UIViewController {
 
@@ -48,19 +49,20 @@ class ColorViewController: UIViewController {
     }
     @objc func colorSelected(_ sender: UIButton)
     {
-        switch sender.backgroundColor!
+        switch sender
         {
-        case .systemBlue: selectedIndex = 0
-        case .systemBrown: selectedIndex = 1
-        case .systemCyan: selectedIndex = 2
-        case .systemGreen: selectedIndex = 3
-        case .systemOrange: selectedIndex = 4
-        case .systemPink: selectedIndex = 5
-        case .systemPurple: selectedIndex = 6
-        case .systemRed: selectedIndex = 7
-        case .systemYellow: selectedIndex = 8
-        default: "Wrong index"
+        case colorButtons[0]: selectedIndex = 0
+        case colorButtons[1]: selectedIndex = 1
+        case colorButtons[2]: selectedIndex = 2
+        case colorButtons[3]: selectedIndex = 3
+        case colorButtons[4]: selectedIndex = 4
+        case colorButtons[5]: selectedIndex = 5
+        case colorButtons[6]: selectedIndex = 6
+        case colorButtons[7]: selectedIndex = 7
+        case colorButtons[8]: selectedIndex = 8
+        default: print("Wrong index")
         }
+        delegate?.colorViewController(setBackgroundColorTo: sender.backgroundColor!)
     }
 
     func setUpColorButtonForStackView()
@@ -70,10 +72,10 @@ class ColorViewController: UIViewController {
             let newColorButton = UIButton()
             newColorButton.backgroundColor = colors[index]
             newColorButton.sizeToFit()
-            //newColorButton.setTitleColor(UIColor.getColorFromInt(rawColorValue: index), for: .normal)
             newColorButton.layer.masksToBounds = true
             colorStackView.addArrangedSubview(newColorButton)
             newColorButton.layer.cornerRadius = min(newColorButton.frame.height, newColorButton.frame.width) / 2
+            print("add target to button \(index)")
             newColorButton.addTarget(self, action: #selector(self.colorSelected(_:)), for: .touchUpInside)
             colorButtons.append(newColorButton)
         }

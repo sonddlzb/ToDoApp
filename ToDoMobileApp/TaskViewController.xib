@@ -12,8 +12,13 @@
             <connections>
                 <outlet property="addTaskTextField" destination="zpC-bT-rJS" id="ad6-mM-l1K"/>
                 <outlet property="bottomConstraint" destination="uhS-Ok-PpZ" id="uZh-5S-4sw"/>
+                <outlet property="deleteButton" destination="U5M-uB-rwh" id="Wm6-wo-Y2h"/>
                 <outlet property="dueButton" destination="cbP-eh-28K" id="az5-ST-HBK"/>
+                <outlet property="dueDateButton" destination="7V8-WX-3T0" id="Zme-1e-2uJ"/>
+                <outlet property="moveButton" destination="zgx-g2-Eox" id="E3M-ls-bYb"/>
                 <outlet property="myDayButton" destination="F9u-VS-Prd" id="fGU-oZ-1t1"/>
+                <outlet property="selectAllButton" destination="e7i-Op-AO4" id="ZN2-XI-Ra4"/>
+                <outlet property="stackView" destination="y5M-1d-OFC" id="Uka-PW-I1m"/>
                 <outlet property="taskTableView" destination="5z6-qK-BZ0" id="KtA-XH-qkA"/>
                 <outlet property="view" destination="8Yh-Vq-1Qn" id="7fb-70-tBD"/>
                 <outlet property="viewMove" destination="joA-aY-3XX" id="TL1-JO-IFb"/>
@@ -31,12 +36,12 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="joA-aY-3XX">
                     <rect key="frame" x="0.0" y="772" width="414" height="90"/>
                     <subviews>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zpC-bT-rJS">
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add a Task" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zpC-bT-rJS">
                             <rect key="frame" x="50" y="40" width="364" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="f08-3y-fQf"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nfT-kQ-kNZ">
@@ -46,7 +51,7 @@
                                 <constraint firstAttribute="width" constant="50" id="Oas-TU-ian"/>
                             </constraints>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" title="+"/>
+                            <buttonConfiguration key="configuration" style="plain" image="plus" catalog="system"/>
                             <connections>
                                 <action selector="addTask:" destination="-1" eventType="touchUpInside" id="Ey1-LX-VYf"/>
                             </connections>
@@ -55,22 +60,24 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F9u-VS-Prd">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="40"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="45" height="40"/>
                                     <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" image="homekit" catalog="system"/>
+                                    <buttonConfiguration key="configuration" style="plain" image="house.circle" catalog="system"/>
                                     <connections>
                                         <action selector="myDayDidTap:" destination="-1" eventType="touchUpInside" id="wcM-bv-Czb"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bZO-RQ-srw">
-                                    <rect key="frame" x="50" y="0.0" width="44.5" height="40"/>
+                                    <rect key="frame" x="45" y="0.0" width="45" height="40"/>
                                     <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" image="bell" catalog="system"/>
+                                    <buttonConfiguration key="configuration" style="plain" image="bell.circle" catalog="system"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" horizontalCompressionResistancePriority="748" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cbP-eh-28K">
-                                    <rect key="frame" x="94.5" y="0.0" width="319.5" height="40"/>
+                                    <rect key="frame" x="90" y="0.0" width="324" height="40"/>
+                                    <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                    <inset key="imageEdgeInsets" minX="20" minY="20" maxX="20" maxY="20"/>
                                     <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" image="calendar" catalog="system"/>
+                                    <buttonConfiguration key="configuration" style="plain" image="calendar.circle" catalog="system"/>
                                     <connections>
                                         <action selector="deadlineDidTap:" destination="-1" eventType="touchUpInside" id="sK3-IZ-N5t"/>
                                     </connections>
@@ -92,14 +99,53 @@
                         <constraint firstAttribute="bottom" secondItem="zpC-bT-rJS" secondAttribute="bottom" id="yW3-6o-NOR"/>
                     </constraints>
                 </view>
-                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="MYY-DL-jCe">
-                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MYY-DL-jCe" id="XiH-79-PB9">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </tableViewCellContentView>
-                </tableViewCell>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" id="y5M-1d-OFC">
+                    <rect key="frame" x="145" y="297" width="200" height="90"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="e7i-Op-AO4">
+                            <rect key="frame" x="0.0" y="0.0" width="50" height="90"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="list.bullet" catalog="system" imagePlacement="top" title="Select all">
+                                <fontDescription key="titleFontDescription" name="TimesNewRomanPSMT" family="System Font" pointSize="12"/>
+                            </buttonConfiguration>
+                            <connections>
+                                <action selector="selectAllTap:" destination="-1" eventType="touchUpInside" id="PFb-1B-gjA"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="zgx-g2-Eox">
+                            <rect key="frame" x="50" y="0.0" width="50" height="90"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="list.triangle" catalog="system" imagePlacement="top" title="Move">
+                                <fontDescription key="titleFontDescription" name="TimesNewRomanPSMT" family="System Font" pointSize="12"/>
+                            </buttonConfiguration>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="7V8-WX-3T0">
+                            <rect key="frame" x="100" y="0.0" width="50" height="90"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="calendar" catalog="system" imagePlacement="top" title="Due Date">
+                                <fontDescription key="titleFontDescription" name="TimesNewRomanPSMT" family="System Font" pointSize="12"/>
+                            </buttonConfiguration>
+                            <connections>
+                                <action selector="deadlineDidTap:" destination="-1" eventType="touchUpInside" id="5Aj-er-zK4"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="U5M-uB-rwh">
+                            <rect key="frame" x="150" y="0.0" width="50" height="90"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="trash" catalog="system" imagePlacement="top" title="Delete">
+                                <fontDescription key="titleFontDescription" name="TimesNewRomanPSMT" family="System Font" pointSize="12"/>
+                            </buttonConfiguration>
+                            <connections>
+                                <action selector="deleteSelectedTasksTap:" destination="-1" eventType="touchUpInside" id="LG3-MP-cy0"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="41m-Vt-cvH"/>
+                </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="ssq-o7-n6X"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -117,9 +163,14 @@
         </view>
     </objects>
     <resources>
-        <image name="bell" catalog="system" width="128" height="124"/>
+        <image name="bell.circle" catalog="system" width="128" height="121"/>
         <image name="calendar" catalog="system" width="128" height="106"/>
-        <image name="homekit" catalog="system" width="128" height="106"/>
+        <image name="calendar.circle" catalog="system" width="128" height="121"/>
+        <image name="house.circle" catalog="system" width="128" height="121"/>
+        <image name="list.bullet" catalog="system" width="128" height="88"/>
+        <image name="list.triangle" catalog="system" width="128" height="91"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="trash" catalog="system" width="121" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

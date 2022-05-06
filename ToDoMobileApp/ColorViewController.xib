@@ -20,7 +20,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="OUZ-mG-1Ez">
-                    <rect key="frame" x="0.0" y="683" width="414" height="179"/>
+                    <rect key="frame" x="0.0" y="718.5" width="414" height="143.5"/>
                 </stackView>
                 <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pIt-wx-dbF">
                     <rect key="frame" x="0.0" y="44" width="414" height="50"/>
@@ -48,7 +48,7 @@
                 <constraint firstItem="pIt-wx-dbF" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="KOO-SR-1ms"/>
                 <constraint firstItem="OUZ-mG-1Ez" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="OhV-Dv-57t"/>
                 <constraint firstItem="pIt-wx-dbF" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="bvl-En-Led"/>
-                <constraint firstItem="OUZ-mG-1Ez" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.2" id="qDy-49-KNK"/>
+                <constraint firstItem="OUZ-mG-1Ez" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.16" id="qDy-49-KNK"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="80.357142857142847"/>
         </view>

@@ -14,9 +14,18 @@ class MyDayViewController: UIViewController, UIViewControllerTransitioningDelega
     @IBOutlet weak var myDayButton: UIButton!
     @IBOutlet weak var dueButton: UIButton!
     @IBOutlet weak var viewMove: UIView!
+    @IBOutlet weak var moveButton: UIButton!
+    @IBOutlet weak var selectAllButton: UIButton!
+    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var dueDateButton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
+    var isOnEditMode: Bool = false
     var taskStore: TaskStore!
     var nextDate: Date!
+    var listStore: ListStore!
     var currentDeadlineType: DeadlineType = .Today
+    var isSelected: [Bool] = [Bool](repeating: false, count: 1000)
+    static var backgroundColor: UIColor?
     var myDayTaskFinished: [Task]
     {
         var res = [Task]()
@@ -29,6 +38,16 @@ class MyDayViewController: UIViewController, UIViewControllerTransitioningDelega
             if value.secondTaskType == .myDay && value.isFinished
             {
                 res.append(value)
+            }
+        }
+        for list in listStore.allList
+        {
+            for task in list.listOfTask
+            {
+                if(task.secondTaskType == .myDay && task.isFinished)
+                {
+                    res.append(task)
+                }
             }
         }
         return res
@@ -48,6 +67,16 @@ class MyDayViewController: UIViewController, UIViewControllerTransitioningDelega
                 res.append(value)
             }
         }
+        for list in listStore.allList
+        {
+            for task in list.listOfTask
+            {
+                if(task.secondTaskType == .myDay && !task.isFinished)
+                {
+                    res.append(task)
+                }
+            }
+        }
         return res
     }
     
@@ -61,6 +90,10 @@ class MyDayViewController: UIViewController, UIViewControllerTransitioningDelega
         super.viewDidLoad()
         initUI()
         self.hideKeyboardWhenTappedAround()
+        addTaskTextField.placeholder = "Add a Task"
+        stackView.isHidden = true
+        let optionBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(listOptionDidTap(_:)))
+        self.navigationItem.rightBarButtonItem  = optionBarButtonItem
         myDayTableView.register(UINib(nibName: "TaskTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "TaskTableViewCell")
         myDayTableView.delegate = self
         myDayTableView.dataSource = self
@@ -70,8 +103,66 @@ class MyDayViewController: UIViewController, UIViewControllerTransitioningDelega
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
+        if let color = MyDayViewController.backgroundColor
+        {
+            MyDayViewController.backgroundColor = color
+            self.view.backgroundColor = color
+            self.myDayTableView.backgroundColor = color
+            viewMove.backgroundColor = color
+            addTaskTextField.backgroundColor = color
+        }
+        self.dueButton.setTitle("", for: .normal)
+        self.nextDate = Date()
         myDayTableView.reloadData()
     }
+    
+    // MARK: edit mode on
+    func stackViewAppear()
+    {
+        
+        isOnEditMode = true
+        stackView.isHidden = false
+        viewMove.isHidden = true
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        let bottomConstraint = stackView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50)
+        let leadingConstraint = stackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
+        let trailingConstraint = stackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+        bottomConstraint.isActive = true
+        leadingConstraint.isActive = true
+        trailingConstraint.isActive = true
+        myDayTableView.reloadData()
+    }
+    
+    // MARK: -edit mode off
+    @objc func stackViewDismiss()
+    {
+        isSelected = [Bool](repeating: false, count: 1000)
+        isOnEditMode = false
+        stackView.isHidden = true
+        viewMove.isHidden = false
+        let optionBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(listOptionDidTap(_:)))
+        self.navigationItem.setRightBarButton(optionBarButtonItem, animated: true)
+        myDayTableView.reloadData()
+    }
+    
+    
+    // MARK: -tap list option
+    @objc func listOptionDidTap(_ sender: UIBarButtonItem)
+    {
+        print("Load list of options presentation")
+        let listOptionView = ListOptionViewController()
+        listOptionView.modalTransitionStyle = .coverVertical
+        listOptionView.modalPresentationStyle = .custom
+        listOptionView.transitioningDelegate = self
+        listOptionView.delegate = self
+        listOptionView.taskStore = taskStore
+        listOptionView.taskType = .myDay
+        self.present(listOptionView, animated: true, completion: nil)
+        self.view.layer.opacity = 0.5
+    }
+
+    
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     var isMoved: Bool = false
     //move viewMove to keyboard
@@ -118,6 +209,154 @@ class MyDayViewController: UIViewController, UIViewControllerTransitioningDelega
             let indexPath = IndexPath(row: index, section: 0)
             myDayTableView.insertRows(at: [indexPath], with: .automatic)
             addTaskTextField.text = ""
+        }
+    }
+    
+    // MARK: - select all tap
+    @IBAction func selectAllTap(_ sender: UIButton)
+    {
+        var taskList: [Task] = self.myDayTaskFinished + self.myDayTaskNotFinished
+        if(taskList.count == 0)
+        {
+            return
+        }
+        if let title = sender.titleLabel?.text, title == "Select all"
+        {
+            sender.setTitle("Clear all", for: .normal)
+            let attributeText = NSMutableAttributedString(string: sender.title(for: .normal) ?? "", attributes: [
+                .font: UIFont(name: "Times New Roman", size: CGFloat(12))!
+            ])
+            sender.setAttributedTitle(attributeText, for: .normal)
+            //selectAllButton.setNeedsUpdateConfiguration()
+            print(selectAllButton.titleLabel?.font)
+            print(selectAllButton.titleLabel?.attributedText)
+            sender.titleLabel?.numberOfLines = 1
+            isSelected = [Bool](repeating: true, count: taskList.count)
+            if(myDayTaskNotFinished.count != 0)
+            {
+                for i in 0...(myDayTaskNotFinished.count - 1)
+                {
+                    let indexPath = IndexPath(row: i, section: 0)
+                    (myDayTableView.cellForRow(at: indexPath) as! TaskTableViewCell).finishButton.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
+                }
+            }
+            if(myDayTaskFinished.count != 0)
+            {
+                for i in 0...(myDayTaskFinished.count - 1)
+                {
+                    let indexPath = IndexPath(row: i, section: 1)
+                    (myDayTableView.cellForRow(at: indexPath) as! TaskTableViewCell).finishButton.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
+                }
+            }
+        }
+        else
+        {
+            sender.setTitle("Select all", for: .normal)
+            let attributeText = NSMutableAttributedString(string: sender.title(for: .normal) ?? "", attributes: [
+                .font: UIFont(name: "Times New Roman", size: CGFloat(12))!
+            ])
+            sender.setAttributedTitle(attributeText, for: .normal)
+            isSelected = [Bool](repeating: false, count: taskList.count)
+            if(myDayTaskNotFinished.count != 0)
+            {
+                for i in 0...(myDayTaskNotFinished.count - 1)
+                {
+                    let indexPath = IndexPath(row: i, section: 0)
+                    (myDayTableView.cellForRow(at: indexPath) as! TaskTableViewCell).finishButton.setImage(UIImage(systemName: "circle"), for: .normal)
+                }
+            }
+            if(myDayTaskFinished.count != 0)
+            {
+                for i in 0...(myDayTaskFinished.count - 1)
+                {
+                    let indexPath = IndexPath(row: i, section: 1)
+                    (myDayTableView.cellForRow(at: indexPath) as! TaskTableViewCell).finishButton.setImage(UIImage(systemName: "circle"), for: .normal)
+                }
+            }
+        }
+        updateOptionButtons()
+        
+    }
+    
+    // MARK: - delete selected Tasks
+    @IBAction func deleteSelectedTasksTap(_ sender: UIButton)
+    {
+        var taskList = myDayTaskFinished + myDayTaskNotFinished
+        let alert = UIAlertController(title: nil, message: "Are you sure you want to permanently delete these tasks?", preferredStyle: .actionSheet)
+        let yesAction = UIAlertAction(title: "Delete task", style: .destructive)
+        {   _ in
+            var idRemove = [String]()
+            for i in 0...taskList.count - 1
+            {
+                if(self.isSelected[i])
+                {
+                    if(i >= self.myDayTaskNotFinished.count)
+                    {
+                        idRemove.append(self.myDayTaskFinished[i - self.myDayTaskNotFinished.count].taskID)
+                        self.isSelected[i] = false
+                    }
+                    else
+                    {
+                        idRemove.append(self.myDayTaskNotFinished[i].taskID)
+                        self.isSelected[i] = false
+                    }
+                }
+            }
+            for value in idRemove
+            {
+                self.taskStore.removeByID(id: value)
+            }
+            self.stackViewDismiss()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(yesAction)
+        alert.addAction(cancelAction)
+        present(alert,animated: true, completion: nil)
+    }
+    // MARK: - update option buttons
+    func updateOptionButtons()
+    {
+        var taskList = myDayTaskFinished + myDayTaskNotFinished
+        if let value = isSelected.firstIndex(of: true)
+        {
+            moveButton.tintColor = UIColor.systemBlue
+            dueDateButton.tintColor = UIColor.systemBlue
+            deleteButton.tintColor = UIColor.red
+            deleteButton.isUserInteractionEnabled = true
+            dueDateButton.isUserInteractionEnabled = true
+            moveButton.isUserInteractionEnabled = true
+        }
+        else
+        {
+            if let title = selectAllButton.titleLabel?.text, title == "Clear all"
+            {
+                selectAllButton.setTitle("Select all", for: .normal)
+                let attributeText = NSMutableAttributedString(string: selectAllButton.title(for: .normal) ?? "", attributes: [
+                    .font: UIFont(name: "Times New Roman", size: CGFloat(12))!
+                ])
+                selectAllButton.setAttributedTitle(attributeText, for: .normal)
+            }
+            moveButton.tintColor = UIColor.black
+            dueDateButton.tintColor = UIColor.black
+            deleteButton.tintColor = UIColor.black
+            deleteButton.isUserInteractionEnabled = false
+            dueDateButton.isUserInteractionEnabled = false
+            moveButton.isUserInteractionEnabled = false
+        }
+        if let value = isSelected.firstIndex(of: false), value < taskList.count
+        {
+            
+        }
+        else
+        {
+            if let title = selectAllButton.titleLabel?.text, title == "Select all"
+            {
+                selectAllButton.setTitle("Clear all", for: .normal)
+                let attributeText = NSMutableAttributedString(string: selectAllButton.title(for: .normal) ?? "", attributes: [
+                    .font: UIFont(name: "Times New Roman", size: CGFloat(12))!
+                ])
+                selectAllButton.setAttributedTitle(attributeText, for: .normal)
+            }
         }
     }
     
@@ -174,6 +413,7 @@ extension MyDayViewController: UITableViewDelegate, UITableViewDataSource
         {
             cell.task = myDayTaskFinished[indexPath.row]
         }
+        cell.isOnEditMode = isOnEditMode
         cell.initCellForMyDayViewController(indexPath: indexPath)
         return cell
     }
@@ -185,13 +425,32 @@ extension MyDayViewController: UITableViewDelegate, UITableViewDataSource
             {
                 return ""
             }
-            return "Đã hoàn thành \(number)"
+            return "Completed \(number)"
         }
         return ""
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete
+        {
+            let id: String
+            if(indexPath.section == 0)
+            {
+                id = myDayTaskNotFinished[indexPath.row].taskID
+            }
+            else
+            {
+                id = myDayTaskFinished[indexPath.row].taskID
+            }
+                taskStore.removeByID(id: id)
+                myDayTableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        if(!isOnEditMode)
+        {
         //display task detail screen for each task
         let detailTaskViewController = TaskMoreDetailViewController()
         if(indexPath.section == 0)
@@ -207,7 +466,7 @@ extension MyDayViewController: UITableViewDelegate, UITableViewDataSource
         detailTaskViewController.isMyDay = true
         self.navigationController?.pushViewController(detailTaskViewController, animated: true)
     }
-    
+    }
 }
 // MARK: - delegate from textField
 
@@ -219,13 +478,30 @@ extension MyDayViewController: UITextFieldDelegate
     }
 }
 
-// MARK: - delegate from cell for finish and interest touch action
+// MARK: - delegate from cell
 extension MyDayViewController: TaskTableViewCellDelegate
 {
     func taskTableViewCell(_ cell: TaskTableViewCell, didTapFinishButtonAtTask task: Task,didTapFinishButtonToState state: Bool) {
         print("update finished database of \(task.detail)!")
-        task.isFinished = state
-        myDayTableView.reloadSections([0,1], with: .automatic)
+        if(!isOnEditMode)
+        {
+            task.isFinished = state
+            myDayTableView.reloadSections([0,1], with: .automatic)
+        }
+        else
+        {
+            var indexPath: IndexPath = myDayTableView.indexPath(for: cell)!
+            if(indexPath.section == 0)
+            {
+                isSelected[indexPath.row] = state
+            }
+            else
+            {
+                isSelected[indexPath.row + myDayTaskNotFinished.count] = state
+            }
+            print(myDayTableView.indexPath(for: cell)!.row)
+            updateOptionButtons()
+        }
     }
     
     func taskTableViewCell(_ cell: TaskTableViewCell, didTapInterestButtonAtTask task: Task, didTapInterestButtonToState state: Bool) {
@@ -235,7 +511,7 @@ extension MyDayViewController: TaskTableViewCellDelegate
     
 }
 
-// MARK: - delegate from Task Detail View Controller
+// MARK: -Task Detail View Controller
 extension MyDayViewController: TaskMoreDetailViewControllerDelegate
 {
     //change my day property in task detail screen
@@ -269,6 +545,8 @@ extension MyDayViewController: TaskMoreDetailViewControllerDelegate
         myDayTableView.reloadData()
     }
 }
+
+// MARK: - DeadlineDelegate
 extension MyDayViewController: DeadlineViewControllerDelegate
 {
     //receive due type from Deadline screen
@@ -289,6 +567,45 @@ extension MyDayViewController: DeadlineViewControllerDelegate
                 
             default: print("Wrong deadline!")
         }
+        let attributeText = NSMutableAttributedString(string: dueButton.title(for: .normal) ?? "", attributes: [
+            .font: UIFont(name: "Times New Roman", size: CGFloat(12))!
+        ])
+        dueButton.setAttributedTitle(attributeText, for: .normal)
+        if(isOnEditMode)
+        {
+            var dayComponent    = DateComponents()
+            switch currentDeadlineType
+            {
+                case .Tomorrow: dayComponent.day = 1
+                case .Today: dayComponent.day = 0
+                case .NextWeek: dayComponent.day = 7
+                case .Other: dayComponent.day = -1
+            }
+            let theCalendar = Calendar.current
+            if(currentDeadlineType == .Today || currentDeadlineType == .NextWeek || currentDeadlineType == .Tomorrow )
+            {
+                nextDate = theCalendar.date(byAdding: dayComponent, to: Date())
+            }
+            for (index,value) in isSelected.enumerated()
+            {
+                if(value)
+                {
+                    if(index >= self.myDayTaskNotFinished.count)
+                    {
+                        self.myDayTaskFinished[index - self.myDayTaskNotFinished.count].timePlanned = nextDate
+                    }
+                    else
+                    {
+                        self.myDayTaskNotFinished[index].timePlanned = nextDate
+                    }
+                }
+            }
+            if(currentDeadlineType != .Other)
+            {
+                stackViewDismiss()
+            }
+            
+        }
         myDayTableView.reloadData()
     }
     
@@ -299,7 +616,33 @@ extension MyDayViewController: DeadlineViewControllerDelegate
     //get date from date picker
     func deadlineViewController(currentDateSelect datePicker: Date) {
         nextDate = datePicker
-        dueButton.setTitle("Due \(nextDate.dayofTheWeek), \(nextDate.day) \(nextDate.monthString)", for: .normal)
+        if(isOnEditMode)
+        {
+            for (index,value) in isSelected.enumerated()
+            {
+                if(value)
+                {
+                    if(index >= self.myDayTaskNotFinished.count)
+                    {
+                        self.myDayTaskFinished[index - self.myDayTaskNotFinished.count].timePlanned = nextDate
+                    }
+                    else
+                    {
+                        self.myDayTaskNotFinished[index].timePlanned = nextDate
+                    }
+                }
+            }
+            myDayTableView.reloadData()
+            stackViewDismiss()
+        }
+        else
+        {
+            dueButton.setTitle("Due \(nextDate.dayofTheWeek), \(nextDate.day) \(nextDate.monthString)", for: .normal)
+        }
+        let attributeText = NSMutableAttributedString(string: dueButton.title(for: .normal) ?? "", attributes: [
+            .font: UIFont(name: "Times New Roman", size: CGFloat(12))!
+        ])
+        dueButton.setAttributedTitle(attributeText, for: .normal)
     }
     
     
@@ -315,4 +658,33 @@ extension MyDayViewController {
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
+}
+
+extension MyDayViewController: ListOptionViewControllerDelegate
+{
+    func listOptionViewController(Opacity opacity: Float) {
+        self.view.layer.opacity = opacity
+        self.myDayTableView.reloadData()
+    }
+    
+    func listOptionViewController() {
+        stackViewAppear()
+        updateOptionButtons()
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(stackViewDismiss))
+        self.navigationItem.setRightBarButton(cancelButton, animated: true)
+    }
+    
+    func listOptionViewController(setBackgroundColorTo newColor: UIColor) {
+        MyDayViewController.backgroundColor = newColor
+        self.view.backgroundColor = newColor
+        self.myDayTableView.backgroundColor = newColor
+        viewMove.backgroundColor = newColor
+        addTaskTextField.backgroundColor = newColor
+    }
+    
+    func listOptionViewController(changeCompletedTaskPropertyTo newState: Bool) {
+        
+    }
+    
+    
 }

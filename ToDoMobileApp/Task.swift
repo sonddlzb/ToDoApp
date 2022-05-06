@@ -15,6 +15,12 @@ class Task
     @objc dynamic var  isInterested: Bool = false
     @objc dynamic var timeCreate: Date
     @objc dynamic var timePlanned: Date
+    
+    
+    var taskType: TaskType
+    var steps: [(Bool,String)] = []
+    var secondTaskType: TaskType = .normal
+    var note: String = ""
     init(detail: String, taskType: TaskType, timeCreate: Date)
     {
         if(taskType == .important)
@@ -50,10 +56,31 @@ class Task
         self.timePlanned = timePlanned
         self.secondTaskType = secondTaskType
     }
-
-    var taskType: TaskType
-    var steps: [(Bool,String)] = []
-    var secondTaskType: TaskType = .normal
+    init(detail: String, taskType: TaskType, secondTaskType: TaskType, timeCreate: Date, timePlanned: Date, listName: String)
+    {
+        if(taskType == .important)
+        {
+            self.isInterested = true
+        }
+        self.detail = detail
+        self.taskType = taskType
+        self.timeCreate = timeCreate
+        self.timePlanned = timePlanned
+        self.secondTaskType = secondTaskType
+        self.listName = listName
+    }
+    init(detail: String, taskType: TaskType, timeCreate: Date, timePlanned: Date, listName: String)
+    {
+        if(taskType == .important)
+        {
+            self.isInterested = true
+        }
+        self.detail = detail
+        self.taskType = taskType
+        self.timeCreate = timeCreate
+        self.timePlanned = timePlanned
+        self.listName = listName
+    }
     var due: DueType
     {
         if self.timePlanned.day == Date().day        {

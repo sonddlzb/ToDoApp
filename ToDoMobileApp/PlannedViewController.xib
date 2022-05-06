@@ -38,12 +38,12 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2aq-GN-6wA">
                     <rect key="frame" x="0.0" y="772" width="414" height="90"/>
                     <subviews>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9tg-EV-tBo">
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add a Task" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9tg-EV-tBo">
                             <rect key="frame" x="40" y="40" width="374" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="aLt-g1-uFa"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AsN-Un-9Rc">
@@ -63,23 +63,23 @@
                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8XR-iz-5YE">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GMq-Kv-0Kb">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="40"/>
+                                <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GMq-Kv-0Kb">
+                                    <rect key="frame" x="0.0" y="0.0" width="45" height="40"/>
                                     <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" image="homekit" catalog="system"/>
+                                    <buttonConfiguration key="configuration" style="plain" image="house.circle" catalog="system"/>
                                     <connections>
                                         <action selector="myDayDidTap:" destination="-1" eventType="touchUpInside" id="wgP-er-Omz"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LD1-pB-P3V">
-                                    <rect key="frame" x="50" y="0.0" width="44.5" height="40"/>
+                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LD1-pB-P3V">
+                                    <rect key="frame" x="45" y="0.0" width="45" height="40"/>
                                     <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" image="bell" catalog="system"/>
+                                    <buttonConfiguration key="configuration" style="plain" image="bell.circle" catalog="system"/>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" horizontalCompressionResistancePriority="748" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aZe-dV-nyM">
-                                    <rect key="frame" x="94.5" y="0.0" width="319.5" height="40"/>
+                                <button opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="248" horizontalCompressionResistancePriority="748" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aZe-dV-nyM">
+                                    <rect key="frame" x="90" y="0.0" width="324" height="40"/>
                                     <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" image="calendar" catalog="system"/>
+                                    <buttonConfiguration key="configuration" style="plain" image="calendar.circle" catalog="system"/>
                                     <connections>
                                         <action selector="deadlineDidTap:" destination="-1" eventType="touchUpInside" id="ONb-bw-lij"/>
                                     </connections>
@@ -165,14 +165,6 @@
                     </subviews>
                     <viewLayoutGuide key="safeArea" id="pH6-s7-uA2"/>
                 </stackView>
-                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="WVY-KP-oNG">
-                    <rect key="frame" x="0.0" y="92" width="414" height="44"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WVY-KP-oNG" id="K0N-v3-Etz">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </tableViewCellContentView>
-                </tableViewCell>
             </subviews>
             <viewLayoutGuide key="safeArea" id="bhL-G2-v9e"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -193,9 +185,10 @@
         </view>
     </objects>
     <resources>
-        <image name="bell" catalog="system" width="128" height="124"/>
+        <image name="bell.circle" catalog="system" width="128" height="121"/>
         <image name="calendar" catalog="system" width="128" height="106"/>
-        <image name="homekit" catalog="system" width="128" height="106"/>
+        <image name="calendar.circle" catalog="system" width="128" height="121"/>
+        <image name="house.circle" catalog="system" width="128" height="121"/>
         <image name="list.bullet" catalog="system" width="128" height="88"/>
         <image name="list.triangle" catalog="system" width="128" height="91"/>
         <image name="trash" catalog="system" width="121" height="128"/>

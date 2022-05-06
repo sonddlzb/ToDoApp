@@ -13,9 +13,16 @@ class TableViewCell: UITableViewCell {
     var task: Task!
     var functionName: [String] = ["Add to My Day", "Remind Me", "Add Due Date", "Repeat", "Add File"]
     var imageName: [String] = [ "sun.max", "bell", "calendar", "repeat", "tag"]
-    var listOfImportantTask: [Task]
+    var imageColor: [UIColor] = [.purple, .darkGray, .red, .green, .blue]
+    var importantTaskNotFinished: [Task]
     {
-        return listStore.importantTaskListStore + taskStore.importantTaskTaskStore
+        let res = listStore.importantTaskListStoreNotFinished + taskStore.importantTaskTaskStoreNotFinished
+        return res
+    }
+    var importantTaskBoth: [Task]
+    {
+        let res = listStore.importantTaskListStoreBoth + taskStore.importantTaskTaskStoreBoth
+        return res
     }
     let buttonName: [String] = ["My Day", "Important", "Planned", "Assign To Me", "Task"]
     @IBOutlet weak var nameLabel: UILabel!
@@ -53,11 +60,12 @@ class TableViewCell: UITableViewCell {
             case 3:     self.imageViewCell.image = UIImage(systemName: "person")
             default: self.imageViewCell.image = UIImage(systemName: "homekit")
         }
+        self.imageViewCell.tintColor = imageColor[indexPath.row]
         let number: Int
         switch indexPath.row
         {
-            case 0: number = taskStore.myDayTask.count
-            case 1: number = listOfImportantTask.count
+        case 0: number = taskStore.myDayTask.count + listStore.myDayListStore.count
+            case 1: number = importantTaskNotFinished.count
             case 2: number = taskStore.planTask.count
             case 4: number = taskStore.taskNotFinished.count
             default: number = 0
@@ -134,9 +142,9 @@ class TableViewCell: UITableViewCell {
         }
     }
     
-    func initCellForListOptionViewController(indexPath: IndexPath)
+    func initCellForListOptionViewController(indexPath: IndexPath, completedState: Bool)
     {
-        let optionName: [String] = ["Edit", "Change Theme", "Print List","Group by", "Send a Copy", "Show Completed Tasks"]
+        let optionName: [String] = ["Edit", "Change Theme", "Print List","Group by", "Sort", "Show Completed Tasks"]
         let optionImage: [String] = ["pencil", "photo.artframe", "printer","rectangle.3.group", "square.and.arrow.up", "checkmark.circle"]
         self.nameLabel.text = optionName[indexPath.row]
         self.imageViewCell.image = UIImage(systemName: optionImage[indexPath.row])
@@ -144,7 +152,31 @@ class TableViewCell: UITableViewCell {
         {
             self.countLabel.text = ">"
         }
+        if(completedState && indexPath.row == 5)
+        {
+            self.nameLabel.text = "Hide Completed Tasks"
+        }
         
+    }
+    func initCellForListOptionViewController(indexPath: IndexPath)
+    {
+        let optionName: [String] = ["Edit", "Change Theme", "Print List","Group by", "Sort"]
+        let optionImage: [String] = ["pencil", "photo.artframe", "printer","rectangle.3.group", "square.and.arrow.up"]
+        self.nameLabel.text = optionName[indexPath.row]
+        self.imageViewCell.image = UIImage(systemName: optionImage[indexPath.row])
+        if(indexPath.row == 1 || indexPath.row == 3)
+        {
+            self.countLabel.text = ">"
+        }
+        
+    }
+    // MARK: - cell for color viewcontroller
+    func initCellForSortViewController(indexPath: IndexPath)
+    {
+        let cellName = ["Alphabetically","Due Date","Creation Date"]
+        let cellImage = ["arrow.up.arrow.down","calendar","plus.circle"]
+        self.nameLabel.text = cellName[indexPath.row]
+        self.imageViewCell.image = UIImage(systemName: cellImage[indexPath.row])
     }
 }
 

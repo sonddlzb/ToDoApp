@@ -47,7 +47,14 @@ class TaskTableViewCell: UITableViewCell {
     }
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+//        self.layer.cornerRadius = 5
+//        self.layer.masksToBounds = true
+        self.alpha = 0.5
+        self.layer.borderWidth = 0.1
+        self.layer.masksToBounds = true
+        self.layer.cornerRadius = 10
+        self.backgroundColor = .white
+
     }
 
     @IBAction func finishClick(_ sender: UIButton) {
@@ -121,12 +128,53 @@ class TaskTableViewCell: UITableViewCell {
                 self.interestButton.imageView?.image = UIImage(systemName: "star")
             }
         }
+        if(isOnEditMode)
+        {
+            self.interestButton.isHidden = true
+            self.finishButton.tintColor = UIColor.black
+            self.finishButton.setImage(UIImage(systemName: "circle"), for: .normal)
+        }
+        else
+        {
+            self.interestButton.isHidden = false
+            self.finishButton.tintColor = .systemBlue
+        }
     }
     
     //init the view of cell for ListTableView
     func initCellForListTableViewCell(list: List, indexPath: IndexPath)
     {
-        self.moreInfoLabel.text = "Tasks"
+        self.task = list.listOfTask[indexPath.row]
+        let due = task.timePlanned
+        let nextDay = Int(task.timePlanned.day)
+        let currentDay = Int(Date().day)
+        let distance = nextDay! - currentDay!
+        var deadline: String = " "
+        if(distance == 0)
+        {
+                deadline += "Today"
+        }
+        else if(distance == 1)
+        {
+            deadline += "Tomorrow"
+        }
+        else if(distance == -1)
+        {
+            deadline += "Yesterday"
+        }
+        else
+        {
+            deadline += "\(task.timePlanned.dayofTheWeek), \(task.timePlanned.day) \(task.timePlanned.monthString)"
+        }
+        if(Date() > due)
+        {
+            self.moreInfoLabel.textColor = UIColor.red
+        }
+        else
+        {
+            self.moreInfoLabel.textColor = UIColor.black
+        }
+        self.moreInfoLabel.text! = "Tasks. " + deadline
         self.moreInfoLabel.contentMode = .left
         if indexPath.section == 0
         {
@@ -163,12 +211,53 @@ class TaskTableViewCell: UITableViewCell {
                 self.interestButton.imageView?.image = UIImage(systemName: "star")
             }
         }
+        if(isOnEditMode)
+        {
+            self.interestButton.isHidden = true
+            self.finishButton.tintColor = UIColor.black
+            self.finishButton.setImage(UIImage(systemName: "circle"), for: .normal)
+        }
+        else
+        {
+            self.interestButton.isHidden = false
+            self.finishButton.tintColor = .systemBlue
+        }
     }
     
     //init cell for importantViewController
     func initCellForImportantViewController(indexPath: IndexPath, listOfImportantTask: [Task])
     {
-        self.moreInfoLabel.text = "Tasks"
+        self.task = listOfImportantTask[indexPath.row]
+        let due = task.timePlanned
+        let nextDay = Int(task.timePlanned.day)
+        let currentDay = Int(Date().day)
+        let distance = nextDay! - currentDay!
+        var deadline: String = " "
+        if(distance == 0)
+        {
+                deadline += "Today"
+        }
+        else if(distance == 1)
+        {
+            deadline += "Tomorrow"
+        }
+        else if(distance == -1)
+        {
+            deadline += "Yesterday"
+        }
+        else
+        {
+            deadline += "\(task.timePlanned.dayofTheWeek), \(task.timePlanned.day) \(task.timePlanned.monthString)"
+        }
+        if(Date() > due)
+        {
+            self.moreInfoLabel.textColor = UIColor.red
+        }
+        else
+        {
+            self.moreInfoLabel.textColor = UIColor.black
+        }
+        self.moreInfoLabel.text! = "Tasks " + deadline
         self.moreInfoLabel.contentMode = .left
         print(listOfImportantTask.count)
         self.task = listOfImportantTask[indexPath.row]
@@ -183,6 +272,17 @@ class TaskTableViewCell: UITableViewCell {
         self.task.isFinished = false
         self.finishButton.imageView?.image = UIImage(systemName: "circle")
         self.interestButton.imageView?.image = UIImage(systemName: "star.fill")
+        if(isOnEditMode)
+        {
+            self.interestButton.isHidden = true
+            self.finishButton.tintColor = UIColor.black
+            self.finishButton.setImage(UIImage(systemName: "circle"), for: .normal)
+        }
+        else
+        {
+            self.interestButton.isHidden = false
+            self.finishButton.tintColor = .systemBlue
+        }
     }
     
     //init cell for myDayViewController
@@ -219,13 +319,13 @@ class TaskTableViewCell: UITableViewCell {
         }
         if(task.taskType == .myDay || (task.taskType == .planned && task.secondTaskType == .myDay))
         {
-            self.moreInfoLabel.text = "My Day"
+            self.moreInfoLabel.text = "My Day."
         }
         else
         {
             self.moreInfoLabel.text = ""
         }
-        self.moreInfoLabel.text! += " Tasks" + deadline
+        self.moreInfoLabel.text! += " Tasks." + deadline
         self.moreInfoLabel.contentMode = .left
         self.taskNameLabel.text = self.task.detail
         self.taskNameLabel.contentMode = .left
@@ -247,14 +347,39 @@ class TaskTableViewCell: UITableViewCell {
             self.task.isFinished = true
             self.finishButton.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
         }
+        if(isOnEditMode)
+        {
+            self.interestButton.isHidden = true
+            self.finishButton.tintColor = UIColor.black
+            self.finishButton.setImage(UIImage(systemName: "circle"), for: .normal)
+        }
+        else
+        {
+            self.interestButton.isHidden = false
+            self.finishButton.tintColor = .systemBlue
+        }
     }
     //init cell for plannedViewController
-    func initCellForPlannedViewController()
+    func initCellForPlannedViewController(showCompletedTaskState state: Bool)
     {
         initGui()
         self.taskNameLabel.text = task.detail
         self.taskNameLabel.contentMode = .left
-        self.task.isFinished = false
+        if(state)
+        {
+            if(!task.isFinished)
+            {
+                finishButton.setImage(UIImage(systemName: "circle"), for: .normal)
+            }
+            else
+            {
+                finishButton.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
+            }
+        }
+        else
+        {
+            self.finishButton.imageView?.image = UIImage(systemName: "circle")
+        }
         if(task.isInterested)
         {
             self.interestButton.imageView?.image = UIImage(systemName: "star.fill")
@@ -294,7 +419,7 @@ class TaskTableViewCell: UITableViewCell {
         }
         if(task.taskType == .myDay || (task.taskType == .planned && task.secondTaskType == .myDay))
         {
-            self.moreInfoLabel.text = "My Day"
+            self.moreInfoLabel.text = "My Day."
         }
         else
         {
@@ -302,7 +427,6 @@ class TaskTableViewCell: UITableViewCell {
         }
         self.moreInfoLabel.text! += " Tasks" + deadline
         self.moreInfoLabel.contentMode = .left
-        self.finishButton.imageView?.image = UIImage(systemName: "circle")
         if(task.isInterested)
         {
             self.interestButton.imageView?.image = UIImage(systemName: "star.fill")
@@ -315,12 +439,62 @@ class TaskTableViewCell: UITableViewCell {
         {
             self.interestButton.isHidden = true
             self.finishButton.tintColor = UIColor.black
+            self.finishButton.setImage(UIImage(systemName: "circle"), for: .normal)
         }
         else
         {
             self.interestButton.isHidden = false
             self.finishButton.tintColor = .systemBlue
         }
+    }
+    
+    // MARK: init cell for searching result
+    func initCellForSearchViewController()
+    {
+        initGui()
+        let due = task.timePlanned
+        let nextDay = Int(task.timePlanned.day)
+        let currentDay = Int(Date().day)
+        let distance = nextDay! - currentDay!
+        var deadline: String = " "
+        if(distance == 0)
+        {
+                deadline += "Today"
+        }
+        else if(distance == 1)
+        {
+            deadline += "Tomorrow"
+        }
+        else if(distance == -1)
+        {
+            deadline += "Yesterday"
+        }
+        else
+        {
+            deadline += "\(task.timePlanned.dayofTheWeek), \(task.timePlanned.day) \(task.timePlanned.monthString)"
+        }
+        if(Date() > due)
+        {
+            self.moreInfoLabel.textColor = UIColor.red
+        }
+        else
+        {
+            self.moreInfoLabel.textColor = UIColor.black
+        }
+        if(task.taskType == .myDay || (task.taskType == .planned && task.secondTaskType == .myDay))
+        {
+            self.moreInfoLabel.text = "My Day. "
+        }
+        if(task.taskType == .listed)
+        {
+            self.moreInfoLabel.text = task.listName
+        }
+        else
+        {
+            self.moreInfoLabel.text = "Tasks. "
+        }
+        self.moreInfoLabel.text! +=  deadline
+        self.moreInfoLabel.contentMode = .left
     }
 }
 

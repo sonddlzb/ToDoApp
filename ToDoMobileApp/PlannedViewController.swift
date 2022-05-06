@@ -9,13 +9,16 @@ import UIKit
 import SwiftUI
 class PlannedViewController: UIViewController, UIViewControllerTransitioningDelegate {
     var isOnEditMode: Bool = false
+    static var showCompletedTask: Bool = false
     var taskStore: TaskStore!
     var currentFilter: Int = 0
     var isMyDay = false
     var nextDate: Date!
     var currentDeadlineType: DeadlineType = .Today
+
     var isSelected: [Bool] = [Bool](repeating: false, count: 1000)
     let nameValue = ["All Planned", "Overdue", "Today", "Tomorrow", "This Week", "Later"]
+    static var backgroundColor: UIColor?
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var addTaskTextField: UITextField!
     @IBOutlet weak var plannedTableView: UITableView!
@@ -30,10 +33,7 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
     @IBOutlet weak var deleteButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.systemYellow
         self.plannedTableView.separatorColor = .white
-        self.plannedTableView.backgroundColor = .systemYellow
-        viewMove.backgroundColor = .systemYellow
         addTaskTextField.placeholder = "Add a Task"
         stackView.isHidden = true
         self.hideKeyboardWhenTappedAround()
@@ -51,6 +51,16 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        if let color = PlannedViewController.backgroundColor
+        {
+            PlannedViewController.backgroundColor = color
+            self.view.backgroundColor = color
+            self.plannedTableView.backgroundColor = color
+            viewMove.backgroundColor = color
+            addTaskTextField.backgroundColor = color
+        }
+        self.dueButton.setTitle("", for: .normal)
+        self.nextDate = Date()
         plannedTableView.reloadData()
     }
     // MARK: -edit mode on
@@ -129,11 +139,22 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
             }
             addTaskTextField.text = ""
         }
+        self.dueButton.setTitle("", for: .normal)
+        self.nextDate = Date()
     }
     // MARK: - select all tap
     @IBAction func selectAllTap(_ sender: UIButton)
     {
-        if(self.taskStore.planTask.count == 0)
+        var taskList: [Task]
+        if(PlannedViewController.showCompletedTask)
+        {
+            taskList = self.taskStore.bothPlanTask
+        }
+        else
+        {
+            taskList = self.taskStore.planTask
+        }
+        if(taskList.count == 0)
         {
             return
         }
@@ -148,8 +169,8 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
             print(selectAllButton.titleLabel?.font)
             print(selectAllButton.titleLabel?.attributedText)
             sender.titleLabel?.numberOfLines = 1
-            isSelected = [Bool](repeating: true, count: self.taskStore.planTask.count)
-            for i in 0...(self.taskStore.planTask.count - 1)
+            isSelected = [Bool](repeating: true, count: taskList.count)
+            for i in 0...(taskList.count - 1)
             {
                 let indexPath = IndexPath(row: i, section: 0)
                 (plannedTableView.cellForRow(at: indexPath) as! TaskTableViewCell).finishButton.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
@@ -162,8 +183,8 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
                 .font: UIFont(name: "Times New Roman", size: CGFloat(12))!
             ])
             sender.setAttributedTitle(attributeText, for: .normal)
-            isSelected = [Bool](repeating: false, count: self.taskStore.planTask.count)
-            for i in 0...(self.taskStore.planTask.count - 1)
+            isSelected = [Bool](repeating: false, count: taskList.count)
+            for i in 0...(taskList.count - 1)
             {
                 let indexPath = IndexPath(row: i, section: 0)
                 (plannedTableView.cellForRow(at: indexPath) as! TaskTableViewCell).finishButton.setImage(UIImage(systemName: "circle"), for: .normal)
@@ -180,12 +201,20 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
         let yesAction = UIAlertAction(title: "Delete task", style: .destructive)
         {   _ in
             var idRemove = [String]()
-            for i in 0...(self.taskStore.planTask.count-1)
+            for i in 0...((PlannedViewController.showCompletedTask) ? (self.taskStore.bothPlanTask.count-1) : (self.taskStore.planTask.count - 1))
             {
                 if(self.isSelected[i])
                 {
-                    idRemove.append(self.taskStore.planTask[i].taskID)
-                    self.isSelected[i] = false
+                    if(PlannedViewController.showCompletedTask)
+                    {
+                        idRemove.append(self.taskStore.bothPlanTask[i].taskID)
+                        self.isSelected[i] = false
+                    }
+                    else
+                    {
+                        idRemove.append(self.taskStore.planTask[i].taskID)
+                        self.isSelected[i] = false
+                    }
                 }
             }
             for value in idRemove
@@ -286,7 +315,7 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
             dueDateButton.isUserInteractionEnabled = false
             moveButton.isUserInteractionEnabled = false
         }
-        if let value = isSelected.firstIndex(of: false), value < taskStore.planTask.count
+        if let value = isSelected.firstIndex(of: false), value < ((PlannedViewController.showCompletedTask) ?  taskStore.bothPlanTask.count : taskStore.planTask.count)
         {
             
         }
@@ -324,6 +353,9 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
         listOptionView.modalPresentationStyle = .custom
         listOptionView.transitioningDelegate = self
         listOptionView.delegate = self
+        listOptionView.taskStore = taskStore
+        listOptionView.taskType = .planned
+        listOptionView.showCompletedTask = PlannedViewController.showCompletedTask
         self.present(listOptionView, animated: true, completion: nil)
         self.view.layer.opacity = 0.5
     }
@@ -338,77 +370,117 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
 extension PlannedViewController: UITableViewDelegate, UITableViewDataSource
 {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch currentFilter
+        if(!PlannedViewController.showCompletedTask)
         {
-            case 0: return taskStore.planTask.count
-            case 1: return taskStore.planOverdueTask.count
-            case 2: return taskStore.planTodayTask.count
-            case 3: return taskStore.planTomorrowTask.count
-            case 4: return taskStore.planThisWeekTask.count + taskStore.planTomorrowTask.count + taskStore.planTodayTask.count
-            case 5: return taskStore.planLaterTask.count
-            default: print("wrong index of filter")
+            switch currentFilter
+            {
+                case 0: return taskStore.planTask.count
+                case 1: return taskStore.planOverdueTask.count
+                case 2: return taskStore.planTodayTask.count
+                case 3: return taskStore.planTomorrowTask.count
+                case 4: return taskStore.planThisWeekTask.count + taskStore.planTomorrowTask.count + taskStore.planTodayTask.count
+                case 5: return taskStore.planLaterTask.count
+                default: print("wrong index of filter")
+            }
+            return taskStore.planTask.count
         }
-        return taskStore.planTask.count
+        else
+        {
+            switch currentFilter
+            {
+                case 0: return taskStore.bothPlanTask.count
+                case 1: return taskStore.bothPlanOverdueTask.count
+                case 2: return taskStore.bothPlanTodayTask.count
+                case 3: return taskStore.bothPlanTomorrowTask.count
+                case 4: return taskStore.bothPlanThisWeekTask.count + taskStore.bothPlanTomorrowTask.count + taskStore.bothPlanTodayTask.count
+                case 5: return taskStore.bothPlanLaterTask.count
+                default: print("wrong index of filter")
+            }
+            return taskStore.bothPlanTask.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = plannedTableView.dequeueReusableCell(withIdentifier: "TaskTableViewCell") as! TaskTableViewCell
-        switch currentFilter
+        if(!PlannedViewController.showCompletedTask)
         {
-            case 0: cell.task = taskStore.planTask[indexPath.row]
-            case 1: cell.task = taskStore.planOverdueTask[indexPath.row]
-            case 2: cell.task = taskStore.planTodayTask[indexPath.row]
-            case 3: cell.task = taskStore.planTomorrowTask[indexPath.row]
-            case 4:
-            let thisWeek = taskStore.planTodayTask + taskStore.planTomorrowTask + taskStore.planThisWeekTask
-            cell.task = thisWeek[indexPath.row]
-            case 5: cell.task = taskStore.planLaterTask[indexPath.row]
-            default: print("wrong index of filter for cell")
+            switch currentFilter
+            {
+                case 0: cell.task = taskStore.planTask[indexPath.row]
+                case 1: cell.task = taskStore.planOverdueTask[indexPath.row]
+                case 2: cell.task = taskStore.planTodayTask[indexPath.row]
+                case 3: cell.task = taskStore.planTomorrowTask[indexPath.row]
+                case 4:
+                let thisWeek = taskStore.planTodayTask + taskStore.planTomorrowTask + taskStore.planThisWeekTask
+                cell.task = thisWeek[indexPath.row]
+                case 5: cell.task = taskStore.planLaterTask[indexPath.row]
+                default: print("wrong index of filter for cell")
+            }
+        }
+        else
+        {
+            switch currentFilter
+            {
+                case 0: cell.task = taskStore.bothPlanTask[indexPath.row]
+                case 1: cell.task = taskStore.bothPlanOverdueTask[indexPath.row]
+                case 2: cell.task = taskStore.bothPlanTodayTask[indexPath.row]
+                case 3: cell.task = taskStore.bothPlanTomorrowTask[indexPath.row]
+                case 4:
+                let thisWeek = taskStore.bothPlanTodayTask + taskStore.bothPlanTomorrowTask + taskStore.bothPlanThisWeekTask
+                cell.task = thisWeek[indexPath.row]
+                case 5: cell.task = taskStore.bothPlanLaterTask[indexPath.row]
+                default: print("wrong index of filter for cell")
+            }
         }
         cell.delegate = self
         cell.isOnEditMode = isOnEditMode
-        cell.initCellForPlannedViewController()
+        cell.initCellForPlannedViewController(showCompletedTaskState: PlannedViewController.showCompletedTask)
         return cell
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete
         {
             let id: String
-            switch currentFilter
+            if(!PlannedViewController.showCompletedTask)
             {
-                case 0: id = taskStore.allTask[indexPath.row].taskID
-                case 1: id = taskStore.planOverdueTask[indexPath.row].taskID
-                case 2: id = taskStore.planTodayTask[indexPath.row].taskID
-                case 3: id = taskStore.planTomorrowTask[indexPath.row].taskID
-                case 4: id = taskStore.planThisWeekTask[indexPath.row].taskID
-                case 5: id = taskStore.planLaterTask[indexPath.row].taskID
-                default: id = ""
+                switch currentFilter
+                {
+                    case 0: id = taskStore.allTask[indexPath.row].taskID
+                    case 1: id = taskStore.planOverdueTask[indexPath.row].taskID
+                    case 2: id = taskStore.planTodayTask[indexPath.row].taskID
+                    case 3: id = taskStore.planTomorrowTask[indexPath.row].taskID
+                    case 4: id = taskStore.planThisWeekTask[indexPath.row].taskID
+                    case 5: id = taskStore.planLaterTask[indexPath.row].taskID
+                    default: id = ""
+                }
+                taskStore.removeByID(id: id)
+                plannedTableView.deleteRows(at: [indexPath], with: .automatic)
             }
-            taskStore.removeByID(id: id)
-            plannedTableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("select row at \(indexPath.row)")
-        var taskSelect: Task = taskStore.taskNotFinished[indexPath.row]
-        switch currentFilter
+        if(!isOnEditMode)
         {
-            case 0: taskSelect = taskStore.taskNotFinished[indexPath.row]
-            case 1: taskSelect = taskStore.planOverdueTask[indexPath.row]
-            case 2: taskSelect = taskStore.planTodayTask[indexPath.row]
-            case 3: taskSelect = taskStore.planTomorrowTask[indexPath.row]
-            case 4: taskSelect = taskStore.planThisWeekTask[indexPath.row]
-            case 5: taskSelect = taskStore.planLaterTask[indexPath.row]
-            default:
-                print("Wrong filter")
+            var taskSelect: Task = taskStore.taskNotFinished[indexPath.row]
+            switch currentFilter
+            {
+                case 0: taskSelect = taskStore.taskNotFinished[indexPath.row]
+                case 1: taskSelect = taskStore.planOverdueTask[indexPath.row]
+                case 2: taskSelect = taskStore.planTodayTask[indexPath.row]
+                case 3: taskSelect = taskStore.planTomorrowTask[indexPath.row]
+                case 4: taskSelect = taskStore.planThisWeekTask[indexPath.row]
+                case 5: taskSelect = taskStore.planLaterTask[indexPath.row]
+                default:
+                    print("Wrong filter")
+            }
+            var detailTaskViewController = TaskMoreDetailViewController()
+            detailTaskViewController.task = taskSelect
+            detailTaskViewController.delegate = self
+            detailTaskViewController.currentIndexPath = indexPath
+            self.navigationController?.pushViewController(detailTaskViewController, animated: true)
+            detailTaskViewController.reloadInputViews()
         }
-        var detailTaskViewController = TaskMoreDetailViewController()
-        detailTaskViewController.task = taskSelect
-        detailTaskViewController.delegate = self
-        detailTaskViewController.currentIndexPath = indexPath
-        self.navigationController?.pushViewController(detailTaskViewController, animated: true)
-        detailTaskViewController.reloadInputViews()
     }
 }
 // MARK: - delegate from cell
@@ -419,14 +491,17 @@ extension PlannedViewController: TaskTableViewCellDelegate
         if(!isOnEditMode)
         {
             task.isFinished = state
-            let indexPath = plannedTableView.indexPath(for: cell)
-            if let index = indexPath
+            if(!PlannedViewController.showCompletedTask)
             {
-                plannedTableView.deleteRows(at: [index], with: .automatic)
-            }
-            else
-            {
-                print("Unexpected error!")
+                let indexPath = plannedTableView.indexPath(for: cell)
+                if let index = indexPath
+                {
+                    plannedTableView.deleteRows(at: [index], with: .automatic)
+                }
+                else
+                {
+                    print("Unexpected error!")
+                }
             }
         }
         else
@@ -446,7 +521,7 @@ extension PlannedViewController: TaskTableViewCellDelegate
     
 }
 
-// MARK: - delegate from PlannedFilterFloatViewControlle
+// MARK: - PlannedFilterFloatViewControlle
 extension PlannedViewController: PlannedFilterFloatViewControllerDelegate
 {
     func plannedFilterFloatViewController() {
@@ -462,7 +537,7 @@ extension PlannedViewController: PlannedFilterFloatViewControllerDelegate
     
 }
 
-// MARK: - delegate from DeadlineViewController
+// MARK: - DeadlineViewController
 extension PlannedViewController: DeadlineViewControllerDelegate
 {
     func deadlineViewController(currentDateSelect datePicker: Date) {
@@ -474,17 +549,29 @@ extension PlannedViewController: DeadlineViewControllerDelegate
             {
                 if(value)
                 {
-                    taskStore.planTask[index].timePlanned = nextDate
+                    if(!PlannedViewController.showCompletedTask)
+                    {
+                        taskStore.planTask[index].timePlanned = nextDate
+                    }
+                    else
+                    {
+                        taskStore.bothPlanTask[index].timePlanned = nextDate
+                    }
                 }
             }
-            stackViewDismiss()
             plannedTableView.reloadData()
+            stackViewDismiss()
+            
             
         }
         else
         {
             dueButton.setTitle("Due \(nextDate.dayofTheWeek), \(nextDate.day) \(nextDate.monthString)", for: .normal)
         }
+        let attributeText = NSMutableAttributedString(string: dueButton.title(for: .normal) ?? "", attributes: [
+            .font: UIFont(name: "Times New Roman", size: CGFloat(12))!
+        ])
+        dueButton.setAttributedTitle(attributeText, for: .normal)
     }
     
     func deadlineViewController(Opacity opacity: Float) {
@@ -492,6 +579,7 @@ extension PlannedViewController: DeadlineViewControllerDelegate
     }
     
     func deadlineViewController(didSelectRowAt indexPath: IndexPath) {
+
         switch indexPath.row
         {
             case 0:
@@ -508,6 +596,10 @@ extension PlannedViewController: DeadlineViewControllerDelegate
                 
             default: print("Wrong deadline!")
         }
+        let attributeText = NSMutableAttributedString(string: dueButton.title(for: .normal) ?? "", attributes: [
+            .font: UIFont(name: "Times New Roman", size: CGFloat(12))!
+        ])
+        dueButton.setAttributedTitle(attributeText, for: .normal)
         if(isOnEditMode)
         {
             var dayComponent    = DateComponents()
@@ -527,10 +619,20 @@ extension PlannedViewController: DeadlineViewControllerDelegate
             {
                 if(value)
                 {
-                    taskStore.planTask[index].timePlanned = nextDate
+                    if(PlannedViewController.showCompletedTask)
+                    {
+                        self.taskStore.bothPlanTask[index].timePlanned = nextDate
+                    }
+                    else
+                    {
+                        self.taskStore.planTask[index].timePlanned = nextDate
+                    }
                 }
             }
-            stackViewDismiss()
+            if(currentDeadlineType != .Other)
+            {
+                stackViewDismiss()
+            }
             plannedTableView.reloadData()
             
         }
@@ -589,6 +691,19 @@ extension PlannedViewController: TaskMoreDetailViewControllerDelegate
 // MARK: - ListOptionViewController
 extension PlannedViewController: ListOptionViewControllerDelegate
 {
+    func listOptionViewController(changeCompletedTaskPropertyTo newState: Bool) {
+        PlannedViewController.showCompletedTask = newState
+        self.plannedTableView.reloadData()
+    }
+    
+    func listOptionViewController(setBackgroundColorTo newColor: UIColor) {
+        PlannedViewController.backgroundColor = newColor
+        self.view.backgroundColor = newColor
+        self.plannedTableView.backgroundColor = newColor
+        viewMove.backgroundColor = newColor
+        addTaskTextField.backgroundColor = newColor
+    }
+    
     func listOptionViewController() {
         stackViewAppear()
         updateOptionButtons()
@@ -599,6 +714,7 @@ extension PlannedViewController: ListOptionViewControllerDelegate
     
     func listOptionViewController(Opacity opacity: Float) {
         self.view.layer.opacity = opacity
+        self.plannedTableView.reloadData()
     }
     
 

@@ -48,6 +48,10 @@
 		C895EA0228162E4D00A9072C /* HalfSizePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C895EA0128162E4D00A9072C /* HalfSizePresentationController.swift */; };
 		C895EA05281678D400A9072C /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C895EA03281678D400A9072C /* NoteViewController.swift */; };
 		C895EA06281678D400A9072C /* NoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C895EA04281678D400A9072C /* NoteViewController.xib */; };
+		C8C989FB2822392B0023B602 /* SortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C989F92822392B0023B602 /* SortViewController.swift */; };
+		C8C989FC2822392B0023B602 /* SortViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8C989FA2822392B0023B602 /* SortViewController.xib */; };
+		C8C989FF282507300023B602 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C989FD282507300023B602 /* SearchViewController.swift */; };
+		C8C98A00282507300023B602 /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8C989FE282507300023B602 /* SearchViewController.xib */; };
 		C8EA498F2812491C00B4971D /* TaskMoreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EA498D2812491C00B4971D /* TaskMoreDetailViewController.swift */; };
 		C8EA49902812491C00B4971D /* TaskMoreDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8EA498E2812491C00B4971D /* TaskMoreDetailViewController.xib */; };
 		C8EA49932812655B00B4971D /* StepTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EA49912812655B00B4971D /* StepTableViewCell.swift */; };
@@ -130,6 +134,10 @@
 		C895EA0128162E4D00A9072C /* HalfSizePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSizePresentationController.swift; sourceTree = "<group>"; };
 		C895EA03281678D400A9072C /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		C895EA04281678D400A9072C /* NoteViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteViewController.xib; sourceTree = "<group>"; };
+		C8C989F92822392B0023B602 /* SortViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortViewController.swift; sourceTree = "<group>"; };
+		C8C989FA2822392B0023B602 /* SortViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SortViewController.xib; sourceTree = "<group>"; };
+		C8C989FD282507300023B602 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		C8C989FE282507300023B602 /* SearchViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchViewController.xib; sourceTree = "<group>"; };
 		C8EA498D2812491C00B4971D /* TaskMoreDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskMoreDetailViewController.swift; sourceTree = "<group>"; };
 		C8EA498E2812491C00B4971D /* TaskMoreDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskMoreDetailViewController.xib; sourceTree = "<group>"; };
 		C8EA49912812655B00B4971D /* StepTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTableViewCell.swift; sourceTree = "<group>"; };
@@ -246,6 +254,10 @@
 				C83380D92818EEF70025E423 /* ListOptionViewController.xib */,
 				C85B75BA281B95A9002746B2 /* ColorViewController.swift */,
 				C85B75BB281B95A9002746B2 /* ColorViewController.xib */,
+				C8C989F92822392B0023B602 /* SortViewController.swift */,
+				C8C989FA2822392B0023B602 /* SortViewController.xib */,
+				C8C989FD282507300023B602 /* SearchViewController.swift */,
+				C8C989FE282507300023B602 /* SearchViewController.xib */,
 			);
 			path = ToDoMobileApp;
 			sourceTree = "<group>";
@@ -408,6 +420,7 @@
 				C866BFC927FD985F0027EFF1 /* LaunchScreen.storyboard in Resources */,
 				C806873F27FFC65200491787 /* TableViewCell.xib in Resources */,
 				C82CB6A5280FA34500A147AD /* DatePickerViewController.xib in Resources */,
+				C8C989FC2822392B0023B602 /* SortViewController.xib in Resources */,
 				C8EFFB7828092D38001770AD /* PlannedFilterFloatViewController.xib in Resources */,
 				C83380DB2818EEF70025E423 /* ListOptionViewController.xib in Resources */,
 				C8EFFB74280901AA001770AD /* MyDayViewController.xib in Resources */,
@@ -416,6 +429,7 @@
 				C83A95E52806B98D0044EA99 /* ImportantViewController.xib in Resources */,
 				C8EA49902812491C00B4971D /* TaskMoreDetailViewController.xib in Resources */,
 				C866BFC427FD985E0027EFF1 /* Main.storyboard in Resources */,
+				C8C98A00282507300023B602 /* SearchViewController.xib in Resources */,
 				C895EA06281678D400A9072C /* NoteViewController.xib in Resources */,
 				C85B75BD281B95A9002746B2 /* ColorViewController.xib in Resources */,
 				C8330DAC280D4C230064FE4C /* DeadlineViewController.xib in Resources */,
@@ -552,6 +566,7 @@
 				C866BFC127FD985E0027EFF1 /* ViewController.swift in Sources */,
 				C83A95DD280670CE0044EA99 /* TaskStore.swift in Sources */,
 				C82CB6A4280FA34500A147AD /* DatePickerViewController.swift in Sources */,
+				C8C989FB2822392B0023B602 /* SortViewController.swift in Sources */,
 				C8EFFB73280901AA001770AD /* MyDayViewController.swift in Sources */,
 				C85B75BC281B95A9002746B2 /* ColorViewController.swift in Sources */,
 				C83A95CE2806686F0044EA99 /* TaskTableViewCell.swift in Sources */,
@@ -573,6 +588,7 @@
 				C866BFBF27FD985E0027EFF1 /* SceneDelegate.swift in Sources */,
 				C8EA498F2812491C00B4971D /* TaskMoreDetailViewController.swift in Sources */,
 				C8330DAB280D4C230064FE4C /* DeadlineViewController.swift in Sources */,
+				C8C989FF282507300023B602 /* SearchViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

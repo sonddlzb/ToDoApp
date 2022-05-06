@@ -58,7 +58,6 @@ class ViewController: UIViewController {
     }
     private func initGui()
     {
-        addListButton.imageView?.image = UIImage(named: "add-icon")
         addListTextField.placeholder = "New list"
     }
 
@@ -76,6 +75,15 @@ class ViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
+    }
+    
+    // MARK: searchButton tapped
+    @IBAction func searchButtonTapped(_ sender: UIButton) {
+        let searchViewController = SearchViewController()
+        searchViewController.listStore = self.listStore
+        searchViewController.taskStore =
+        self.taskStore
+        self.navigationController?.pushViewController(searchViewController, animated: true)
     }
 }
 
@@ -146,6 +154,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource
                 case 0:
                     let myDayViewController = MyDayViewController()
                     myDayViewController.taskStore = taskStore
+                    myDayViewController.listStore = listStore
                     self.navigationController?.pushViewController(myDayViewController, animated: true)
                 case 2:
                 let plannedViewController = PlannedViewController()
