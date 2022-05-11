@@ -41,7 +41,7 @@ class TableViewCell: UITableViewCell {
     }
     func bindDataForSection1(list: List,indexPath: IndexPath)
     {
-        self.nameLabel.text = list.name
+        self.nameLabel.text = list.getName()
         self.imageViewCell.image = UIImage(systemName: "list.bullet")
         let number = list.listOfTask.count
         if(number != 0)
@@ -94,7 +94,7 @@ class TableViewCell: UITableViewCell {
         }
         if(indexPath.row == 2)
         {
-            let plan = task.timePlanned
+            let plan = task.getTimePlanned()
             let nextDay = Int(plan.day)
             let currentDay = Int(Date().day)
             let distance = nextDay! - currentDay!
@@ -113,7 +113,7 @@ class TableViewCell: UITableViewCell {
             }
             else
             {
-                deadline += "\(task.timePlanned.dayofTheWeek), \(task.timePlanned.day) \(task.timePlanned.monthString)"
+                deadline += "\(task.getTimePlanned().dayofTheWeek), \(task.getTimePlanned().day) \(task.getTimePlanned().monthString)"
             }
             if(Date() > plan)
             {

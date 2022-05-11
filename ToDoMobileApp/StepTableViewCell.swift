@@ -34,7 +34,7 @@ class StepTableViewCell: UITableViewCell {
     func initCellForTaskMoreDetailViewController(indexPath: IndexPath, task: Task)
     {
         currentStep = indexPath.row
-        if task.steps[indexPath.row].0
+        if task.steps[indexPath.row].getIsFinished()
         {
             self.finishButton.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
         }
@@ -44,7 +44,7 @@ class StepTableViewCell: UITableViewCell {
         }
         self.deleteButton.setTitle("x", for: .normal)
         self.stepNameTextField.borderStyle = .none
-        self.stepNameTextField.text = task.steps[indexPath.row].1
+        self.stepNameTextField.text = task.steps[indexPath.row].getName()
 
     }
     @IBAction func deleteStep(_ sender: UIButton)

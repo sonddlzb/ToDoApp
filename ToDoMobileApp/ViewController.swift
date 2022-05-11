@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     override func viewDidLoad() {
         print("loadVIew")
+        initDatabase()
         initGui()
         self.hideKeyboardWhenTappedAround()
         self.title = "TODO APP"
@@ -60,7 +61,50 @@ class ViewController: UIViewController {
     {
         addListTextField.placeholder = "New list"
     }
-
+    
+    // MARK: - load database for app
+    private func initDatabase()
+    {
+        let defaultPath = Realm.Configuration.defaultConfiguration.fileURL
+        print(defaultPath?.path)
+        //try! FileManager.default.removeItem(atPath: defaultPath!.path)
+        Database.realm = try! Realm(fileURL: defaultPath!)
+//        try! Database.realm.write({
+//            Database.realm.deleteAll()
+//        })
+        var noteTasks = Database.realm.objects(Task.self)
+        var lists = Database.realm.objects(List.self)
+        var steps = Database.realm.objects(Step.self)
+        for value in lists
+        {
+            listStore.allList.append(value)
+        }
+        for value in noteTasks
+        {
+            //add steps
+            for step in steps
+            {
+                if(step.getTaskID() == value.getTaskID())
+                {
+                    value.steps.append(step)
+                }
+            }
+            if(value.getTaskType() != .listed)
+            {
+                taskStore.allTask.append(value)
+            }
+            else
+            {
+                for list in listStore.allList
+                {
+                    if(value.getListID() == list.getListID())
+                    {
+                        list.listOfTask.append(value)
+                    }
+                }
+            }
+        }
+    }
     @IBAction func addNewList(_ sender: UIButton) {
         if let listName = addListTextField.text, addListTextField.hasText
         {
@@ -174,6 +218,23 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource
         return footerView
     }
 
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete
+        {
+            let alert = UIAlertController(title: nil, message: "\("\(listStore.allList[indexPath.row].getName())") will be permanently deleted", preferredStyle: .actionSheet)
+            let yesAction = UIAlertAction(title: "Delete List", style: .destructive)
+            {
+                _ in
+                Database.deleteList(list: self.listStore.allList[indexPath.row])
+                self.listStore.allList.remove(at: indexPath.row)
+                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alert.addAction(yesAction)
+            alert.addAction(cancelAction)
+            present(alert, animated: true, completion: nil)
+        }
+    }
     
 }
 

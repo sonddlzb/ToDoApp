@@ -25,7 +25,7 @@ class NoteViewController: UIViewController {
         noteTextField.contentMode = .top
         noteTextField.textAlignment = .left
         noteTextField.contentVerticalAlignment = .top
-        navigationBar.topItem?.title = task.detail
+        navigationBar.topItem?.title = task.getDetail()
     }
     override func viewDidLoad() {
         super.viewDidLoad()

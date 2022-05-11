@@ -6,12 +6,34 @@
 //
 
 import Foundation
-class List
+import RealmSwift
+class List: Object
 {
-    @objc dynamic var name: String
+    override init() {
+        
+    }
+    @objc dynamic private var listID: String = NSUUID().uuidString
+    @objc dynamic private var name: String = ""
     var  listOfTask: [Task] = []
+    func getName() -> String
+    {
+        return self.name
+    }
+    func setName(newName: String)
+    {
+        try! Database.realm.write(
+            {
+                self.name = newName
+            }
+        )
+    }
+    func getListID() -> String
+    {
+        return self.listID
+    }
     func addTask(task: Task)
     {
+        Database.addTask(newTask: task)
         self.listOfTask.append(task)
     }
     var taskFinished: [Task]
@@ -19,7 +41,7 @@ class List
         var finished: [Task] = []
         for value in listOfTask
         {
-            if value.isFinished == true
+            if value.getIsFinished() == true
             {
                 finished.append(value)
             }
@@ -31,7 +53,7 @@ class List
         var notFinished: [Task] = []
         for value in listOfTask
         {
-            if value.isFinished == false
+            if value.getIsFinished() == false
             {
                 notFinished.append(value)
             }

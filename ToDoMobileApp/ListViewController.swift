@@ -30,7 +30,7 @@ class ListViewController: UIViewController, UIViewControllerTransitioningDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
-        self.title = listStore.allList[currentList].name
+        self.title = listStore.allList[currentList].getName()
         addTaskTextField.delegate = self
         stackView.isHidden = true
         listTableView.delegate = self
@@ -151,11 +151,11 @@ class ListViewController: UIViewController, UIViewControllerTransitioningDelegat
             let newTask: Task
             if(isMyDay)
             {
-                newTask = Task(detail:taskName, taskType: .listed, secondTaskType: .myDay, timeCreate: Date(), timePlanned: nextDate!, listName: listStore.allList[currentList].name)
+                newTask = Task(detail:taskName, taskType: .listed, secondTaskType: .myDay, timeCreate: Date(), timePlanned: nextDate!, listID: listStore.allList[currentList].getListID())
             }
             else
             {
-                newTask = Task(detail:taskName, taskType: .listed, secondTaskType: .normal, timeCreate: Date(), timePlanned: nextDate!,listName:  listStore.allList[currentList].name)
+                newTask = Task(detail:taskName, taskType: .listed, secondTaskType: .normal, timeCreate: Date(), timePlanned: nextDate!,listID:  listStore.allList[currentList].getListID())
             }
             listStore.allList[currentList].addTask(task: newTask)
             let index = listStore.allList[currentList].taskNotFinished.count - 1
@@ -281,12 +281,12 @@ class ListViewController: UIViewController, UIViewControllerTransitioningDelegat
                 {
                     if(i >= self.listStore.taskNotFinished(currentList: self.currentList).count )
                     {
-                        idRemove.append(self.listStore.taskFinished(currentList: self.currentList)[i - self.listStore.taskNotFinished(currentList: self.currentList).count].taskID)
+                        idRemove.append(self.listStore.taskFinished(currentList: self.currentList)[i - self.listStore.taskNotFinished(currentList: self.currentList).count].getTaskID())
                         self.isSelected[i] = false
                     }
                     else
                     {
-                        idRemove.append(self.listStore.taskNotFinished(currentList: self.currentList)[i].taskID)
+                        idRemove.append(self.listStore.taskNotFinished(currentList: self.currentList)[i].getTaskID())
                         self.isSelected[i] = false
                     }
                 }
@@ -294,6 +294,8 @@ class ListViewController: UIViewController, UIViewControllerTransitioningDelegat
             for value in idRemove
             {
                 self.listStore.removeByID(currentList: self.currentList, id: value)
+                //Database.deleteTask(task: self.listStore.findTaskByID(taskID: value))
+                self.listTableView.reloadData()
             }
             self.stackViewDismiss()
         }
@@ -375,6 +377,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource
         //task not finished
         cell.delegate = self
         cell.isOnEditMode = isOnEditMode
+        cell.listStore = listStore
         cell.initCellForListTableViewCell(list: listStore.allList[currentList], indexPath: indexPath)
         return cell
     }
@@ -409,6 +412,24 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource
             self.navigationController?.pushViewController(detailTaskViewController, animated: true)
         }
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete
+        {
+            let alert = UIAlertController(title: nil, message: "\("\(self.listStore.allList[currentList].listOfTask[indexPath.row].getDetail())") will be permanently deleted", preferredStyle: .actionSheet)
+            let yesAction = UIAlertAction(title: "Delete Task", style: .destructive)
+            {
+                _ in
+                Database.deleteTask(task: self.listStore.allList[self.currentList].listOfTask[indexPath.row])
+                self.listStore.allList[self.currentList].listOfTask.remove(at: indexPath.row)
+                self.listTableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alert.addAction(yesAction)
+            alert.addAction(cancelAction)
+            present(alert, animated: true, completion: nil)
+        }
+    }
 }
 
 // MARK: - delegate from text Field for returning
@@ -424,10 +445,10 @@ extension ListViewController: UITextFieldDelegate
 extension ListViewController: TaskTableViewCellDelegate
 {
     func taskTableViewCell(_ cell: TaskTableViewCell, didTapFinishButtonAtTask task: Task, didTapFinishButtonToState state: Bool) {
-        print("update finished database of \(task.detail)!")
+        print("update finished database of \(task.getDetail())!")
         if(!isOnEditMode)
         {
-            task.isFinished = state
+            task.setIsFinished(newState: state)
             listTableView.reloadSections([0,1], with: .automatic)
         }
         else
@@ -447,8 +468,8 @@ extension ListViewController: TaskTableViewCellDelegate
     }
     
     func taskTableViewCell(_ cell: TaskTableViewCell, didTapInterestButtonAtTask task: Task, didTapInterestButtonToState state: Bool) {
-        print("update interested database of \(task.detail)!")
-        task.isInterested = state
+        print("update interested database of \(task.getDetail())!")
+        task.setIsInterested(newState: state)
     }
     
 }
@@ -473,30 +494,31 @@ extension ListViewController: TaskMoreDetailViewControllerDelegate
     func taskMoreDetailViewController(targetTask target: Task, changeMyDayState state: Bool) {
         if(state)
         {
-            target.taskType = .myDay
+            target.setSecondTaskType(newTaskType: .myDay)
         }
         else
         {
-            target.taskType = .normal
+            target.setSecondTaskType(newTaskType: .normal)
         }
         listTableView.reloadData()
     }
     
     
     func taskMoreDetailViewController(_ indexPath: IndexPath, didTapFinishButtonAtTask task: Task, didTapFinishButtonToState state: Bool) {
-        print("update finished database of \(task.detail)!")
-        task.isFinished = state
+        print("update finished database of \(task.getDetail())!")
+        task.setIsFinished(newState: state)
         self.listTableView.reloadData()
     }
     
     func taskMoreDetailViewController(_ indexPath: IndexPath, didTapImportantButtonAtTask task: Task, didTapImportantButtonToState state: Bool) {
-        print("update finished database of \(task.detail)!")
-        task.isInterested = state
+        print("update finished database of \(task.getDetail())!")
+        task.setIsInterested(newState: state)
     }
     
     //delete a task from task detail screen
     func taskMoreDetailViewController(DeleteTarget target: Task) {
-        listStore.removeByID(currentList:  currentList, id: target.taskID)
+        listStore.removeByID(currentList:  currentList, id: target.getTaskID())
+        print("deleted");
         listTableView.reloadData()
     }
     
@@ -548,11 +570,11 @@ extension ListViewController: DeadlineViewControllerDelegate
                 {
                     if(index >= self.listStore.taskNotFinished(currentList: self.currentList).count)
                     {
-                        self.listStore.taskFinished(currentList: self.currentList)[index - self.listStore.taskNotFinished(currentList: self.currentList).count].timePlanned = nextDate
+                        self.listStore.taskFinished(currentList: self.currentList)[index - self.listStore.taskNotFinished(currentList: self.currentList).count].setTimePlanned(newTime: nextDate)
                     }
                     else
                     {
-                        self.listStore.taskNotFinished(currentList: self.currentList)[index].timePlanned = nextDate
+                        self.listStore.taskNotFinished(currentList: self.currentList)[index].setTimePlanned(newTime: nextDate)
                     }
                 }
             }
@@ -580,11 +602,11 @@ extension ListViewController: DeadlineViewControllerDelegate
                 {
                     if(index >= self.listStore.taskNotFinished(currentList: self.currentList).count)
                     {
-                        self.listStore.taskFinished(currentList: self.currentList)[index - self.listStore.taskNotFinished(currentList: self.currentList).count].timePlanned = nextDate
+                        self.listStore.taskFinished(currentList: self.currentList)[index - self.listStore.taskNotFinished(currentList: self.currentList).count].setTimePlanned(newTime: nextDate)
                     }
                     else
                     {
-                        self.listStore.taskNotFinished(currentList: self.currentList)[index].timePlanned = nextDate
+                        self.listStore.taskNotFinished(currentList: self.currentList)[index].setTimePlanned(newTime: nextDate)
                     }
                 }
             }

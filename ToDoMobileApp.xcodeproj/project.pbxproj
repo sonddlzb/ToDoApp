@@ -45,6 +45,8 @@
 		C866BFD427FD985F0027EFF1 /* ToDoMobileAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C866BFD327FD985F0027EFF1 /* ToDoMobileAppTests.swift */; };
 		C866BFDE27FD985F0027EFF1 /* ToDoMobileAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C866BFDD27FD985F0027EFF1 /* ToDoMobileAppUITests.swift */; };
 		C866BFE027FD985F0027EFF1 /* ToDoMobileAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C866BFDF27FD985F0027EFF1 /* ToDoMobileAppUITestsLaunchTests.swift */; };
+		C86AFD9D2828FA80002A08D6 /* Step.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86AFD9C2828FA80002A08D6 /* Step.swift */; };
+		C86AFD9F2829015E002A08D6 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86AFD9E2829015E002A08D6 /* Database.swift */; };
 		C895EA0228162E4D00A9072C /* HalfSizePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C895EA0128162E4D00A9072C /* HalfSizePresentationController.swift */; };
 		C895EA05281678D400A9072C /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C895EA03281678D400A9072C /* NoteViewController.swift */; };
 		C895EA06281678D400A9072C /* NoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C895EA04281678D400A9072C /* NoteViewController.xib */; };
@@ -131,6 +133,8 @@
 		C866BFD927FD985F0027EFF1 /* ToDoMobileAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoMobileAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C866BFDD27FD985F0027EFF1 /* ToDoMobileAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoMobileAppUITests.swift; sourceTree = "<group>"; };
 		C866BFDF27FD985F0027EFF1 /* ToDoMobileAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoMobileAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		C86AFD9C2828FA80002A08D6 /* Step.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step.swift; sourceTree = "<group>"; };
+		C86AFD9E2829015E002A08D6 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		C895EA0128162E4D00A9072C /* HalfSizePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSizePresentationController.swift; sourceTree = "<group>"; };
 		C895EA03281678D400A9072C /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		C895EA04281678D400A9072C /* NoteViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteViewController.xib; sourceTree = "<group>"; };
@@ -258,6 +262,8 @@
 				C8C989FA2822392B0023B602 /* SortViewController.xib */,
 				C8C989FD282507300023B602 /* SearchViewController.swift */,
 				C8C989FE282507300023B602 /* SearchViewController.xib */,
+				C86AFD9C2828FA80002A08D6 /* Step.swift */,
+				C86AFD9E2829015E002A08D6 /* Database.swift */,
 			);
 			path = ToDoMobileApp;
 			sourceTree = "<group>";
@@ -577,8 +583,10 @@
 				C83A95E42806B98D0044EA99 /* ImportantViewController.swift in Sources */,
 				C895EA0228162E4D00A9072C /* HalfSizePresentationController.swift in Sources */,
 				C806874227FFD7FC00491787 /* ListViewController.swift in Sources */,
+				C86AFD9D2828FA80002A08D6 /* Step.swift in Sources */,
 				C83380DA2818EEF70025E423 /* ListOptionViewController.swift in Sources */,
 				C8330DAE280D6A940064FE4C /* Enumeration.swift in Sources */,
+				C86AFD9F2829015E002A08D6 /* Database.swift in Sources */,
 				C806873E27FFC65200491787 /* TableViewCell.swift in Sources */,
 				C8330DA7280CF3890064FE4C /* AssignToMeViewController.swift in Sources */,
 				C895EA05281678D400A9072C /* NoteViewController.swift in Sources */,
@@ -695,7 +703,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -750,7 +758,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -776,7 +784,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -806,7 +814,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -830,7 +838,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = C88L7TD8K4;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mycompany.ToDoMobileAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -851,7 +859,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = C88L7TD8K4;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mycompany.ToDoMobileAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

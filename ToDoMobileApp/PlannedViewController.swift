@@ -119,6 +119,7 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
             {
                 newTask = Task(detail:taskName, taskType: .planned, secondTaskType: .myDay, timeCreate: Date(), timePlanned: nextDate!)
             }
+            print("due is \(newTask.due)")
             taskStore.addTask(task: newTask)
             var index: Int
             switch currentFilter
@@ -207,12 +208,12 @@ class PlannedViewController: UIViewController, UIViewControllerTransitioningDele
                 {
                     if(PlannedViewController.showCompletedTask)
                     {
-                        idRemove.append(self.taskStore.bothPlanTask[i].taskID)
+                        idRemove.append(self.taskStore.bothPlanTask[i].getTaskID())
                         self.isSelected[i] = false
                     }
                     else
                     {
-                        idRemove.append(self.taskStore.planTask[i].taskID)
+                        idRemove.append(self.taskStore.planTask[i].getTaskID())
                         self.isSelected[i] = false
                     }
                 }
@@ -445,12 +446,12 @@ extension PlannedViewController: UITableViewDelegate, UITableViewDataSource
             {
                 switch currentFilter
                 {
-                    case 0: id = taskStore.allTask[indexPath.row].taskID
-                    case 1: id = taskStore.planOverdueTask[indexPath.row].taskID
-                    case 2: id = taskStore.planTodayTask[indexPath.row].taskID
-                    case 3: id = taskStore.planTomorrowTask[indexPath.row].taskID
-                    case 4: id = taskStore.planThisWeekTask[indexPath.row].taskID
-                    case 5: id = taskStore.planLaterTask[indexPath.row].taskID
+                    case 0: id = taskStore.allTask[indexPath.row].getTaskID()
+                    case 1: id = taskStore.planOverdueTask[indexPath.row].getTaskID()
+                    case 2: id = taskStore.planTodayTask[indexPath.row].getTaskID()
+                    case 3: id = taskStore.planTomorrowTask[indexPath.row].getTaskID()
+                    case 4: id = taskStore.planThisWeekTask[indexPath.row].getTaskID()
+                    case 5: id = taskStore.planLaterTask[indexPath.row].getTaskID()
                     default: id = ""
                 }
                 taskStore.removeByID(id: id)
@@ -487,10 +488,10 @@ extension PlannedViewController: UITableViewDelegate, UITableViewDataSource
 extension PlannedViewController: TaskTableViewCellDelegate
 {
     func taskTableViewCell(_ cell: TaskTableViewCell, didTapFinishButtonAtTask task: Task, didTapFinishButtonToState state: Bool) {
-        print("update finished database of \(task.detail)!")
+        print("update finished database of \(task.getDetail())!")
         if(!isOnEditMode)
         {
-            task.isFinished = state
+            task.setIsFinished(newState: state)
             if(!PlannedViewController.showCompletedTask)
             {
                 let indexPath = plannedTableView.indexPath(for: cell)
@@ -514,8 +515,8 @@ extension PlannedViewController: TaskTableViewCellDelegate
     }
     
     func taskTableViewCell(_ cell: TaskTableViewCell, didTapInterestButtonAtTask task: Task, didTapInterestButtonToState state: Bool) {
-        print("update finished database of \(task.detail)!")
-        task.isInterested = state
+        print("update finished database of \(task.getDetail())!")
+        task.setIsInterested(newState: state)
 
     }
     
@@ -551,11 +552,11 @@ extension PlannedViewController: DeadlineViewControllerDelegate
                 {
                     if(!PlannedViewController.showCompletedTask)
                     {
-                        taskStore.planTask[index].timePlanned = nextDate
+                        taskStore.planTask[index].setTimePlanned(newTime: nextDate)
                     }
                     else
                     {
-                        taskStore.bothPlanTask[index].timePlanned = nextDate
+                        taskStore.bothPlanTask[index].setTimePlanned(newTime: nextDate)
                     }
                 }
             }
@@ -621,11 +622,11 @@ extension PlannedViewController: DeadlineViewControllerDelegate
                 {
                     if(PlannedViewController.showCompletedTask)
                     {
-                        self.taskStore.bothPlanTask[index].timePlanned = nextDate
+                        self.taskStore.bothPlanTask[index].setTimePlanned(newTime: nextDate)
                     }
                     else
                     {
-                        self.taskStore.planTask[index].timePlanned = nextDate
+                        self.taskStore.planTask[index].setTimePlanned(newTime: nextDate)
                     }
                 }
             }
@@ -640,7 +641,7 @@ extension PlannedViewController: DeadlineViewControllerDelegate
     
 }
 
-// MARK: - delegate from textField
+// MARK: - textField
 extension PlannedViewController: UITextFieldDelegate
 {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -649,30 +650,30 @@ extension PlannedViewController: UITextFieldDelegate
     }
 }
 
-// MARK: - delegate from TaskMoreDetailViewController
+// MARK: - TaskMoreDetailViewController
 
 extension PlannedViewController: TaskMoreDetailViewControllerDelegate
 {
     func taskMoreDetailViewController(targetTask target: Task, changeMyDayState state: Bool) {
         if(state)
         {
-            target.secondTaskType = .myDay
+            target.setSecondTaskType(newTaskType: .myDay)
         }
         else
         {
-            target.secondTaskType = .normal
+            target.setSecondTaskType(newTaskType: .normal)
         }
         plannedTableView.reloadData()
     }
     
     func taskMoreDetailViewController(DeleteTarget target: Task) {
-        taskStore.removeByID(id: target.taskID)
+        taskStore.removeByID(id: target.getTaskID())
         plannedTableView.reloadData()
     }
     
     func taskMoreDetailViewController(_ indexPath: IndexPath, didTapFinishButtonAtTask task: Task, didTapFinishButtonToState state: Bool) {
-        print("update finished database of \(task.detail)!")
-        task.isFinished = state
+        print("update finished database of \(task.getDetail())!")
+        task.setIsFinished(newState: state)
         if(state)
         {
             plannedTableView.deleteRows(at: [indexPath], with: .automatic)
@@ -681,8 +682,8 @@ extension PlannedViewController: TaskMoreDetailViewControllerDelegate
     }
     
     func taskMoreDetailViewController(_ indexPath: IndexPath, didTapImportantButtonAtTask task: Task, didTapImportantButtonToState state: Bool) {
-        print("update finished database of \(task.detail)!")
-        task.isInterested = state
+        print("update finished database of \(task.getDetail())!")
+        task.setIsInterested(newState: state)
     }
     
     

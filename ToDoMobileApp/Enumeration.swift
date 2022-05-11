@@ -15,7 +15,7 @@ enum DeadlineType
     case Other
     
 }
-enum TaskType
+enum TaskType: Int
 {
     case myDay
     case planned

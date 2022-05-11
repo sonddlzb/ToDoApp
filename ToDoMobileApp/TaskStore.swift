@@ -12,14 +12,16 @@ class TaskStore
     var allTask = [Task]()
     func addTask(task: Task)
     {
+        Database.addTask(newTask: task)
         allTask.append(task)
+        
     }
     var taskFinished: [Task]
     {
         var finished: [Task] = []
         for value in allTask
         {
-            if value.isFinished == true
+            if value.getIsFinished() == true
             {
                 finished.append(value)
             }
@@ -31,7 +33,7 @@ class TaskStore
         var notFinished: [Task] = []
         for value in allTask
         {
-            if value.isFinished == false
+            if value.getIsFinished() == false
             {
                 notFinished.append(value)
             }
@@ -43,11 +45,11 @@ class TaskStore
         var myDay: [Task] = []
         for value in allTask
         {
-            if value.taskType == .myDay && !value.isFinished
+            if value.getTaskType() == .myDay && !value.getIsFinished()
             {
                 myDay.append(value)
             }
-            if value.secondTaskType == .myDay && !value.isFinished
+            if value.getSecondTaskType() == .myDay && !value.getIsFinished()
             {
                 myDay.append(value)
             }
@@ -60,7 +62,7 @@ class TaskStore
         var plan: [Task] = []
         for value in allTask
         {
-            if value.taskType == .planned && !value.isFinished
+            if value.getTaskType() == .planned && !value.getIsFinished()
             {
                 plan.append(value)
             }
@@ -72,13 +74,13 @@ class TaskStore
         var plan: [Task] = []
         for value in allTask
         {
-            if value.taskType == .planned && !value.isFinished
+            if value.getTaskType() == .planned && !value.getIsFinished()
             {
                 plan.append(value)
             }
         }
         return plan.sorted{
-            $0.detail < $1.detail
+            $0.getDetail() < $1.getDetail()
         }
         
     }
@@ -87,7 +89,7 @@ class TaskStore
         var plan: [Task] = []
         for value in allTask
         {
-            if value.taskType == .planned
+            if value.getTaskType() == .planned
             {
                 plan.append(value)
             }
@@ -141,7 +143,7 @@ class TaskStore
         var normal: [Task] = []
         for value in allTask
         {
-            if value.taskType == .normal && !value.isFinished
+            if value.getTaskType() == .normal && !value.getIsFinished()
             {
                 normal.append(value)
             }
@@ -153,7 +155,7 @@ class TaskStore
         var res: [Task] = []
         for task in allTask
         {
-            if(task.taskType != .listed && task.isInterested && !task.isFinished)
+            if(task.getTaskType() != .listed && task.getIsInterested() && !task.getIsFinished())
             {
                 res.append(task)
             }
@@ -165,7 +167,7 @@ class TaskStore
         var res: [Task] = []
         for task in allTask
         {
-            if(task.taskType != .listed && task.isInterested)
+            if(task.getTaskType() != .listed && task.getIsInterested())
             {
                 res.append(task)
             }
@@ -174,15 +176,39 @@ class TaskStore
     }
     func removeByID(id: String)
     {
-        allTask = allTask.filter{$0.taskID != id}
+        let task = self.getTaskByID(id: id)
+        for (index,task) in allTask.enumerated()
+        {
+            if(task.getTaskID() == id)
+            {
+                allTask.remove(at: index)
+            }
+        }
+        Database.deleteTask(task: task)
+        
+
+
     }
     
     //search Task
     func searchTaskBySearchingKey(searchingKey: String) -> [Task]
     {
         return self.allTask.filter{
-            $0.detail.contains(searchingKey)
+            $0.getDetail().contains(searchingKey)
         }
+    }
+    
+    func getTaskByID(id: String) -> Task
+    {
+        var foundTask: Task = Task()
+        for task in allTask {
+            if task.getTaskID() == id
+            {
+                foundTask = task
+                return foundTask
+            }
+        }
+        return foundTask
     }
 }
 

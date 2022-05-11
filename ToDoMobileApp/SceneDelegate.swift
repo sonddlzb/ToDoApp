@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import RealmSwift
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -18,8 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         guard let _ = (scene as? UIWindowScene) else { return }
-        let listStore = ListStore()
-        let taskStore = TaskStore()
+        let listStore =  ListStore()
+        var taskStore = TaskStore()
         //let viewController = window!.rootViewController as! ViewController
         let navController = window!.rootViewController as! UINavigationController
         let viewController = navController.topViewController as! ViewController

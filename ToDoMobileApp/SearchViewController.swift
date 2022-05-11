@@ -64,7 +64,7 @@ class SearchViewController: UIViewController {
             {
                 for value in searchResult
                 {
-                    print(value.detail)
+                    print(value.getDetail())
                 }
             }
         }
@@ -100,7 +100,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource
         detailTaskViewController.task = currentTask
         detailTaskViewController.delegate = self
         detailTaskViewController.currentIndexPath = indexPath
-        detailTaskViewController.isMyDay = currentTask.taskType == .myDay || currentTask.secondTaskType == .myDay
+        detailTaskViewController.isMyDay = currentTask.getTaskType() == .myDay || currentTask.getSecondTaskType() == .myDay
         self.navigationController?.pushViewController(detailTaskViewController, animated: true)
     }
 }
@@ -109,15 +109,15 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource
 extension SearchViewController: TaskTableViewCellDelegate
 {
     func taskTableViewCell(_ cell: TaskTableViewCell, didTapFinishButtonAtTask task: Task, didTapFinishButtonToState state: Bool) {
-        task.isFinished = state
+        task.setIsFinished(newState: state)
         searchTableView.reloadData()
     }
     
     func taskTableViewCell(_ cell: TaskTableViewCell, didTapInterestButtonAtTask task: Task, didTapInterestButtonToState state: Bool) {
-        task.isInterested = state
+        task.setIsInterested(newState: state)
         if(!state)
         {
-            task.taskType = .normal
+            task.setSecondTaskType(newTaskType: .normal)
         }
     }
     
@@ -127,25 +127,25 @@ extension SearchViewController: TaskTableViewCellDelegate
 extension SearchViewController: TaskMoreDetailViewControllerDelegate
 {
     func taskMoreDetailViewController(_ indexPath: IndexPath, didTapFinishButtonAtTask task: Task, didTapFinishButtonToState state: Bool) {
-        task.isFinished = state
+        task.setIsFinished(newState: state)
         searchTableView.reloadData()
     }
     
     func taskMoreDetailViewController(_ indexPath: IndexPath, didTapImportantButtonAtTask task: Task, didTapImportantButtonToState state: Bool) {
-        task.isInterested = state
+        task.setIsInterested(newState: state)
     }
     
     func taskMoreDetailViewController(DeleteTarget target: Task) {
-        if(target.taskType == .listed)
+        if(target.getTaskType() == .listed)
         {
-            listStore.removeByID(id: target.taskID)
+            listStore.removeByID(id: target.getTaskID())
         }
         else
         {
-            taskStore.removeByID(id: target.taskID)
+            taskStore.removeByID(id: target.getTaskID())
         }
         searchResult = searchResult.filter{
-            $0.taskID != target.taskID
+            $0.getTaskID() != target.getTaskID()
         }
         searchTableView.reloadData()
     }
@@ -153,11 +153,11 @@ extension SearchViewController: TaskMoreDetailViewControllerDelegate
     func taskMoreDetailViewController(targetTask target: Task, changeMyDayState state: Bool) {
         if(state)
         {
-            target.secondTaskType = .myDay
+            target.setSecondTaskType(newTaskType: .myDay)
         }
         else
         {
-            target.secondTaskType = .normal
+            target.setSecondTaskType(newTaskType: .normal)
         }
         searchTableView.reloadData()
     }

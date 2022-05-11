@@ -161,12 +161,12 @@ class ImportantViewController: UIViewController, UIViewControllerTransitioningDe
                 {
                     if(ImportantViewController.showCompletedTask)
                     {
-                        idRemove.append(self.importantTaskBoth[i].taskID)
+                        idRemove.append(self.importantTaskBoth[i].getTaskID())
                         self.isSelected[i] = false
                     }
                     else
                     {
-                        idRemove.append(self.importantTaskNotFinished[i].taskID)
+                        idRemove.append(self.importantTaskNotFinished[i].getTaskID())
                         self.isSelected[i] = false
                     }
                 }
@@ -381,12 +381,12 @@ extension ImportantViewController: UITableViewDelegate, UITableViewDataSource
             if(!ImportantViewController.showCompletedTask)
             {
                 detailTaskViewController.task = importantTaskNotFinished[indexPath.row]
-                detailTaskViewController.isMyDay = (importantTaskNotFinished[indexPath.row].secondTaskType == .myDay)
+                detailTaskViewController.isMyDay = (importantTaskNotFinished[indexPath.row].getSecondTaskType() == .myDay)
             }
             else
             {
                 detailTaskViewController.task = importantTaskBoth[indexPath.row]
-                detailTaskViewController.isMyDay = (importantTaskBoth[indexPath.row].secondTaskType == .myDay)
+                detailTaskViewController.isMyDay = (importantTaskBoth[indexPath.row].getSecondTaskType() == .myDay)
             }
             detailTaskViewController.delegate = self
             detailTaskViewController.currentIndexPath = indexPath
@@ -410,10 +410,10 @@ extension ImportantViewController: UITextFieldDelegate
 extension ImportantViewController: TaskTableViewCellDelegate
 {
     func taskTableViewCell(_ cell: TaskTableViewCell, didTapFinishButtonAtTask task: Task, didTapFinishButtonToState state: Bool) {
-        print("update finished database of \(task.detail)!")
+        print("update finished database of \(task.getDetail())!")
         if(!isOnEditMode)
         {
-            task.isFinished = state
+            task.setIsFinished(newState: state)
             if(!ImportantViewController.showCompletedTask)
             {
                 let indexPath = importantTableView.indexPath(for: cell)
@@ -436,8 +436,8 @@ extension ImportantViewController: TaskTableViewCellDelegate
     }
     
     func taskTableViewCell(_ cell: TaskTableViewCell, didTapInterestButtonAtTask task: Task, didTapInterestButtonToState state: Bool) {
-        print("update finished database of \(task.detail)!")
-        task.isInterested = state
+        print("update finished database of \(task.getDetail())!")
+        task.setIsInterested(newState: state)
         let indexPath = importantTableView.indexPath(for: cell)
         importantTableView.deleteRows(at: [indexPath!], with: .automatic)
     }
@@ -490,11 +490,11 @@ extension ImportantViewController: DeadlineViewControllerDelegate
                 {
                     if(ImportantViewController.showCompletedTask)
                     {
-                        importantTaskBoth[index].timePlanned = nextDate
+                        importantTaskBoth[index].setTimePlanned(newTime: nextDate)
                     }
                     else
                     {
-                        importantTaskNotFinished[index].timePlanned = nextDate
+                        importantTaskNotFinished[index].setTimePlanned(newTime: nextDate)
                     }
                 }
             }
@@ -521,11 +521,11 @@ extension ImportantViewController: DeadlineViewControllerDelegate
                 {
                     if(!ImportantViewController.showCompletedTask)
                     {
-                        importantTaskNotFinished[index].timePlanned = nextDate
+                        importantTaskNotFinished[index].setTimePlanned(newTime: nextDate)
                     }
                     else
                     {
-                        importantTaskBoth[index].timePlanned = nextDate
+                        importantTaskBoth[index].setTimePlanned(newTime: nextDate)
                     }
                 }
             }
@@ -552,8 +552,8 @@ extension ImportantViewController: DeadlineViewControllerDelegate
 extension ImportantViewController: TaskMoreDetailViewControllerDelegate
 {
     func taskMoreDetailViewController(_ indexPath: IndexPath, didTapFinishButtonAtTask task: Task, didTapFinishButtonToState state: Bool) {
-        print("update finished database of \(task.detail)!")
-        task.isFinished = state
+        print("update finished database of \(task.getDetail())!")
+        task.setIsFinished(newState: state)
         if(state)
         {
             importantTableView.deleteRows(at: [indexPath], with: .automatic)
@@ -562,23 +562,23 @@ extension ImportantViewController: TaskMoreDetailViewControllerDelegate
     }
     
     func taskMoreDetailViewController(_ indexPath: IndexPath, didTapImportantButtonAtTask task: Task, didTapImportantButtonToState state: Bool) {
-        print("update finished database of \(task.detail)!")
-        task.isInterested = state
+        print("update finished database of \(task.getDetail())!")
+        task.setIsInterested(newState: state)
     }
     
     func taskMoreDetailViewController(DeleteTarget target: Task) {
-        taskStore.removeByID(id: target.taskID)
+        taskStore.removeByID(id: target.getTaskID())
         importantTableView.reloadData()
     }
     
     func taskMoreDetailViewController(targetTask target: Task, changeMyDayState state: Bool) {
         if(state)
         {
-            target.secondTaskType = .myDay
+            target.setSecondTaskType(newTaskType: .myDay)
         }
         else
         {
-            target.secondTaskType = .normal
+            target.setSecondTaskType(newTaskType: .normal)
         }
         importantTableView.reloadData()
     }

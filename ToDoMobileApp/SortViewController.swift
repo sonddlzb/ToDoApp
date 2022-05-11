@@ -42,13 +42,13 @@ class SortViewController: UIViewController {
         if(taskStore != nil)
         {
             taskStore.allTask.sort{
-                $0.detail < $1.detail
+                $0.getDetail() < $1.getDetail()
             }
         }
         else
         {
             listStore.allList[currentList].listOfTask.sort{
-                $0.detail < $1.detail
+                $0.getDetail() < $1.getDetail()
             }
         }
     }
@@ -59,13 +59,13 @@ class SortViewController: UIViewController {
         if(taskStore != nil)
         {
             taskStore.allTask.sort{
-                $0.timePlanned < $1.timePlanned
+                $0.getTimePlanned() < $1.getTimePlanned()
             }
         }
         else
         {
             listStore.allList[currentList].listOfTask.sort{
-                $0.timePlanned < $1.timePlanned
+                $0.getTimePlanned() < $1.getTimePlanned()
             }
         }
     }
@@ -76,13 +76,13 @@ class SortViewController: UIViewController {
         if(taskStore != nil)
         {
             taskStore.allTask.sort{
-                $0.timeCreate < $1.timeCreate
+                $0.getTimeCreate() < $1.getTimeCreate()
             }
         }
         else
         {
             listStore.allList[currentList].listOfTask.sort{
-                $0.timeCreate < $1.timeCreate
+                $0.getTimeCreate() < $1.getTimeCreate()
             }
         }
     }

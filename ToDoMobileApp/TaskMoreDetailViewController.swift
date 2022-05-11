@@ -31,12 +31,12 @@ class TaskMoreDetailViewController: UIViewController, UIViewControllerTransition
     var delegate: TaskMoreDetailViewControllerDelegate?
        func initGui()
        {
-           taskNameTextField.text = task.detail
+           taskNameTextField.text = task.getDetail()
            stepNameTextField.borderStyle = .none
            taskNameTextField.contentMode = .left
            taskNameTextField.borderStyle = .none
            //init state of task
-           if(!task.isFinished)
+           if(!task.getIsFinished())
            {
                finishAllButton.setImage(UIImage(systemName: "circle"), for: .normal)
            }
@@ -44,7 +44,7 @@ class TaskMoreDetailViewController: UIViewController, UIViewControllerTransition
            {
                finishAllButton.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
            }
-           if(!task.isInterested)
+           if(!task.getIsInterested())
            {
                importantButton.setImage(UIImage(systemName: "star"), for: .normal)
            }
@@ -99,7 +99,9 @@ class TaskMoreDetailViewController: UIViewController, UIViewControllerTransition
     {
         if let stepName = self.stepNameTextField.text, stepNameTextField.hasText
         {
-            task.steps.append((false,stepName))
+            let newStep = Step(taskID: task.getTaskID(), name: stepName)
+            Database.addStep(newStep: newStep)
+            task.steps.append(newStep)
         let index = taskTableView.numberOfRows(inSection: 0)
         let indexPath = IndexPath(row: index, section: 0)
         taskTableView.insertRows(at: [indexPath], with: .automatic)
@@ -138,7 +140,7 @@ class TaskMoreDetailViewController: UIViewController, UIViewControllerTransition
     //delete this Task
     @IBAction func deleteTask(_ sender: UIButton)
     {
-        let alert = UIAlertController(title: nil, message: "\("\(task.detail)") will be permanently deleted", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: nil, message: "\("\(task.getDetail())") will be permanently deleted", preferredStyle: .actionSheet)
         let yesAction = UIAlertAction(title: "Delete task", style: .destructive)
         {
             _ in
@@ -159,12 +161,12 @@ class TaskMoreDetailViewController: UIViewController, UIViewControllerTransition
         if(!isMyDay)
         {
             isMyDay = true
-            task.secondTaskType = .myDay
+            task.setSecondTaskType(newTaskType: .myDay)
         }
         else
         {
             isMyDay = false
-            task.secondTaskType = .normal
+            task.setSecondTaskType(newTaskType: .normal)
         }
         cell.changeToMyDay(state: isMyDay)
         delegate?.taskMoreDetailViewController(targetTask: task, changeMyDayState: isMyDay)
@@ -213,7 +215,7 @@ extension TaskMoreDetailViewController: UITableViewDelegate, UITableViewDataSour
             let cell = taskTableView.dequeueReusableCell(withIdentifier: "TableViewCell")
             as! TableViewCell
             cell.task = task
-            let state = task.taskType == .myDay || ( task.secondTaskType == .myDay)
+            let state = task.getTaskType() == .myDay || ( task.getSecondTaskType() == .myDay)
             cell.initCellForTaskMoreDetailViewController(indexPath: indexPath, myDayState: state)
             return cell
         }
@@ -233,6 +235,7 @@ extension TaskMoreDetailViewController: UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete
         {
+            Database.deleteStep(step: task.steps[indexPath.row])
             self.task.steps.remove(at: indexPath.row)
             self.taskTableView.deleteRows(at: [indexPath], with: .automatic)
         }
@@ -259,7 +262,7 @@ extension TaskMoreDetailViewController: UITextFieldDelegate
         {
             if let newName  = textField.text, textField.hasText
             {
-                task.detail = newName
+                task.setDetail(newDetail: newName)
             }
         }
         return false
@@ -270,9 +273,10 @@ extension TaskMoreDetailViewController: UITextFieldDelegate
 extension TaskMoreDetailViewController: StepTableViewCellDelegate
 {
     func stepTableViewCell(_ cell: StepTableViewCell, didDeleteButtonAtStep step: Int) {
-        let alert = UIAlertController(title: nil, message: task.steps[cell.currentStep].1 + " will be permanently deleted.", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: nil, message: task.steps[cell.currentStep].getName() + " will be permanently deleted.", preferredStyle: .actionSheet)
         let yesAction = UIAlertAction(title: "Delete step", style: .destructive)
         {   _ in
+            Database.deleteStep(step: self.task.steps[step])
             self.task.steps.remove(at: step)
             let indexPath = IndexPath(row: step, section: 0)
             self.taskTableView.deleteRows(at: [indexPath], with: .automatic)
@@ -289,16 +293,16 @@ extension TaskMoreDetailViewController: StepTableViewCellDelegate
         if cell.finishButton.imageView!.image!.description.contains("checkmark.circle.fill")
         {
             cell.finishButton.setImage(UIImage(systemName: "circle"), for: .normal)
-            task.steps[step].0 = false
+            task.steps[step].setIsFinished(newIsFinished: false)
         }
         else
         {
             cell.finishButton.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
-            task.steps[step].0 = true
+            task.steps[step].setIsFinished(newIsFinished: true)
         }
     }
     func stepTableViewCell(_ cell: StepTableViewCell, didEditStepNameAt step: Int, toValue newName: String) {
-        task.steps[step].1 = newName
+        task.steps[step].setName(newName: newName)
     }
 }
 
@@ -319,7 +323,7 @@ extension TaskMoreDetailViewController: DeadlineViewControllerDelegate
         }
         if(indexPath.row != 3)
         {
-            task.timePlanned = Calendar.current.date(byAdding: dayComponent, to: Date())!
+            task.setTimePlanned(newTime: Calendar.current.date(byAdding: dayComponent, to: Date())!)
             taskTableView.reloadData()
         }
     }
@@ -329,7 +333,7 @@ extension TaskMoreDetailViewController: DeadlineViewControllerDelegate
     }
     
     func deadlineViewController(currentDateSelect datePicker: Date) {
-        task.timePlanned = datePicker
+        task.setTimePlanned(newTime: datePicker)
         taskTableView.reloadData()
     }
     

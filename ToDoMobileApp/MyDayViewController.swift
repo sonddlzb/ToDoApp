@@ -31,11 +31,11 @@ class MyDayViewController: UIViewController, UIViewControllerTransitioningDelega
         var res = [Task]()
         for value in taskStore.allTask
         {
-            if value.taskType == .myDay && value.isFinished
+            if value.getTaskType() == .myDay && value.getIsFinished()
             {
                 res.append(value)
             }
-            if value.secondTaskType == .myDay && value.isFinished
+            if value.getSecondTaskType() == .myDay && value.getIsFinished()
             {
                 res.append(value)
             }
@@ -44,7 +44,7 @@ class MyDayViewController: UIViewController, UIViewControllerTransitioningDelega
         {
             for task in list.listOfTask
             {
-                if(task.secondTaskType == .myDay && task.isFinished)
+                if(task.getSecondTaskType() == .myDay && task.getIsFinished())
                 {
                     res.append(task)
                 }
@@ -58,11 +58,11 @@ class MyDayViewController: UIViewController, UIViewControllerTransitioningDelega
         var res = [Task]()
         for value in taskStore.allTask
         {
-            if value.taskType == .myDay && !value.isFinished
+            if value.getTaskType() == .myDay && !value.getIsFinished()
             {
                 res.append(value)
             }
-            if value.secondTaskType == .myDay && !value.isFinished
+            if value.getSecondTaskType() == .myDay && !value.getIsFinished()
             {
                 res.append(value)
             }
@@ -71,7 +71,7 @@ class MyDayViewController: UIViewController, UIViewControllerTransitioningDelega
         {
             for task in list.listOfTask
             {
-                if(task.secondTaskType == .myDay && !task.isFinished)
+                if(task.getSecondTaskType() == .myDay && !task.getIsFinished())
                 {
                     res.append(task)
                 }
@@ -292,12 +292,12 @@ class MyDayViewController: UIViewController, UIViewControllerTransitioningDelega
                 {
                     if(i >= self.myDayTaskNotFinished.count)
                     {
-                        idRemove.append(self.myDayTaskFinished[i - self.myDayTaskNotFinished.count].taskID)
+                        idRemove.append(self.myDayTaskFinished[i - self.myDayTaskNotFinished.count].getTaskID())
                         self.isSelected[i] = false
                     }
                     else
                     {
-                        idRemove.append(self.myDayTaskNotFinished[i].taskID)
+                        idRemove.append(self.myDayTaskNotFinished[i].getTaskID())
                         self.isSelected[i] = false
                     }
                 }
@@ -436,11 +436,11 @@ extension MyDayViewController: UITableViewDelegate, UITableViewDataSource
             let id: String
             if(indexPath.section == 0)
             {
-                id = myDayTaskNotFinished[indexPath.row].taskID
+                id = myDayTaskNotFinished[indexPath.row].getTaskID()
             }
             else
             {
-                id = myDayTaskFinished[indexPath.row].taskID
+                id = myDayTaskFinished[indexPath.row].getTaskID()
             }
                 taskStore.removeByID(id: id)
                 myDayTableView.deleteRows(at: [indexPath], with: .automatic)
@@ -455,7 +455,7 @@ extension MyDayViewController: UITableViewDelegate, UITableViewDataSource
         let detailTaskViewController = TaskMoreDetailViewController()
         if(indexPath.section == 0)
         {
-            detailTaskViewController.task = myDayTaskNotFinished[indexPath.row]
+           detailTaskViewController.task = myDayTaskNotFinished[indexPath.row]
         }
         else
         {
@@ -482,10 +482,10 @@ extension MyDayViewController: UITextFieldDelegate
 extension MyDayViewController: TaskTableViewCellDelegate
 {
     func taskTableViewCell(_ cell: TaskTableViewCell, didTapFinishButtonAtTask task: Task,didTapFinishButtonToState state: Bool) {
-        print("update finished database of \(task.detail)!")
+        print("update finished database of \(task.getDetail())!")
         if(!isOnEditMode)
         {
-            task.isFinished = state
+            task.setIsFinished(newState: state)
             myDayTableView.reloadSections([0,1], with: .automatic)
         }
         else
@@ -505,8 +505,8 @@ extension MyDayViewController: TaskTableViewCellDelegate
     }
     
     func taskTableViewCell(_ cell: TaskTableViewCell, didTapInterestButtonAtTask task: Task, didTapInterestButtonToState state: Bool) {
-        print("update interested database of \(task.detail)!")
-        task.isInterested = state
+        print("update interested database of \(task.getDetail())!")
+        task.setIsInterested(newState: state)
     }
     
 }
@@ -518,30 +518,30 @@ extension MyDayViewController: TaskMoreDetailViewControllerDelegate
     func taskMoreDetailViewController(targetTask target: Task, changeMyDayState state: Bool) {
         if(state)
         {
-            target.taskType = .myDay
+            target.setSecondTaskType(newTaskType: .myDay)
         }
         else
         {
-            target.taskType = .normal
+            target.setSecondTaskType(newTaskType: .normal)
         }
         myDayTableView.reloadData()
     }
     
     
     func taskMoreDetailViewController(_ indexPath: IndexPath, didTapFinishButtonAtTask task: Task, didTapFinishButtonToState state: Bool) {
-        print("update finished database of \(task.detail)!")
-        task.isFinished = state
+        print("update finished database of \(task.getDetail())!")
+        task.setIsFinished(newState: state)
         self.myDayTableView.reloadData()
     }
     
     func taskMoreDetailViewController(_ indexPath: IndexPath, didTapImportantButtonAtTask task: Task, didTapImportantButtonToState state: Bool) {
-        print("update finished database of \(task.detail)!")
-        task.isInterested = state
+        print("update finished database of \(task.getDetail())!")
+        task.setIsInterested(newState: state)
     }
     
     //delete a task from task detail screen
     func taskMoreDetailViewController(DeleteTarget target: Task) {
-        taskStore.removeByID(id: target.taskID)
+        taskStore.removeByID(id: target.getTaskID())
         myDayTableView.reloadData()
     }
 }
@@ -592,11 +592,11 @@ extension MyDayViewController: DeadlineViewControllerDelegate
                 {
                     if(index >= self.myDayTaskNotFinished.count)
                     {
-                        self.myDayTaskFinished[index - self.myDayTaskNotFinished.count].timePlanned = nextDate
+                        self.myDayTaskFinished[index - self.myDayTaskNotFinished.count].setTimePlanned(newTime: nextDate)
                     }
                     else
                     {
-                        self.myDayTaskNotFinished[index].timePlanned = nextDate
+                        self.myDayTaskNotFinished[index].setTimePlanned(newTime: nextDate)
                     }
                 }
             }
@@ -624,11 +624,11 @@ extension MyDayViewController: DeadlineViewControllerDelegate
                 {
                     if(index >= self.myDayTaskNotFinished.count)
                     {
-                        self.myDayTaskFinished[index - self.myDayTaskNotFinished.count].timePlanned = nextDate
+                        self.myDayTaskFinished[index - self.myDayTaskNotFinished.count].setTimePlanned(newTime: nextDate)
                     }
                     else
                     {
-                        self.myDayTaskNotFinished[index].timePlanned = nextDate
+                        self.myDayTaskNotFinished[index].setTimePlanned(newTime: nextDate)
                     }
                 }
             }

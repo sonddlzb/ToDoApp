@@ -276,12 +276,12 @@ class TaskViewController: UIViewController, UIViewControllerTransitioningDelegat
                 {
                     if(i >= self.taskStore.taskNotFinished.count)
                     {
-                        idRemove.append(self.taskStore.taskFinished[i - self.taskStore.taskNotFinished.count].taskID)
+                        idRemove.append(self.taskStore.taskFinished[i - self.taskStore.taskNotFinished.count].getTaskID())
                         self.isSelected[i] = false
                     }
                     else
                     {
-                        idRemove.append(self.taskStore.taskNotFinished[i].taskID)
+                        idRemove.append(self.taskStore.taskNotFinished[i].getTaskID())
                         self.isSelected[i] = false
                     }
                 }
@@ -418,10 +418,10 @@ extension TaskViewController: UITextFieldDelegate
 extension TaskViewController: TaskTableViewCellDelegate
 {
     func taskTableViewCell(_ cell: TaskTableViewCell, didTapFinishButtonAtTask task: Task,didTapFinishButtonToState state: Bool) {
-        print("update finished database of \(task.detail)!")
+        print("update finished database of \(task.getDetail())!")
         if(!isOnEditMode)
         {
-        task.isFinished = state
+        task.setIsFinished(newState: state)
         taskTableView.reloadSections([0,1], with: .automatic)
         }
         else
@@ -441,11 +441,11 @@ extension TaskViewController: TaskTableViewCellDelegate
     }
     
     func taskTableViewCell(_ cell: TaskTableViewCell, didTapInterestButtonAtTask task: Task, didTapInterestButtonToState state: Bool) {
-        print("update interested database of \(task.detail)!")
-        task.isInterested = state
+        print("update interested database of \(task.getDetail())!")
+        task.setIsInterested(newState: state)
         if(!state)
         {
-            task.taskType = .normal
+            task.setTaskType(newTaskType: .normal)
         }
 //        task.taskType = .important
     }
@@ -465,11 +465,11 @@ extension TaskViewController: DeadlineViewControllerDelegate
                 {
                     if(index >= self.taskStore.taskNotFinished.count)
                     {
-                        self.taskStore.taskFinished[index - self.taskStore.taskNotFinished.count].timePlanned = nextDate
+                        self.taskStore.taskFinished[index - self.taskStore.taskNotFinished.count].setTimePlanned(newTime: nextDate)
                     }
                     else
                     {
-                        self.taskStore.taskNotFinished[index].timePlanned = nextDate
+                        self.taskStore.taskNotFinished[index].setTimePlanned(newTime: nextDate)
                     }
                 }
             }
@@ -532,11 +532,11 @@ extension TaskViewController: DeadlineViewControllerDelegate
                 {
                     if(index >= self.taskStore.taskNotFinished.count)
                     {
-                        self.taskStore.taskFinished[index - self.taskStore.taskNotFinished.count].timePlanned = nextDate
+                        self.taskStore.taskFinished[index - self.taskStore.taskNotFinished.count].setTimePlanned(newTime: nextDate)
                     }
                     else
                     {
-                        self.taskStore.taskNotFinished[index].timePlanned = nextDate
+                        self.taskStore.taskNotFinished[index].setTimePlanned(newTime: nextDate)
                     }
                 }
             }
@@ -558,23 +558,23 @@ extension TaskViewController: TaskMoreDetailViewControllerDelegate
     func taskMoreDetailViewController(targetTask target: Task, changeMyDayState state: Bool) {
         if(state)
         {
-            target.secondTaskType = .myDay
+            target.setSecondTaskType(newTaskType: .myDay)
         }
         else
         {
-            target.secondTaskType = .normal
+            target.setSecondTaskType(newTaskType: .normal)
         }
         taskTableView.reloadData()
     }
     
     func taskMoreDetailViewController(DeleteTarget target: Task) {
-        taskStore.removeByID(id: target.taskID)
+        taskStore.removeByID(id: target.getTaskID())
         taskTableView.reloadData()
     }
     
     func taskMoreDetailViewController(_ indexPath: IndexPath, didTapFinishButtonAtTask task: Task, didTapFinishButtonToState state: Bool) {
-        print("update finished database of \(task.detail)!")
-        task.isFinished = state
+        print("update finished database of \(task.getDetail())!")
+        task.setIsFinished(newState: state)
         if(state)
         {
             taskTableView.deleteRows(at: [indexPath], with: .automatic)
@@ -583,8 +583,8 @@ extension TaskViewController: TaskMoreDetailViewControllerDelegate
     }
     
     func taskMoreDetailViewController(_ indexPath: IndexPath, didTapImportantButtonAtTask task: Task, didTapImportantButtonToState state: Bool) {
-        print("update finished database of \(task.detail)!")
-        task.isInterested = state
+        print("update finished database of \(task.getDetail())!")
+        task.setIsInterested(newState: state)
     }
     
     
