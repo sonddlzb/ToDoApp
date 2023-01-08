@@ -157,13 +157,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell") as! TableViewCell
         cell.taskStore = taskStore
         cell.listStore = listStore
-        if(indexPath.section == 1)
+        if(indexPath.section == 0)
         {
-            cell.bindDataForSection1(list: listStore.allList[indexPath.row], indexPath: indexPath)
+        
+            cell.bindDataForSection0(indexPath: indexPath)
         }
         else
         {
-            cell.bindDataForSection0(indexPath: indexPath)
+            cell.bindDataForSection1(list: listStore.allList[indexPath.row], indexPath: indexPath)
         }
         return cell
     }

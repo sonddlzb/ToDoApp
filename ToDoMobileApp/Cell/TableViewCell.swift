@@ -44,40 +44,46 @@ class TableViewCell: UITableViewCell {
         self.nameLabel.text = list.getName()
         self.imageViewCell.image = UIImage(systemName: "list.bullet")
         let number = list.listOfTask.count
+        print("number count of list \(list.getName()) is \(number)")
         if(number != 0)
         {
-            self.countLabel.text = "\(number)"
+            print("Bind number for row \(indexPath.row) section \(indexPath.section) with value \(number)")
+            countLabel.text = "\(number)"
         }
     }
     func bindDataForSection0(indexPath: IndexPath)
     {
-        self.nameLabel.text = buttonName[indexPath.row]
-        switch indexPath.row
+        if(indexPath.section == 0)
         {
-            case 0:     self.imageViewCell.image = UIImage(systemName: "sun.max")
-            case 1:     self.imageViewCell.image = UIImage(systemName: "star")
-            case 2:     self.imageViewCell.image = UIImage(systemName: "calendar")
-            case 3:     self.imageViewCell.image = UIImage(systemName: "person")
-            default: self.imageViewCell.image = UIImage(systemName: "homekit")
-        }
-        self.imageViewCell.tintColor = imageColor[indexPath.row]
-        let number: Int
-        switch indexPath.row
-        {
-        case 0: number = taskStore.myDayTask.count + listStore.myDayListStore.count
-            case 1: number = importantTaskNotFinished.count
-            case 2: number = taskStore.planTask.count
-            case 4: number = taskStore.taskNotFinished.count
-            default: number = 0
-        }
-        if(number != 0)
-        {
-            self.countLabel.text = "\(number)"
-            print("Bind number for row \(indexPath.row)")
-        }
-        else
-        {
-            self.countLabel.text = ""
+            self.nameLabel.text = buttonName[indexPath.row]
+            switch indexPath.row
+            {
+                case 0:     self.imageViewCell.image = UIImage(systemName: "sun.max")
+                case 1:     self.imageViewCell.image = UIImage(systemName: "star")
+                case 2:     self.imageViewCell.image = UIImage(systemName: "calendar")
+                case 3:     self.imageViewCell.image = UIImage(systemName: "person")
+                default: self.imageViewCell.image = UIImage(systemName: "homekit")
+            }
+            imageViewCell.tintColor = imageColor[indexPath.row]
+            let number: Int
+
+            switch indexPath.row
+            {
+            case 0: number = taskStore.myDayTask.count + listStore.myDayListStore.count
+                case 1: number = importantTaskNotFinished.count
+                case 2: number = taskStore.planTask.count
+                case 4: number = taskStore.taskNotFinished.count
+                default: number = 0
+            }
+            if(number != 0)
+            {
+                countLabel.text = "\(number)"
+                print("Bind number for row \(indexPath.row) section \(indexPath.section) with value \(number)")
+            }
+            else
+            {
+                countLabel.text = ""
+            }
         }
     }
     

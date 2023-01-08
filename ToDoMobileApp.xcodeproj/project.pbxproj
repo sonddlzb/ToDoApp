@@ -185,6 +185,125 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C82010B1296AE94D009753FC /* App */ = {
+			isa = PBXGroup;
+			children = (
+				C866BFBC27FD985E0027EFF1 /* AppDelegate.swift */,
+				C866BFBE27FD985E0027EFF1 /* SceneDelegate.swift */,
+				C866BFC527FD985F0027EFF1 /* Assets.xcassets */,
+				C866BFC727FD985F0027EFF1 /* LaunchScreen.storyboard */,
+				C866BFCA27FD985F0027EFF1 /* Info.plist */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		C82010B2296AE954009753FC /* Screen */ = {
+			isa = PBXGroup;
+			children = (
+				C82010BE296AEA7E009753FC /* Xib */,
+				C866BFC027FD985E0027EFF1 /* ViewController.swift */,
+				C806874027FFD7FC00491787 /* ListViewController.swift */,
+				C83A95D828066BA20044EA99 /* TaskViewController.swift */,
+				C83A95E22806B98D0044EA99 /* ImportantViewController.swift */,
+				C8EFFB71280901AA001770AD /* MyDayViewController.swift */,
+				C8EFFB7528092D38001770AD /* PlannedFilterFloatViewController.swift */,
+				C8EFFB7D280931AF001770AD /* PlannedViewController.swift */,
+				C8330DA5280CF3890064FE4C /* AssignToMeViewController.swift */,
+				C8330DA9280D4C230064FE4C /* DeadlineViewController.swift */,
+				C82CB6A2280FA34500A147AD /* DatePickerViewController.swift */,
+				C8EA498D2812491C00B4971D /* TaskMoreDetailViewController.swift */,
+				C895EA0128162E4D00A9072C /* HalfSizePresentationController.swift */,
+				C895EA03281678D400A9072C /* NoteViewController.swift */,
+				C83380D82818EEF70025E423 /* ListOptionViewController.swift */,
+				C85B75BA281B95A9002746B2 /* ColorViewController.swift */,
+				C8C989F92822392B0023B602 /* SortViewController.swift */,
+				C8C989FD282507300023B602 /* SearchViewController.swift */,
+			);
+			path = Screen;
+			sourceTree = "<group>";
+		};
+		C82010B4296AE95E009753FC /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C8330DAF280D6B430064FE4C /* Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C82010B5296AE96B009753FC /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				C82010BD296AEA64009753FC /* Xib */,
+				C8EFFB7928092E22001770AD /* PlannedFilterFloatTableViewCell.swift */,
+				C8EA49912812655B00B4971D /* StepTableViewCell.swift */,
+				C83A95CC2806686F0044EA99 /* TaskTableViewCell.swift */,
+				C806873827FFC1BC00491787 /* Task.swift */,
+				C806873C27FFC65100491787 /* TableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		C82010B6296AE98B009753FC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C806873A27FFC25B00491787 /* List.swift */,
+				C86AFD9C2828FA80002A08D6 /* Step.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C82010B7296AE9AA009753FC /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				C86AFD9E2829015E002A08D6 /* Database.swift */,
+				C806874427FFE9DA00491787 /* ListStore.swift */,
+				C83A95DC280670CE0044EA99 /* TaskStore.swift */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
+		C82010BC296AEA53009753FC /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				C8330DAD280D6A940064FE4C /* Enumeration.swift */,
+			);
+			path = Enum;
+			sourceTree = "<group>";
+		};
+		C82010BD296AEA64009753FC /* Xib */ = {
+			isa = PBXGroup;
+			children = (
+				C8EFFB7A28092E22001770AD /* PlannedFilterFloatTableViewCell.xib */,
+				C8EA49922812655B00B4971D /* StepTableViewCell.xib */,
+				C83A95CD2806686F0044EA99 /* TaskTableViewCell.xib */,
+				C806873D27FFC65100491787 /* TableViewCell.xib */,
+			);
+			path = Xib;
+			sourceTree = "<group>";
+		};
+		C82010BE296AEA7E009753FC /* Xib */ = {
+			isa = PBXGroup;
+			children = (
+				C8C989FA2822392B0023B602 /* SortViewController.xib */,
+				C8C989FE282507300023B602 /* SearchViewController.xib */,
+				C866BFC227FD985E0027EFF1 /* Main.storyboard */,
+				C82CB6A3280FA34500A147AD /* DatePickerViewController.xib */,
+				C8EA498E2812491C00B4971D /* TaskMoreDetailViewController.xib */,
+				C895EA04281678D400A9072C /* NoteViewController.xib */,
+				C83380D92818EEF70025E423 /* ListOptionViewController.xib */,
+				C85B75BB281B95A9002746B2 /* ColorViewController.xib */,
+				C806874127FFD7FC00491787 /* ListViewController.xib */,
+				C83A95D928066BA20044EA99 /* TaskViewController.xib */,
+				C83A95E32806B98D0044EA99 /* ImportantViewController.xib */,
+				C8EFFB72280901AA001770AD /* MyDayViewController.xib */,
+				C8EFFB7628092D38001770AD /* PlannedFilterFloatViewController.xib */,
+				C8EFFB7E280931AF001770AD /* PlannedViewController.xib */,
+				C8330DA6280CF3890064FE4C /* AssignToMeViewController.xib */,
+				C8330DAA280D4C230064FE4C /* DeadlineViewController.xib */,
+			);
+			path = Xib;
+			sourceTree = "<group>";
+		};
 		C866BFB027FD985E0027EFF1 = {
 			isa = PBXGroup;
 			children = (
@@ -210,60 +329,13 @@
 		C866BFBB27FD985E0027EFF1 /* ToDoMobileApp */ = {
 			isa = PBXGroup;
 			children = (
-				C866BFBC27FD985E0027EFF1 /* AppDelegate.swift */,
-				C866BFBE27FD985E0027EFF1 /* SceneDelegate.swift */,
-				C866BFC027FD985E0027EFF1 /* ViewController.swift */,
-				C866BFC227FD985E0027EFF1 /* Main.storyboard */,
-				C866BFC527FD985F0027EFF1 /* Assets.xcassets */,
-				C866BFC727FD985F0027EFF1 /* LaunchScreen.storyboard */,
-				C866BFCA27FD985F0027EFF1 /* Info.plist */,
-				C806873827FFC1BC00491787 /* Task.swift */,
-				C806873A27FFC25B00491787 /* List.swift */,
-				C806873C27FFC65100491787 /* TableViewCell.swift */,
-				C806873D27FFC65100491787 /* TableViewCell.xib */,
-				C806874027FFD7FC00491787 /* ListViewController.swift */,
-				C806874127FFD7FC00491787 /* ListViewController.xib */,
-				C806874427FFE9DA00491787 /* ListStore.swift */,
-				C83A95CC2806686F0044EA99 /* TaskTableViewCell.swift */,
-				C83A95CD2806686F0044EA99 /* TaskTableViewCell.xib */,
-				C83A95D828066BA20044EA99 /* TaskViewController.swift */,
-				C83A95D928066BA20044EA99 /* TaskViewController.xib */,
-				C83A95DC280670CE0044EA99 /* TaskStore.swift */,
-				C83A95E22806B98D0044EA99 /* ImportantViewController.swift */,
-				C83A95E32806B98D0044EA99 /* ImportantViewController.xib */,
-				C8EFFB71280901AA001770AD /* MyDayViewController.swift */,
-				C8EFFB72280901AA001770AD /* MyDayViewController.xib */,
-				C8EFFB7528092D38001770AD /* PlannedFilterFloatViewController.swift */,
-				C8EFFB7628092D38001770AD /* PlannedFilterFloatViewController.xib */,
-				C8EFFB7928092E22001770AD /* PlannedFilterFloatTableViewCell.swift */,
-				C8EFFB7A28092E22001770AD /* PlannedFilterFloatTableViewCell.xib */,
-				C8EFFB7D280931AF001770AD /* PlannedViewController.swift */,
-				C8EFFB7E280931AF001770AD /* PlannedViewController.xib */,
-				C8330DA5280CF3890064FE4C /* AssignToMeViewController.swift */,
-				C8330DA6280CF3890064FE4C /* AssignToMeViewController.xib */,
-				C8330DA9280D4C230064FE4C /* DeadlineViewController.swift */,
-				C8330DAA280D4C230064FE4C /* DeadlineViewController.xib */,
-				C8330DAD280D6A940064FE4C /* Enumeration.swift */,
-				C8330DAF280D6B430064FE4C /* Extension.swift */,
-				C82CB6A2280FA34500A147AD /* DatePickerViewController.swift */,
-				C82CB6A3280FA34500A147AD /* DatePickerViewController.xib */,
-				C8EA498D2812491C00B4971D /* TaskMoreDetailViewController.swift */,
-				C8EA498E2812491C00B4971D /* TaskMoreDetailViewController.xib */,
-				C8EA49912812655B00B4971D /* StepTableViewCell.swift */,
-				C8EA49922812655B00B4971D /* StepTableViewCell.xib */,
-				C895EA0128162E4D00A9072C /* HalfSizePresentationController.swift */,
-				C895EA03281678D400A9072C /* NoteViewController.swift */,
-				C895EA04281678D400A9072C /* NoteViewController.xib */,
-				C83380D82818EEF70025E423 /* ListOptionViewController.swift */,
-				C83380D92818EEF70025E423 /* ListOptionViewController.xib */,
-				C85B75BA281B95A9002746B2 /* ColorViewController.swift */,
-				C85B75BB281B95A9002746B2 /* ColorViewController.xib */,
-				C8C989F92822392B0023B602 /* SortViewController.swift */,
-				C8C989FA2822392B0023B602 /* SortViewController.xib */,
-				C8C989FD282507300023B602 /* SearchViewController.swift */,
-				C8C989FE282507300023B602 /* SearchViewController.xib */,
-				C86AFD9C2828FA80002A08D6 /* Step.swift */,
-				C86AFD9E2829015E002A08D6 /* Database.swift */,
+				C82010BC296AEA53009753FC /* Enum */,
+				C82010B7296AE9AA009753FC /* Realm */,
+				C82010B6296AE98B009753FC /* Model */,
+				C82010B5296AE96B009753FC /* Cell */,
+				C82010B4296AE95E009753FC /* Extensions */,
+				C82010B2296AE954009753FC /* Screen */,
+				C82010B1296AE94D009753FC /* App */,
 			);
 			path = ToDoMobileApp;
 			sourceTree = "<group>";

@@ -403,6 +403,24 @@ extension TaskViewController: UITableViewDelegate, UITableViewDataSource
             self.navigationController?.pushViewController(detailTaskViewController, animated: true)
         }
     }
+    
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete
+//        {
+//            let alert = UIAlertController(title: nil, message: "\("\(self.taskStore.allTask[indexPath.row].getDetail())") will be permanently deleted", preferredStyle: .actionSheet)
+//            let yesAction = UIAlertAction(title: "Delete Task", style: .destructive)
+//            {
+//                _ in
+//                Database.deleteTask(task: self.listStore.allList[self.currentList].listOfTask[indexPath.row])
+//                self.listStore.allList[self.currentList].listOfTask.remove(at: indexPath.row)
+//                self.taskTableView.deleteRows(at: [indexPath], with: .automatic)
+//            }
+//            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//            alert.addAction(yesAction)
+//            alert.addAction(cancelAction)
+//            present(alert, animated: true, completion: nil)
+//        }
+//    }
 }
 
 // MARK: - delegate from textField for returning
